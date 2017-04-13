@@ -1,0 +1,83 @@
+<head>
+  <meta charset="utf-8">
+  <script src="https://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js">
+  </script>
+</head>
+<body>
+<div class="row text-left">
+  <form id="form" method="post" class="form-horizontal">
+  <div class="form-group has-success">
+    <label for="is_project", class="project-label">选择项目</label>
+    <select id="is_project">
+      {% for project in projects %}
+        <option value="{{ project }}" onChange="alert(this.options[this.selectedIndex].text)">{{ project }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="form-group has-success">
+    <label for="branch", class="branch-label">选择分支</label>
+    <select id="is_branch">
+      {% for branch in branch_list %}
+        <option value="branch">{{ branch }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="form-group has-success">
+    <label for="tag", class="tag-label">选择标签</label>
+    <select id="is_tag">
+      {% for tag in tag_list %}
+        <option value="tag">{{ tag }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  </form>
+  <div class="row text-left">
+    <button type="submit" class="btn btn-primary" onclick="uploadtotest()">提测</button>
+  </div>
+</div>
+<script type="text/javascript">
+  var selectprojectmenu = document.getElementById("is_project")
+  var selectbranchmenu = document.getElementById("is_branch")
+  var selecttagmenu = document.getElementById("is_tag")
+  var button = document.getElementsByClassName("btn btn-primary")
+  var cookie_values = document.cookie.split(';')
+
+  for (var i=0;i<cookie_values.length;i++)
+    if (cookie_values[i].indexOf('option_value')!=-1) {
+      var option_value = cookie_values[i].split('=')[1]
+      selectprojectmenu.options[option_value].selected = true;
+    }
+  for (var i=0;i<cookie_values.length;i++)
+    if (cookie_values[i].indexOf('option_value')!=-1) {
+      var option_value = cookie_values[i].split('=')[1]
+      selectbranchmenu.options[option_value].selected = true;
+    }
+  for (var i=0;i<cookie_values.length;i++)
+    if (cookie_values[i].indexOf('option_value')!=-1) {
+      var option_value = cookie_values[i].split('=')[1]
+      selecttagmenu.options[option_value].selected = true;
+    }
+
+  selectprojectmenu.onchange = function() {
+    var chosen_option = this.options[this.selectedIndex]
+    document.cookie = 'project=' + chosen_option.innerText
+    selectprojectmenu.options[selectprojectmenu.options.selectedIndex].selected = true;
+    window.location.reload();
+  }
+  selectbranchmenu.onchange = function() {
+    var chosen_option = this.options[this.selectedIndex]
+    document.cookie = 'branch=' + chosen_option.innerText
+    selectbranchmenu.options[selectbranchmenu.options.selectedIndex].selected = true;
+    window.location.reload();
+  }
+  selecttagmenu.onchange = function() {
+    var chosen_option = this.options[this.selectedIndex]
+    document.cookie = 'tag=' + chosen_option.innerText
+    selecttagmenu.options[selecttagmenu.options.selectedIndex].selected = true;
+    window.location.reload();
+  }
+  function uploadtotest(action) {
+
+  }
+</script>
+</body>
