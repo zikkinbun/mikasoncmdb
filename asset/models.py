@@ -47,7 +47,7 @@ class Server(models.Model):
     HDDStorage = models.CharField(max_length=32, blank=True, null=True, verbose_name=u'硬盘')
     NetCard = models.CharField(max_length=32, blank=True, null=True, verbose_name=u'网卡带宽')
     # Status = models.CharField(max_length=20, choices=STATUS, verbose_name=u'是否激活')
-    Status = models.CharField(max_length=20, blank=True, null=True, verbose_name=u'是否激活')
+    Status = models.CharField(max_length=20, blank=True, null=True, verbose_name=u'是否在线')
     comment = models.CharField(max_length=255, blank=True, null=True, verbose_name=u'备注')
     CreateTime = models.DateTimeField(auto_now=True, null=True)
 
@@ -59,3 +59,7 @@ class Server(models.Model):
                                                                                        self.System, self.GlobalIpAddr, self.CpuStat, \
                                                                                        self.MemoryStat, self.HDDStorage, self.NetCard, \
                                                                                        self.Status, self.CreateTime, self.comment)
+
+class Server_Status(models.Model):
+    server_id = models.IntegerField()
+    login_user = models.CharField(max_length=10, blank=True, null=True, verbose_name=u'用户登录数')

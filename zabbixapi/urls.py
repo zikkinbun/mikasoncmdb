@@ -4,6 +4,8 @@ from zabbixapi import api
 
 app_name = 'zabbixapi'
 urlpatterns = [
-    url(r'^test/$', views.test, name='test'),
-    url(r'^test_list/$', views.test_list, name='test_list')
+    url(r'^uptime/$', api.get_uptime, name='get_uptime'),
+    url(r'^boottime/$', api.get_boottime, name='get_boottime'),
+    url(r'^ping/$', api.agent_ping, name='agent_ping'),
+    url(r'^runprocess/$', api.get_runprocess, name='get_runprocess'),
 ]

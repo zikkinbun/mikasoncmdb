@@ -8,7 +8,7 @@ import json
 
 @csrf_exempt
 def get_project(request):  # search the project from gitlab
-    project_url = 'http://112.74.182.80:10080/api/v3/projects?private_token=1__kd35zHaxPyx21BnX6'
+    project_url = 'http://127.0.0.1/api/v3/projects?private_token=1__kd35zHaxPyx21BnX6'
     r = requests.get(project_url)
     datas = r.json()
     # print datas
@@ -38,7 +38,7 @@ def get_tag(request):  # get all tags of the project
         # project_id = request.POST.get('project_id', '')
         project_id = json.loads(request.body)[u'project_id']
         # print json.loads(request.body)[u'project_id']
-        tag_url = "http://112.74.182.80:10080/api/v3/projects/" + \
+        tag_url = "http://127.0.0.1/api/v3/projects/" + \
                 str(project_id) + \
                 "/repository/tags?private_token=1__kd35zHaxPyx21BnX6"
         r = requests.get(tag_url)
@@ -61,7 +61,7 @@ def get_branches(request):
         project_id = json.loads(request.body)[u'project_id']
         # print request.body
         # print type(project_id)
-        branch_url = 'http://112.74.182.80:10080/api/v3/projects/' + str(project_id) + "/repository/branches?private_token=1__kd35zHaxPyx21BnX6"
+        branch_url = 'http://127.0.0.1/api/v3/projects/' + str(project_id) + "/repository/branches?private_token=1__kd35zHaxPyx21BnX6"
         # print branch_url
         r = requests.get(branch_url)
         datas = r.json()
@@ -77,7 +77,7 @@ def get_branches(request):
         return HttpResponse(mybranches)
 
 def get_project_api():  # search the project from gitlab
-    project_url = 'http://112.74.182.80:10080/api/v3/projects?private_token=1__kd35zHaxPyx21BnX6'
+    project_url = 'http://127.0.0.1/api/v3/projects?private_token=1__kd35zHaxPyx21BnX6'
     r = requests.get(project_url)
     datas = r.json()
     projects = []
@@ -93,7 +93,7 @@ def get_project_api():  # search the project from gitlab
     return projects
 
 def get_tag_api(project_id):  # get all tags of the project
-    tag_url = "http://112.74.182.80:10080/api/v3/projects/" + \
+    tag_url = "http://127.0.0.1/api/v3/projects/" + \
             str(project_id) + \
             "/repository/tags?private_token=1__kd35zHaxPyx21BnX6"
     r = requests.get(tag_url)
@@ -107,7 +107,7 @@ def get_tag_api(project_id):  # get all tags of the project
 
 
 def get_branches_api(project_id):
-    branch_url = 'http://112.74.182.80:10080/api/v3/projects/' + str(project_id) + "/repository/branches?private_token=1__kd35zHaxPyx21BnX6"
+    branch_url = 'http://127.0.0.1/api/v3/projects/' + str(project_id) + "/repository/branches?private_token=1__kd35zHaxPyx21BnX6"
     # print branch_url
     r = requests.get(branch_url)
     datas = r.json()
@@ -124,7 +124,7 @@ def get_url_api(project_name):
     for project in projects:
         if project_name == project['name']:
             project_id = project['id']
-    request_url = 'http://112.74.182.80:10080/api/v3/projects/' + str(project_id) + "?private_token=1__kd35zHaxPyx21BnX6"
+    request_url = 'http://127.0.0.1/api/v3/projects/' + str(project_id) + "?private_token=1__kd35zHaxPyx21BnX6"
     r = requests.get(request_url)
     data = r.json()
     # print type(data)

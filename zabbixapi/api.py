@@ -1,22 +1,17 @@
 # _*_ coding:utf-8_*_
 # The Auth ID Is: 5e7f7d055a05f3bfb9abecd77f9f0381
+from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt
+from asset.models import Server
+
 import json
 import urllib2
 import pymysql
 import redis
 import time
 
-def conndb():
-    conn = pymysql.connect(host='112.74.182.80', port='3306', user='gdrAdmin', password='gdr2016', db='', charset='utf8')
-    cur = conn.cursor()
-    return cur
-
-def connrd(db=None):
-    conn = redis.Redis(host='112.74.182.80', port=6379, password='gdrdev2016', db=db)
-    return conn
-
 def processData(method, params):
-    url = 'http://112.74.164.242:8001/api_jsonrpc.php'
+    url = 'http://127.0.0.1/api_jsonrpc.php'
     header = {"Content-Type":"application/json"}
     data = {
         "jsonrpc": "2.0",
@@ -39,103 +34,109 @@ def processData(method, params):
         response = json.loads(result.read())
         return response['result']
 
-def get_data_count(itemlist=None):
-    """
-        先将数据进行计算再存进redis db1
-    """
-    method = "history.get"
-    redis = connrd(db=1)
-    if itemlist:
-        for item in itemlist:
-            params = {
-                "output": "extend",
-                "history": 3,
-                "itemids": item,
-                "limit": 10
-            }
-            data = processData(method, params)
-            k = 1024
-            m = 1024*k
-            redis.set(item, json.dumps([int(host[u'value'])/m for host in data]))
-    else:
-        msg = 'empty list'
-        return msg
-    data = {item: redis.get(item) for item in itemlist}
-    # print data
-    return data
-
-def get_data(itemlist=None):
-    """
-        直接将数据存进redis db1
-    """
-    method = "history.get"
-    redis = connrd(db=1)
-    if itemlist:
-        for item in itemlist:
-            params = {
-                "output": "extend",
-                "history": 3,
-                "itemids": item,
-                "limit": 10
-            }
-            data = processData(method, params)
-            redis.set(item, json.dumps([(host[u'value']) for host in data]))
-    else:
-        msg = 'empty list'
-        return msg
-    data = {item: redis.get(item) for item in itemlist}
-    # print data
-    return data
-
-def gethistory_clock(itemlist=None):
-        """
-            先将数据存进redis db1
-        """
+@csrf_exempt
+def get_uptime(request):
+    if request.method == 'GET':
+        itemlist = ['23708', '23830', '23896', '23937', '23978', '24019', '23313']
+        namelist = ['get_dev', 'gdr_test', 'gdr_rd_prod', 'gdr_sql_mt', 'gdr_sql_sl', 'gdr_web_prod', 'zabbix_server']
         method = "history.get"
-        redis = connrd(db=2)
-        if itemlist:
-            for item in itemlist:
-                params = {
-                    "output": "extend",
-                    "history": 3,
-                    "itemids": item,
-                    "limit": 10
-                }
-                data = processData(method, params)
-                clocks = []
-                for host in data:
-                    clocks.append(host[u'clock'])
-                new_clocks = []
-                for clock in clocks:
-                    strtime = time.strftime("%Y%m%d%H%M", time.gmtime(float(clock)))
-                    new_clocks.append(strtime)
-                redis.set(item, json.dumps(new_clocks))
-        else:
-            msg = 'empty list'
-            return msg
-        data = {item: redis.get(item) for item in itemlist}
-        # print data
-        return data
-
-
-def get_uptime(itemlist=None):
-    method = "history.get"
-    redis = connrd(db=3)
-    if itemlist:
-        for item in itemlist:
-            value = []
+        data = {}
+        for i in range(len(itemlist)):
             params = {
                     "output": "extend",
                     "history": 3,
-                    "itemids": item,
+                    "itemids": itemlist[i],
                     "limit": 10
-            }
+                    }
+            origin = processData(method, params)
+            # print origin
+            for host in origin:
+                # print type(host)
+                day = int(host[u'value'])/(60*60*24) + 1
+                data[namelist[i]] = day
+        series_data = []
+        for name in namelist:
+            series_data.append(data[name])
+        r = json.dumps(series_data, encoding='utf-8')
+        return HttpResponse(r)
+
+@csrf_exempt
+def get_boottime(request):
+    if request.method == 'GET':
+        itemlist = ['23688', '23810', '23876', '23917', '23958', '23999', '23293']
+        namelist = ['get_dev', 'gdr_test', 'gdr_rd_prod', 'gdr_sql_mt', 'gdr_sql_sl', 'gdr_web_prod', 'zabbix_server']
+        method = "history.get"
+        data = {}
+        for i in range(len(itemlist)):
+            params = {
+                    "output": "extend",
+                    "history": 3,
+                    "itemids": itemlist[i],
+                    "limit": 10
+                    }
+            origin = processData(method, params)
+            # print origin
+            for host in origin:
+                # print host
+                day = int(host[u'value'])
+                data[namelist[i]] = day
+        series_data = []
+        for name in namelist:
+            series_data.append(data[name])
+        r = json.dumps(series_data, encoding='utf-8')
+        return HttpResponse(r)
+
+@csrf_exempt
+def agent_ping(request):
+    if request.method == 'GET':
+        itemlist = ['23682', '23804', '23870', '23911', '23952', '23993', '23287']
+        namelist = ['get_dev', 'gdr_test', 'gdr_rd_prod', 'gdr_sql_mt', 'gdr_sql_sl', 'gdr_web_prod', 'zabbix_server']
+        method = "history.get"
+        data = {}
+        for i in range(len(itemlist)):
+            params = {
+                    "output": "extend",
+                    "history": 3,
+                    "itemids": itemlist[i],
+                    "limit": 10
+                    }
             origin = processData(method, params)
             for host in origin:
-                value.append(host[u'value'])
-                redis.set(item, json.dumps(value))
-    else:
-        msg = 'empty list'
-        return msg
-    data = {item: redis.get(item) for item in itemlist}
-    return data
+                ping = int(host[u'value'])
+                data[namelist[i]] = ping
+        servers = Server.objects.all()
+        for server in servers:
+            ping = data[server.Name]
+            # print type(ping)
+            if ping == int(1):
+                Server.objects.filter(Name=server.Name).update(Status='在线')
+            else:
+                Server.objects.filter(Name=server.Name).update(Status='不在线')
+
+        return HttpResponse("{'data': '请求成功'}")
+
+@csrf_exempt
+def get_runprocess(request):
+    if request.method == 'GET':
+        itemlist = ['23687', '23809', '23875', '23916', '23957', '23998', '23292']
+        namelist = ['get_dev', 'gdr_test', 'gdr_rd_prod', 'gdr_sql_mt', 'gdr_sql_sl', 'gdr_web_prod', 'zabbix_server']
+        method = "history.get"
+        data = {}
+        for i in range(len(itemlist)):
+            params = {
+                    "output": "extend",
+                    "history": 3,
+                    "itemids": itemlist[i],
+                    "limit": 10
+                    }
+            origin = processData(method, params)
+            # print origin
+            for host in origin:
+                # print host
+                proc = int(host[u'value'])
+                data[namelist[i]] = proc
+        series_data = []
+        for name in namelist:
+            series_data.append(data[name])
+        r = json.dumps(series_data, encoding='utf-8')
+        return HttpResponse(r)
