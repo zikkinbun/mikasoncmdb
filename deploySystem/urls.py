@@ -26,5 +26,6 @@ urlpatterns = [
     url(r'^hooks/', include('webhooks.urls', namespace="webhooks")),
     url(r'^zabbixapi/', include('zabbixapi.urls', namespace="zabbixapi")),
     url(r'^asset/', include('asset.urls', namespace="asset")),
-    url(r'^$', TemplateView.as_view(template_name="index.html")),
+    url(r'^user/', include('deployuser.urls', namespace="user")),
+    url(r'^user/admin/', admin.site.urls),
 ]

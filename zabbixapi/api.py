@@ -11,7 +11,7 @@ import redis
 import time
 
 def processData(method, params):
-    url = 'http://127.0.0.1/api_jsonrpc.php'
+    url = 'http://112.74.164.242:8001/api_jsonrpc.php'
     header = {"Content-Type":"application/json"}
     data = {
         "jsonrpc": "2.0",
@@ -90,7 +90,7 @@ def get_boottime(request):
 def agent_ping(request):
     if request.method == 'GET':
         itemlist = ['23682', '23804', '23870', '23911', '23952', '23993', '23287']
-        namelist = ['get_dev', 'gdr_test', 'gdr_rd_prod', 'gdr_sql_mt', 'gdr_sql_sl', 'gdr_web_prod', 'zabbix_server']
+        namelist = ['gdr_dev', 'gdr_test', 'gdr_rd_prod', 'gdr_sql_mt', 'gdr_sql_sl', 'gdr_web_prod', 'zabbix_server']
         method = "history.get"
         data = {}
         for i in range(len(itemlist)):

@@ -25,7 +25,7 @@ SECRET_KEY = 'p49^exu142tv*kr1t_g^osg+1vs_hzq!#vby2rc2mihre@74qu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['112.74.182.80', '127.0.0.1']
 
 
 # CORS_ORIGIN_WHITELIST = (
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'asset',
     'rest_framework',
     'corsheaders',
+    'deployuser.apps.DeployuserConfig',
     'django_crontab',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -74,7 +75,7 @@ WSGI_APPLICATION = 'deploySystem.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'deploysystem',
+        'NAME': 'deploySystem',
         'USER': 'db_admin',
         'PASSWORD': 'db_admin2016',
         'HOST': '112.74.188.202',
@@ -148,6 +149,8 @@ TEMPLATES = [
 SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 # SESSION_COOKIE_HTTPONLY = True
 CORS_ORIGIN_ALLOW_ALL = True
+
+AUTH_USER_MODEL = 'deployuser.CustomUser'
 
 CRONJOBS = (
     ('*/5 * * * *', 'deploySystem.zabbixapi.api.agent_ping', '> /tmp/agent_ping.log'),

@@ -68,6 +68,6 @@ def pushTest(request):
             return msg
 
         # 使用saltapi上传文件
-        saltapi = SaltAPI('https://127.0.0.1:7000', 'saltapi', 'saltadmin')
+        saltapi = SaltAPI('https://112.74.164.242:7000', 'saltapi', 'saltadmin')
         upload = saltapi.file_copy(test_host, 'cp.get_file', 'salt://test/packages/%s', '/home/wwwroot/release/%s') % (filename, filename)
         return upload

@@ -1,5 +1,4 @@
 from django.conf.urls import url
-from . import views
 from zabbixapi import api
 
 app_name = 'zabbixapi'
