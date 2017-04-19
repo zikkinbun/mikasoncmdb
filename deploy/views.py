@@ -48,8 +48,10 @@ def pushTest(request):
                 return HttpResponse(msg)
         else:
             lcd = os.chdir(package_path)
-            # pwd = os.getcwd()
+            pwd = os.getcwd()
+            print pwd
             arg = 'git clone ' + url
+            print arg
             clone = os.popen(arg)
         # 在master上打包
         if os.path.exists(project_dir):
