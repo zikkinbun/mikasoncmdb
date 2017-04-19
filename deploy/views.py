@@ -32,21 +32,25 @@ def pushTest(request):
         url = get_url_api(project)
         dirname = project + '_test_' + branch + '_' + tag
         filename = project + '_test_' + branch + '_' + tag + '_' + time.strftime("%Y%m%d")
-        tarfilename = project + '_test_' + branch + '_' + tag + '_' + ttime.strftime("%Y%m%d") + '.tar.gz'
+        tarfilename = project + '_test_' + branch + '_' + tag + '_' + time.strftime("%Y%m%d") + '.tar.gz'
         # 先在master上处理git操作
         if branch != 'master':
             lcd = os.chdir(package_path)
-            clone = subprocess.PIPE('git clone %s', shell=True, stdout=subprocess.PIPE) % url
+            arg = 'git clone ' + url
+            clone = subprocess.Popen(arg)
             if os.path.exists(project_dir):
                 os.chdir(project_dir)
-                checkout = subprocess.Popen('git checkout -b %s origin/%s', shell=True, stdout=subprocess.PIPE) % (branch, branch)
-                return checkout.stdout
+                arg = 'git checkout -b ' + branch + ' origin/' + branch
+                checkout = subprocess.Popen(arg, shell=True, stdout=subprocess.PIPE)
+                return HttpResponse(checkout.stdout)
             else:
                 msg = clone.stdout
-                return msg
+                return HttpResponse(msg)
         else:
             lcd = os.chdir(package_path)
-            clone = subprocess.PIPE('git clone %s', shell=True, stdout=subprocess.PIPE) % url
+            # pwd = os.getcwd()
+            arg = 'git clone ' + url
+            clone = os.popen(arg)
         # 在master上打包
         if os.path.exists(project_dir):
             tag_dir = shutil.move(project_dir, project_dir + '_test_' + branch + '_' + tag)
@@ -54,20 +58,28 @@ def pushTest(request):
                 os.chdir(tarfile_path)
                 shutil.make_archive(filename, "tar.gz", root_dir=project_dir)
             else:
-                msg = 'The project dir is not exists'
-                return msg
+                msg = {
+                    'retcode': '-1',
+                    'retmsg': 'The project dir is not exists'
+                    }
+                return HttpResponse(json.dumps(msg))
         else:
-            msg = 'The filedir is not exists'
-            return msg
+            msg = {
+                'retcode': '-2',
+                'retmsg': 'The filedir is not exists'
+            }
+            return HttpResponse(json.dumps(msg))
 
         # 转移到master的上传目录复制到minions上
         if os.path.exists(tarfile_path + filename):
             shutil.copyfile(tarfile_path + filename, saltmaster_dir + filename)
         else:
             msg = 'copy error'
-            return msg
+            return HttpResponse(msg)
 
         # 使用saltapi上传文件
         saltapi = SaltAPI('https://112.74.164.242:7000', 'saltapi', 'saltadmin')
-        upload = saltapi.file_copy(test_host, 'cp.get_file', 'salt://test/packages/%s', '/home/wwwroot/release/%s') % (filename, filename)
-        return upload
+        src = 'salt://test/packages/' + filename
+        dst = '/home/wwwroot/release/' + filename
+        upload = saltapi.file_copy(test_host, 'cp.get_file', src, dst)
+        return HttpResponse(upload)
