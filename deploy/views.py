@@ -90,7 +90,7 @@ def pushTest(request):
             msg = 'copy error'
             return HttpResponseServerError(msg)
 
-        # 使用saltapi上传文件
+        # 使用saltapi上传文件并进行初始化
         if os.path.exists(saltmaster_dir + tarfilename):
             saltapi = SaltAPI('https://112.74.164.242:7000', 'saltapi', 'saltadmin')
             src = 'salt://test/packages/' + tarfilename
@@ -105,9 +105,74 @@ def pushTest(request):
                 remove = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
                 ln = 'ln -s /home/wwwroot/releases/' + filename + ' /home/wwwroot/current/' + project
                 softlink = saltapi.remote_execute(test_host, 'cmd.run', ln, 'glob')
+                # update config and reload project
+                if os.path.exists(os.path.join('/home/wwwroot/current/', project)) and os.path.exists(os.path.join('/home/wwwroot/releases/', filename)):
+                    config = init_node_project_config(project, '/home/wwwroot/releases/' + filename)
+                    if config['retcode'] == 1:
+                        config = init_php_project_config(project, '/home/wwwroot/releases/' + filename)
+                    else:
+                        msg = {
+                            'retdata': 'other type project'
+                        }
+                        return HttpResponseServerError(msg)
+                    # lcd = os.chdir(os.path.join('/home/wwwroot/current/', project))
+                    os.popen('python /apps/sh/node_init.py %s init' % project)
+                    msg = {
+                        'retdata': 'reload project successfully'
+                    }
+                    return HttpResponse(msg)
+                else:
+                    msg = {
+                        'retdata': 'current path is not exist'
+                    }
+                return HttpResponse(msg)
             else:
                 msg = 'upload failed'
                 return HttpResponseServerError(msg)
         else:
             msg = 'saltfile error'
             return HttpResponseServerError(msg)
+
+def init_php_project_config(project):
+    php_project_list = ['beeHive', 'uco2H5', 'kalachakraMS']
+    if project in node_project_list:
+        test_path = path + '/Global/config.test.js'
+        cur_path = path + '/Global/config.js'
+        test_path_next = path + '/Interface/application/config.test.php'
+        cur_path_next = path + '/Interface/application/config.php'
+        rm = 'rm -f ' + cur_path
+        rm_next = 'rm -f ' + cur_path_next
+        os.popen(rm)
+        os.popen(rm_next)
+        link = 'ln -s ' + test_path + ' ' + cur_path
+        link_next = 'ln -s ' + test_path_next + ' ' + cur_path_next
+        os.popen(link)
+        os.popen(link_next)
+        msg = {
+            'retcode': 0
+        }
+        return msg
+    else:
+        msg = {
+            'retcode': 1
+        }
+        return msg
+
+def init_node_project_config(project, path):
+    node_project_list = ['platformService', 'uco2Web', 'gdrManagerSystem', 'uco2Notice', 'YoungBody', 'kalachakraWeb', 'kalachakraService']
+    if project in node_project_list:
+        test_path = path + '/global/config.test.js'
+        cur_path = path + '/global/config.js'
+        rm = 'rm -f ' + cur_path
+        os.popen(rm)
+        link = 'ln -s ' + test_path + ' ' + cur_path
+        os.popen(link)
+        msg = {
+            'retcode': 0
+        }
+        return msg
+    else:
+        msg = {
+            'retcode': 1
+        }
+        return msg
