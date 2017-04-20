@@ -25,18 +25,19 @@ def pushTest(request):
 
         test_host = 'web_test_1001'
         package_path = '/apps/packages/'
-        tarfile_path = os.path.join(package_path, 'release')
+        tarfile_path = os.path.join(package_path, 'releases')
         project_dir = os.path.join(package_path, project)
         saltmaster_dir = '/srv/salt/test/packages/'
 
         url = get_url_api(project)
+        reurl = str(url).replace('192.168.1.3', '112.74.182.80')
         dirname = project + '_test_' + branch + '_' + tag
         filename = project + '_test_' + branch + '_' + tag + '_' + time.strftime("%Y%m%d")
         tarfilename = project + '_test_' + branch + '_' + tag + '_' + time.strftime("%Y%m%d") + '.tar.gz'
         # 先在master上处理git操作
         if branch != 'master':
             lcd = os.chdir(package_path)
-            arg = 'git clone ' + url
+            arg = 'git clone ' + reurl
             clone = subprocess.Popen(arg)
             if os.path.exists(project_dir):
                 os.chdir(project_dir)
@@ -48,17 +49,25 @@ def pushTest(request):
                 return HttpResponse(msg)
         else:
             lcd = os.chdir(package_path)
-            pwd = os.getcwd()
-            print pwd
-            arg = 'git clone ' + url
-            print arg
-            clone = os.popen(arg)
+            # pwd = os.getcwd()
+            arg = 'git clone ' + reurl
+            clone = os.popen(arg).readlines()
+            # print clone
+
+        # print os.listdir(package_path)
+        # print os.path.exists(project_dir)
         # 在master上打包
         if os.path.exists(project_dir):
-            tag_dir = shutil.move(project_dir, project_dir + '_test_' + branch + '_' + tag)
+            shutil.move(project_dir, project_dir + '_test_' + branch + '_' + tag)
+            tag_dir = project_dir + '_test_' + branch + '_' + tag
             if os.path.exists(tag_dir):
                 os.chdir(tarfile_path)
-                shutil.make_archive(filename, "tar.gz", root_dir=project_dir)
+                shutil.make_archive(filename, "gztar", root_dir=tag_dir)
+                msg = {
+                    'retcode': '0',
+                    'retmsg': 'tar dir success'
+                }
+                # return HttpResponse(json.dumps(msg))
             else:
                 msg = {
                     'retcode': '-1',
