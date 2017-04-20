@@ -89,7 +89,7 @@ def pushTest(request):
             return HttpResponseServerError(msg)
 
         # 使用saltapi上传文件
-        if os.path.exists(saltmaster_dir + tarfilename)
+        if os.path.exists(saltmaster_dir + tarfilename):
             saltapi = SaltAPI('https://112.74.164.242:7000', 'saltapi', 'saltadmin')
             src = 'salt://test/packages/' + filename
             dst = '/home/wwwroot/release/' + filename
