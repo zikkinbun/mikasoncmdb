@@ -1,6 +1,6 @@
 # coding: utf-8
 from django.shortcuts import render
-from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseServerError
 from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
@@ -73,24 +73,28 @@ def pushTest(request):
                     'retcode': '-1',
                     'retmsg': 'The project dir is not exists'
                     }
-                return HttpResponse(json.dumps(msg))
+                return HttpResponseServerError(json.dumps(msg))
         else:
             msg = {
                 'retcode': '-2',
                 'retmsg': 'The filedir is not exists'
             }
-            return HttpResponse(json.dumps(msg))
+            return HttpResponseServerError(json.dumps(msg))
 
         # 转移到master的上传目录复制到minions上
-        if os.path.exists(tarfile_path + filename):
-            shutil.copyfile(tarfile_path + filename, saltmaster_dir + filename)
+        if os.path.exists(tarfile_path + tarfilename):
+            shutil.copyfile(tarfile_path + tarfilename, saltmaster_dir + tarfilename)
         else:
             msg = 'copy error'
-            return HttpResponse(msg)
+            return HttpResponseServerError(msg)
 
         # 使用saltapi上传文件
-        saltapi = SaltAPI('https://112.74.164.242:7000', 'saltapi', 'saltadmin')
-        src = 'salt://test/packages/' + filename
-        dst = '/home/wwwroot/release/' + filename
-        upload = saltapi.file_copy(test_host, 'cp.get_file', src, dst)
-        return HttpResponse(upload)
+        if os.path.exists(saltmaster_dir + tarfilename)
+            saltapi = SaltAPI('https://112.74.164.242:7000', 'saltapi', 'saltadmin')
+            src = 'salt://test/packages/' + filename
+            dst = '/home/wwwroot/release/' + filename
+            upload = saltapi.file_copy(test_host, 'cp.get_file', src, dst)
+            return HttpResponse(upload)
+        else:
+            msg = 'saltfile error'
+            return HttpResponseServerError(msg)

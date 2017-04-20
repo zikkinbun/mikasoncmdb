@@ -1,1 +1,7 @@
+asset/*.pyc
+deploy/*pyc
+deployuser/*.pyc
+deploySystem/*.pyc
+webhooks/*.pyc
+zabbixapi/*.pyc
 *.pyc
