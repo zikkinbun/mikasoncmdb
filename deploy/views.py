@@ -96,7 +96,18 @@ def pushTest(request):
             src = 'salt://test/packages/' + tarfilename
             dst = '/home/wwwroot/releases/' + tarfilename
             upload = saltapi.file_copy(test_host, 'cp.get_file', src, dst, 'glob')
-            return HttpResponse(upload)
+            if upload:
+                mk = 'mkdir -p ' + '/home/wwwroot/releases/' + filename
+                mkdir = saltapi.remote_execute(test_host, 'cmd.run', mk, 'glob')
+                tar = 'tar zxvf ' + dst + ' -C /home/wwwroot/releases/' + filename
+                untar = saltapi.remote_execute(test_host, 'cmd.run', tar, 'glob')
+                rm = 'rm -rf /home/wwwroot/current/' + project
+                remove = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
+                ln = 'ln -s /home/wwwroot/releases/' + filename + ' /home/wwwroot/current/' + project
+                softlink = saltapi.remote_execute(test_host, 'cmd.run', ln, 'glob')
+            else:
+                msg = 'upload failed'
+                return HttpResponseServerError(msg)
         else:
             msg = 'saltfile error'
             return HttpResponseServerError(msg)
