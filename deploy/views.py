@@ -82,8 +82,10 @@ def pushTest(request):
             return HttpResponseServerError(json.dumps(msg))
 
         # 转移到master的上传目录复制到minions上
-        if os.path.exists(tarfile_path + tarfilename):
-            shutil.copyfile(tarfile_path + tarfilename, saltmaster_dir + tarfilename)
+        # print tarfile_path + tarfilename
+        # print os.path.exists(tarfile_path + '/' + tarfilename)
+        if os.path.exists(tarfile_path + '/' + tarfilename):
+            shutil.copyfile(tarfile_path + '/' + tarfilename, saltmaster_dir + tarfilename)
         else:
             msg = 'copy error'
             return HttpResponseServerError(msg)
