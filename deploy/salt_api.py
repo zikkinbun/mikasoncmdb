@@ -202,7 +202,8 @@ class SaltAPI(object):
         content = self.postRequest(obj)
         ret = content['return'][0][tgt]
         return ret
-# if __name__ == '__main__':
-#     url = 'https://112.74.164.242:7000'
-#     test = SaltAPI(url, 'saltapi', 'saltadmin')
-#     test.remote_execute('web_test_1001', 'cmd.run', 'git clone ssh://git@192.168.1.3:10022/Kira/providerSystem.git')
+        
+if __name__ == '__main__':
+    url = 'https://112.74.164.242:7000'
+    test = SaltAPI(url, 'saltapi', 'saltadmin')
+    test.file_copy('web_test_1001', 'cp.get_file', 'salt://test/packages/YoungBody_test_master_v1.1.4_20170420.tar.gz', '/home/wwwroot/releases/YoungBody_test_master_v1.1.4_20170420.tar.gz')

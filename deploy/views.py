@@ -93,8 +93,8 @@ def pushTest(request):
         # 使用saltapi上传文件
         if os.path.exists(saltmaster_dir + tarfilename):
             saltapi = SaltAPI('https://112.74.164.242:7000', 'saltapi', 'saltadmin')
-            src = 'salt://test/packages/' + filename
-            dst = '/home/wwwroot/release/' + filename
+            src = 'salt://test/packages/' + tarfilename
+            dst = '/home/wwwroot/releases/' + tarfilename
             upload = saltapi.file_copy(test_host, 'cp.get_file', src, dst, 'glob')
             return HttpResponse(upload)
         else:
