@@ -93,7 +93,7 @@ def pushTest(request):
             shutil.copyfile(tarfile_path + '/' + tarfilename, saltmaster_dir + tarfilename)
         else:
             msg = 'copy error'
-            return HttpResponseServerError(msg)
+            return HttpResponseServerError(json.dumps(msg))
 
         # 使用saltapi上传文件并进行初始化
         if os.path.exists(saltmaster_dir + tarfilename):
@@ -118,6 +118,11 @@ def pushTest(request):
                     link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
                     init_run = saltapi.remote_execute(test_host, 'cmd.run', init, 'glob')
                     record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
+                    msg = {
+                        'retcode': 3,
+                        'retdata': project + ' deploy testing successfully',
+                    }
+                    return HttpResponse(json.dumps(msg))
                 elif project in php_project_list:
                     rm, rm_next, link, link_next = init_php_project_config(project, '/home/wwwroot/releases/' + filename)
                     rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
@@ -125,17 +130,22 @@ def pushTest(request):
                     link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
                     link_next_run = saltapi.remote_execute(test_host, 'cmd.run', link_next, 'glob')
                     record = deployRecord.objects.create(project_name=project, project_owner='php', deploy_branch=branch, deploy_tag=tag)
+                    msg = {
+                        'retcode': 3,
+                        'retdata': project + ' deploy testing successfully',
+                    }
+                    return HttpResponse(json.dumps(msg))
                 else:
                     msg = {
                         'retdata': 'current path is not exist'
                     }
-                return HttpResponseServerError(msg)
+                return HttpResponseServerError(json.dumps(msg))
             else:
                 msg = 'upload failed'
-                return HttpResponseServerError(msg)
+                return HttpResponseServerError(json.dumps(msg))
         else:
             msg = 'saltfile error'
-            return HttpResponseServerError(msg)
+            return HttpResponseServerError(json.dumps(msg))
 
 def init_php_project_config(project, path):
     php_project_list = ['beeHive', 'uco2H5', 'kalachakraMS']
