@@ -112,14 +112,14 @@ def pushTest(request):
                 softlink = saltapi.remote_execute(test_host, 'cmd.run', ln, 'glob')
                 # update config and reload project
                 if project in node_project_list:
-                    rm, link = init_node_project_config
+                    rm, link = init_node_project_config(project, '/home/wwwroot/releases/' + filename)
                     init = 'python /apps/sh/node_init.py %s init' % project
                     rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
                     link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
                     init_run = saltapi.remote_execute(test_host, 'cmd.run', init, 'glob')
                     record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
                 elif project in php_project_list:
-                    rm, rm_next, link, link_next = init_php_project_config
+                    rm, rm_next, link, link_next = init_php_project_config(project, '/home/wwwroot/releases/' + filename)
                     rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
                     rm_next_run = saltapi.remote_execute(test_host, 'cmd.run', rm_next, 'glob')
                     link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
