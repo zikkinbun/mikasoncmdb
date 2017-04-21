@@ -127,7 +127,7 @@ def pushTest(request):
                     rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
                     link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
                     init_run = saltapi.remote_execute(test_host, 'cmd.run', init, 'glob')
-                    # print init_run
+                    print init_run
                     record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
                     msg = {
                         'retcode': 3,
