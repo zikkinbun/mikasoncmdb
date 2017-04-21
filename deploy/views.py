@@ -103,7 +103,7 @@ def pushTest(request):
             ft_rm = 'rm -rf /home/wwwroot/releases/' + filename
             rm_ft = saltapi.remote_execute(test_host, 'cmd.run', ft_rm, 'glob')
             tar_rm = 'rm -rf /home/wwwroot/releases/' + tarfilename
-            rm_tar = saltapi.remote_execute(test_host, 'cmd.run', rm_tar, 'glob')
+            rm_tar = saltapi.remote_execute(test_host, 'cmd.run', tar_rm, 'glob')
             upload = saltapi.file_copy(test_host, 'cp.get_file', src, dst, 'glob')
             if upload:
                 mk = 'mkdir -p ' + '/home/wwwroot/releases/' + filename
@@ -248,7 +248,7 @@ def pushProd(request):
             ft_rm = 'rm -rf /home/wwwroot/releases/' + filename
             rm_ft = saltapi.remote_execute(test_host, 'cmd.run', ft_rm, 'glob')
             tar_rm = 'rm -rf /home/wwwroot/releases/' + tarfilename
-            rm_tar = saltapi.remote_execute(test_host, 'cmd.run', rm_tar, 'glob')
+            rm_tar = saltapi.remote_execute(test_host, 'cmd.run', tar_rm, 'glob')
             upload = saltapi.file_copy(test_host, 'cp.get_file', src, dst, 'glob')
             if upload:
                 mk = 'mkdir -p ' + '/home/wwwroot/releases/' + filename
