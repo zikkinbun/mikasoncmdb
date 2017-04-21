@@ -42,7 +42,7 @@ def pushTest(request):
         # 先在master上处理git操作
         if branch != 'master':
             lcd = os.chdir(package_path)
-            arg = 'git clone ' + reurl
+            arg = 'git clone ' + url
             clone = subprocess.Popen(arg)
             if os.path.exists(project_dir):
                 os.chdir(project_dir)
@@ -55,7 +55,7 @@ def pushTest(request):
         else:
             lcd = os.chdir(package_path)
             # pwd = os.getcwd()
-            arg = 'git clone ' + reurl
+            arg = 'git clone ' + url
             clone = os.popen(arg).readlines()
             # print clone
 
@@ -130,6 +130,145 @@ def pushTest(request):
                     link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
                     link_next_run = saltapi.remote_execute(test_host, 'cmd.run', link_next, 'glob')
                     record = deployRecord.objects.create(project_name=project, project_owner='php', deploy_branch=branch, deploy_tag=tag)
+                    msg = {
+                        'retcode': 3,
+                        'retdata': project + ' deploy testing successfully',
+                    }
+                    return HttpResponse(json.dumps(msg))
+                else:
+                    msg = {
+                        'retdata': 'current path is not exist'
+                    }
+                return HttpResponseServerError(json.dumps(msg))
+            else:
+                msg = 'upload failed'
+                return HttpResponseServerError(json.dumps(msg))
+        else:
+            msg = 'saltfile error'
+            return HttpResponseServerError(json.dumps(msg))
+
+@csrf_exempt
+def pushProd(request):
+    if request.POST:
+        project = json.loads(request.body)[u'project']
+        branch = json.loads(request.body)[u'branch']
+        tag = json.loads(request.body)[u'tag']
+        # project = request.POST.get('project', '')
+        # branch = request.POST.get('branch', '')
+        # tag = request.POST.get('tag', '')
+
+        test_host = 'web_prod_1001'
+        package_path = '/apps/packages/'
+        tarfile_path = os.path.join(package_path, 'releases')
+        project_dir = os.path.join(package_path, project)
+        saltmaster_dir = '/srv/salt/prod/packages/'
+
+        url = get_url_api(project)
+        # reurl = str(url).replace('192.168.1.3', '112.74.182.80')
+        dirname = project + '_prod_' + branch + '_' + tag
+        filename = project + '_prod_' + branch + '_' + tag + '_' + time.strftime("%Y%m%d")
+        tarfilename = project + '_prod_' + branch + '_' + tag + '_' + time.strftime("%Y%m%d") + '.tar.gz'
+        # 先在master上处理git操作
+        if branch != 'master':
+            lcd = os.chdir(package_path)
+            arg = 'git clone ' + reurl
+            clone = subprocess.Popen(arg)
+            if os.path.exists(project_dir):
+                os.chdir(project_dir)
+                arg = 'git checkout -b ' + branch + ' origin/' + branch
+                checkout = subprocess.Popen(arg, shell=True, stdout=subprocess.PIPE)
+                return HttpResponse(checkout.stdout)
+            else:
+                msg = clone.stdout
+                return HttpResponse(msg)
+        else:
+            lcd = os.chdir(package_path)
+            # pwd = os.getcwd()
+            arg = 'git clone ' + reurl
+            clone = os.popen(arg).readlines()
+            # print clone
+
+        # print os.listdir(package_path)
+        # print os.path.exists(project_dir)
+        # 在master上打包
+        if os.path.exists(project_dir):
+            shutil.move(project_dir, project_dir + '_prod_' + branch + '_' + tag)
+            tag_dir = project_dir + '_prod_' + branch + '_' + tag
+            if os.path.exists(tag_dir):
+                os.chdir(tarfile_path)
+                shutil.make_archive(filename, "gztar", root_dir=tag_dir)
+                msg = {
+                    'retcode': '0',
+                    'retmsg': 'tar dir success'
+                }
+                # return HttpResponse(json.dumps(msg))
+            else:
+                msg = {
+                    'retcode': '-1',
+                    'retmsg': 'The project dir is not exists'
+                    }
+                return HttpResponseServerError(json.dumps(msg))
+        else:
+            msg = {
+                'retcode': '-2',
+                'retmsg': 'The filedir is not exists'
+            }
+            return HttpResponseServerError(json.dumps(msg))
+
+        # 转移到master的上传目录复制到minions上
+        # print tarfile_path + tarfilename
+        # print os.path.exists(tarfile_path + '/' + tarfilename)
+        if os.path.exists(tarfile_path + '/' + tarfilename):
+            shutil.copyfile(tarfile_path + '/' + tarfilename, saltmaster_dir + tarfilename)
+        else:
+            msg = 'copy error'
+            return HttpResponseServerError(json.dumps(msg))
+
+        # 使用saltapi上传文件并进行初始化
+        if os.path.exists(saltmaster_dir + tarfilename):
+            saltapi = SaltAPI('https://112.74.164.242:7000', 'saltapi', 'saltadmin')
+            src = 'salt://test/packages/' + tarfilename
+            dst = '/home/wwwroot/releases/' + tarfilename
+            ft_rm = 'rm -rf /home/wwwroot/releases/' + filename
+            rm_ft = saltapi.remote_execute(test_host, 'cmd.run', ft_rm, 'glob')
+            tar_rm = 'rm -rf /home/wwwroot/releases/' + tarfilename
+            rm_tar = saltapi.remote_execute(test_host, 'cmd.run', rm_tar, 'glob')
+            upload = saltapi.file_copy(test_host, 'cp.get_file', src, dst, 'glob')
+            if upload:
+                mk = 'mkdir -p ' + '/home/wwwroot/releases/' + filename
+                mkdir = saltapi.remote_execute(test_host, 'cmd.run', mk, 'glob')
+                tar = 'tar zxvf ' + dst + ' -C /home/wwwroot/releases/' + filename
+                untar = saltapi.remote_execute(test_host, 'cmd.run', tar, 'glob')
+                rm = 'rm -rf /home/wwwroot/current/' + project
+                remove = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
+                ln = 'ln -s /home/wwwroot/releases/' + filename + ' /home/wwwroot/current/' + project
+                softlink = saltapi.remote_execute(test_host, 'cmd.run', ln, 'glob')
+                # update config and reload project
+                if project in node_project_list:
+                    rm, link = init_node_project_config(project, '/home/wwwroot/releases/' + filename)
+                    init = 'python /apps/sh/node_init.py %s init' % project
+                    rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
+                    link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
+                    init_run = saltapi.remote_execute(test_host, 'cmd.run', init, 'glob')
+                    record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
+                    rm_srv = os.popen('rm -rf %s' saltmaster_dir + tarfilename)
+                    rm_tar = os.popen('rm -rf %s' package_path + tarfilename)
+                    rm_folder = os.popen('rm -rf %s' package_path + filename)
+                    msg = {
+                        'retcode': 3,
+                        'retdata': project + ' deploy testing successfully',
+                    }
+                    return HttpResponse(json.dumps(msg))
+                elif project in php_project_list:
+                    rm, rm_next, link, link_next = init_php_project_config(project, '/home/wwwroot/releases/' + filename)
+                    rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
+                    rm_next_run = saltapi.remote_execute(test_host, 'cmd.run', rm_next, 'glob')
+                    link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
+                    link_next_run = saltapi.remote_execute(test_host, 'cmd.run', link_next, 'glob')
+                    record = deployRecord.objects.create(project_name=project, project_owner='php', deploy_branch=branch, deploy_tag=tag)
+                    rm_srv = os.popen('rm -rf %s' saltmaster_dir + tarfilename)
+                    rm_tar = os.popen('rm -rf %s' package_path + tarfilename)
+                    rm_folder = os.popen('rm -rf %s' package_path + filename)                    
                     msg = {
                         'retcode': 3,
                         'retdata': project + ' deploy testing successfully',
