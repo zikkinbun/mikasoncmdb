@@ -108,54 +108,57 @@ def pushTest(request):
             if upload:
                 srv_arg = 'rm -rf ' + saltmaster_dir + tarfilename
                 rm_srv = os.popen(srv_arg)
+                print rm_srv
                 tar_arg = 'rm -rf ' + tarfile_path + tarfilename
                 rm_tar = os.popen(tar_arg)
+                print rm_tar
                 folder_arg = 'rm -rf ' + package_path + tarfilename
                 rm_folder = os.popen(folder_arg)
-                mk = 'mkdir -p ' + '/home/wwwroot/releases/' + filename
-                mkdir = saltapi.remote_execute(test_host, 'cmd.run', mk, 'glob')
-                tar = 'tar zxvf ' + dst + ' -C /home/wwwroot/releases/' + filename
-                untar = saltapi.remote_execute(test_host, 'cmd.run', tar, 'glob')
-                rm = 'rm -rf /home/wwwroot/current/' + project
-                remove = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
-                ln = 'ln -s /home/wwwroot/releases/' + filename + ' /home/wwwroot/current/' + project
-                softlink = saltapi.remote_execute(test_host, 'cmd.run', ln, 'glob')
-                # update config and reload project
-                if project in node_project_list:
-                    rm, link = init_node_project_config(project, '/home/wwwroot/releases/' + filename)
-                    init = 'python /apps/sh/node_init.py %s init' % project
-                    rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
-                    link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
-                    init_run = saltapi.remote_execute(test_host, 'cmd.run', init, 'glob')
-                    record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
-                    msg = {
-                        'retcode': 3,
-                        'retdata': project + ' deploy testing successfully',
-                    }
-                    return HttpResponse(json.dumps(msg))
-                elif project in php_project_list:
-                    rm, rm_next, link, link_next = init_php_project_config(project, '/home/wwwroot/releases/' + filename)
-                    rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
-                    rm_next_run = saltapi.remote_execute(test_host, 'cmd.run', rm_next, 'glob')
-                    link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
-                    link_next_run = saltapi.remote_execute(test_host, 'cmd.run', link_next, 'glob')
-                    record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
-                    msg = {
-                        'retcode': 3,
-                        'retdata': project + ' deploy testing successfully',
-                    }
-                    return HttpResponse(json.dumps(msg))
-                else:
-                    msg = {
-                        'retdata': 'current path is not exist'
-                    }
-                return HttpResponseServerError(json.dumps(msg))
-            else:
-                msg = 'upload failed'
-                return HttpResponseServerError(json.dumps(msg))
-        else:
-            msg = 'saltfile error'
-            return HttpResponseServerError(json.dumps(msg))
+                print rm_folder
+        #         mk = 'mkdir -p ' + '/home/wwwroot/releases/' + filename
+        #         mkdir = saltapi.remote_execute(test_host, 'cmd.run', mk, 'glob')
+        #         tar = 'tar zxvf ' + dst + ' -C /home/wwwroot/releases/' + filename
+        #         untar = saltapi.remote_execute(test_host, 'cmd.run', tar, 'glob')
+        #         rm = 'rm -rf /home/wwwroot/current/' + project
+        #         remove = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
+        #         ln = 'ln -s /home/wwwroot/releases/' + filename + ' /home/wwwroot/current/' + project
+        #         softlink = saltapi.remote_execute(test_host, 'cmd.run', ln, 'glob')
+        #         # update config and reload project
+        #         if project in node_project_list:
+        #             rm, link = init_node_project_config(project, '/home/wwwroot/releases/' + filename)
+        #             init = 'python /apps/sh/node_init.py %s init' % project
+        #             rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
+        #             link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
+        #             init_run = saltapi.remote_execute(test_host, 'cmd.run', init, 'glob')
+        #             record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
+        #             msg = {
+        #                 'retcode': 3,
+        #                 'retdata': project + ' deploy testing successfully',
+        #             }
+        #             return HttpResponse(json.dumps(msg))
+        #         elif project in php_project_list:
+        #             rm, rm_next, link, link_next = init_php_project_config(project, '/home/wwwroot/releases/' + filename)
+        #             rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
+        #             rm_next_run = saltapi.remote_execute(test_host, 'cmd.run', rm_next, 'glob')
+        #             link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
+        #             link_next_run = saltapi.remote_execute(test_host, 'cmd.run', link_next, 'glob')
+        #             record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
+        #             msg = {
+        #                 'retcode': 3,
+        #                 'retdata': project + ' deploy testing successfully',
+        #             }
+        #             return HttpResponse(json.dumps(msg))
+        #         else:
+        #             msg = {
+        #                 'retdata': 'current path is not exist'
+        #             }
+        #         return HttpResponseServerError(json.dumps(msg))
+        #     else:
+        #         msg = 'upload failed'
+        #         return HttpResponseServerError(json.dumps(msg))
+        # else:
+        #     msg = 'saltfile error'
+        #     return HttpResponseServerError(json.dumps(msg))
 
 @csrf_exempt
 def pushProd(request):
