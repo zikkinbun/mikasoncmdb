@@ -105,13 +105,13 @@ def pushTest(request):
             if upload:
                 srv_arg = 'rm -rf ' + saltmaster_dir + tarfilename
                 rm_srv = os.popen(srv_arg)
-                print rm_srv
+                # print rm_srv
                 tar_arg = 'rm -rf ' + tarfile_path + '/' + tarfilename
                 rm_tar = os.popen(tar_arg)
-                print rm_tar
+                # print rm_tar
                 folder_arg = 'rm -rf ' + package_path + dirname
                 rm_folder = os.popen(folder_arg)
-                print rm_folder
+                # print rm_folder
                 mk = 'mkdir -p ' + '/home/wwwroot/releases/' + filename
                 mkdir = saltapi.remote_execute(test_host, 'cmd.run', mk, 'glob')
                 tar = 'tar zxvf ' + dst + ' -C /home/wwwroot/releases/' + filename
@@ -127,8 +127,8 @@ def pushTest(request):
                     rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
                     link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
                     init_run = saltapi.remote_execute(test_host, 'cmd.run', init, 'glob')
-                    print init_run
-                    # record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
+                    # print init_run
+                    record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
                     msg = {
                         'retcode': 3,
                         'retdata': project + ' deploy testing successfully',
@@ -140,7 +140,7 @@ def pushTest(request):
                     rm_next_run = saltapi.remote_execute(test_host, 'cmd.run', rm_next, 'glob')
                     link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
                     link_next_run = saltapi.remote_execute(test_host, 'cmd.run', link_next, 'glob')
-                    # record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
+                    record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
                     msg = {
                         'retcode': 3,
                         'retdata': project + ' deploy testing successfully',
@@ -264,7 +264,7 @@ def pushProd(request):
                     rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
                     link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
                     init_run = saltapi.remote_execute(test_host, 'cmd.run', init, 'glob')
-                    # record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
+                    record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
                     msg = {
                         'retcode': 3,
                         'retdata': project + ' deploy testing successfully',
@@ -282,7 +282,7 @@ def pushProd(request):
                     rm_tar = os.popen(tar_arg)
                     folder_arg = 'rm -rf ' + package_path + tarfilename
                     rm_folder = os.popen(folder_arg)
-                    # record = deployRecord.objects.create(project_name=project, project_owner='php', deploy_branch=branch, deploy_tag=tag)
+                    record = deployRecord.objects.create(project_name=project, project_owner='php', deploy_branch=branch, deploy_tag=tag)
                     msg = {
                         'retcode': 3,
                         'retdata': project + ' deploy testing successfully',
