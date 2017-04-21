@@ -2,6 +2,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseServerError
 from django.views.decorators.csrf import csrf_exempt
+
+from .models import deployRecord
 # Create your views here.
 
 from .gitlab_api import *
@@ -12,6 +14,9 @@ import subprocess
 import shutil
 import json
 import os
+
+node_project_list = ['platformService', 'uco2Web', 'gdrManagerSystem', 'uco2Notice', 'YoungBody', 'kalachakraWeb', 'kalachakraService']
+php_project_list = ['beeHive', 'uco2H5', 'kalachakraMS']
 
 @csrf_exempt
 def pushTest(request):
@@ -106,21 +111,20 @@ def pushTest(request):
                 ln = 'ln -s /home/wwwroot/releases/' + filename + ' /home/wwwroot/current/' + project
                 softlink = saltapi.remote_execute(test_host, 'cmd.run', ln, 'glob')
                 # update config and reload project
-                if os.path.exists(os.path.join('/home/wwwroot/current/', project)) and os.path.exists(os.path.join('/home/wwwroot/releases/', filename)):
-                    config = init_node_project_config(project, '/home/wwwroot/releases/' + filename)
-                    if config['retcode'] == 1:
-                        config = init_php_project_config(project, '/home/wwwroot/releases/' + filename)
-                    else:
-                        msg = {
-                            'retdata': 'other type project'
-                        }
-                        return HttpResponseServerError(msg)
-                    # lcd = os.chdir(os.path.join('/home/wwwroot/current/', project))
-                    os.popen('python /apps/sh/node_init.py %s init' % project)
-                    msg = {
-                        'retdata': 'reload project successfully'
-                    }
-                    return HttpResponse(msg)
+                if project in node_project_list:
+                    rm, link = init_node_project_config
+                    init = 'python /apps/sh/node_init.py %s init' % project
+                    rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
+                    link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
+                    init_run = saltapi.remote_execute(test_host, 'cmd.run', init, 'glob')
+                    record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
+                elif project in php_project_list:
+                    rm, rm_next, link, link_next = init_php_project_config
+                    rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
+                    rm_next_run = saltapi.remote_execute(test_host, 'cmd.run', rm_next, 'glob')
+                    link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
+                    link_next_run = saltapi.remote_execute(test_host, 'cmd.run', link_next, 'glob')
+                    record = deployRecord.objects.create(project_name=project, project_owner='php', deploy_branch=branch, deploy_tag=tag)
                 else:
                     msg = {
                         'retdata': 'current path is not exist'
@@ -133,7 +137,7 @@ def pushTest(request):
             msg = 'saltfile error'
             return HttpResponseServerError(msg)
 
-def init_php_project_config(project):
+def init_php_project_config(project, path):
     php_project_list = ['beeHive', 'uco2H5', 'kalachakraMS']
     if project in node_project_list:
         test_path = path + '/Global/config.test.js'
@@ -142,16 +146,9 @@ def init_php_project_config(project):
         cur_path_next = path + '/Interface/application/config.php'
         rm = 'rm -f ' + cur_path
         rm_next = 'rm -f ' + cur_path_next
-        os.popen(rm)
-        os.popen(rm_next)
         link = 'ln -s ' + test_path + ' ' + cur_path
         link_next = 'ln -s ' + test_path_next + ' ' + cur_path_next
-        os.popen(link)
-        os.popen(link_next)
-        msg = {
-            'retcode': 0
-        }
-        return msg
+        return rm, rm_next, link, link_next
     else:
         msg = {
             'retcode': 1
@@ -164,13 +161,8 @@ def init_node_project_config(project, path):
         test_path = path + '/global/config.test.js'
         cur_path = path + '/global/config.js'
         rm = 'rm -f ' + cur_path
-        os.popen(rm)
         link = 'ln -s ' + test_path + ' ' + cur_path
-        os.popen(link)
-        msg = {
-            'retcode': 0
-        }
-        return msg
+        return rm, link
     else:
         msg = {
             'retcode': 1
