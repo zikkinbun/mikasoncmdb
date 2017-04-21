@@ -109,7 +109,7 @@ def pushTest(request):
                 tar_arg = 'rm -rf ' + tarfile_path + '/' + tarfilename
                 rm_tar = os.popen(tar_arg)
                 print rm_tar
-                folder_arg = 'rm -rf ' + package_path + filename
+                folder_arg = 'rm -rf ' + package_path + dirname
                 rm_folder = os.popen(folder_arg)
                 print rm_folder
                 mk = 'mkdir -p ' + '/home/wwwroot/releases/' + filename
