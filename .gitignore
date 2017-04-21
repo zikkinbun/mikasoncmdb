@@ -1,5 +1,5 @@
 asset/*.pyc
-deploy/*pyc
+deploy/*.pyc
 deployuser/*.pyc
 deploySystem/*.pyc
 webhooks/*.pyc

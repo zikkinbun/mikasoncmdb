@@ -125,7 +125,7 @@ def pushTest(request):
                     msg = {
                         'retdata': 'current path is not exist'
                     }
-                return HttpResponse(msg)
+                return HttpResponseServerError(msg)
             else:
                 msg = 'upload failed'
                 return HttpResponseServerError(msg)
