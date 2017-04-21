@@ -271,7 +271,7 @@ def pushProd(request):
                     record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
                     msg = {
                         'retcode': 3,
-                        'retdata': project + ' 提测成功',
+                        'retdata': project + ' 项目生产部署成功',
                     }
                     return HttpResponse(json.dumps(msg))
                 elif project in php_project_list:
@@ -283,7 +283,7 @@ def pushProd(request):
                     record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
                     msg = {
                         'retcode': 3,
-                        'retdata': project + ' 提测成功',
+                        'retdata': project + ' 项目生产部署成功',
                     }
                     return HttpResponse(json.dumps(msg))
                 else:
@@ -325,7 +325,7 @@ def init_php_project_config(project, path, env):
             msg = {
                 'retcode': -1
                 }
-                return msg
+            return msg
     else:
         msg = {
             'retcode': 1
@@ -351,7 +351,7 @@ def init_node_project_config(project, path, env):
             msg = {
                 'retcode': -1
                 }
-                return msg
+            return msg
     else:
         msg = {
             'retcode': 1
