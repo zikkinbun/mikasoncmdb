@@ -127,7 +127,8 @@ def pushTest(request):
                     rm_tar = os.popen(tar_arg)
                     folder_arg = 'rm -rf ' + package_path + tarfilename
                     rm_folder = os.popen(folder_arg)
-                    record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)                    msg = {
+                    record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
+                    msg = {
                         'retcode': 3,
                         'retdata': project + ' deploy testing successfully',
                     }
@@ -144,7 +145,8 @@ def pushTest(request):
                     rm_tar = os.popen(tar_arg)
                     folder_arg = 'rm -rf ' + package_path + tarfilename
                     rm_folder = os.popen(folder_arg)
-                    record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)                    msg = {
+                    record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
+                    msg = {
                         'retcode': 3,
                         'retdata': project + ' deploy testing successfully',
                     }
