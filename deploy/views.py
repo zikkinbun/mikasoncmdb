@@ -122,20 +122,20 @@ def pushTest(request):
                 softlink = saltapi.remote_execute(test_host, 'cmd.run', ln, 'glob')
                 # update config and reload project
                 if project in node_project_list:
-                    rm, link = init_node_project_config(project, '/home/wwwroot/releases/' + filename)
+                    rm, link = init_node_project_config(project, '/home/wwwroot/releases/' + filename, 'test')
                     init = 'python /apps/sh/node_init.py %s init' % project
                     rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
                     link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
                     init_run = saltapi.remote_execute(test_host, 'cmd.run', init, 'glob')
-                    print init_run
+                    # print init_run
                     record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
                     msg = {
                         'retcode': 3,
-                        'retdata': project + ' deploy testing successfully',
+                        'retdata': project + ' 提测成功',
                     }
                     return HttpResponse(json.dumps(msg))
                 elif project in php_project_list:
-                    rm, rm_next, link, link_next = init_php_project_config(project, '/home/wwwroot/releases/' + filename)
+                    rm, rm_next, link, link_next = init_php_project_config(project, '/home/wwwroot/releases/' + filename, 'test')
                     rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
                     rm_next_run = saltapi.remote_execute(test_host, 'cmd.run', rm_next, 'glob')
                     link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
@@ -143,7 +143,7 @@ def pushTest(request):
                     record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
                     msg = {
                         'retcode': 3,
-                        'retdata': project + ' deploy testing successfully',
+                        'retdata': project + ' 提测成功',
                     }
                     return HttpResponse(json.dumps(msg))
                 else:
@@ -165,7 +165,7 @@ def pushProd(request):
         branch = json.loads(request.body)[u'branch']
         tag = json.loads(request.body)[u'tag']
 
-        test_host = 'web_prod_1001'
+        test_host = 'web_test_1001'
         package_path = '/apps/packages/'
         tarfile_path = os.path.join(package_path, 'releases')
         project_dir = os.path.join(package_path, project)
@@ -235,7 +235,7 @@ def pushProd(request):
         # 使用saltapi上传文件并进行初始化
         if os.path.exists(saltmaster_dir + tarfilename):
             saltapi = SaltAPI('https://112.74.164.242:7000', 'saltapi', 'saltadmin')
-            src = 'salt://test/packages/' + tarfilename
+            src = 'salt://prod/packages/' + tarfilename
             dst = '/home/wwwroot/releases/' + tarfilename
             ft_rm = 'rm -rf /home/wwwroot/releases/' + filename
             rm_ft = saltapi.remote_execute(test_host, 'cmd.run', ft_rm, 'glob')
@@ -245,10 +245,13 @@ def pushProd(request):
             if upload:
                 srv_arg = 'rm -rf ' + saltmaster_dir + tarfilename
                 rm_srv = os.popen(srv_arg)
+                # print rm_srv
                 tar_arg = 'rm -rf ' + tarfile_path + '/' + tarfilename
                 rm_tar = os.popen(tar_arg)
-                folder_arg = 'rm -rf ' + package_path + filename
+                # print rm_tar
+                folder_arg = 'rm -rf ' + package_path + dirname
                 rm_folder = os.popen(folder_arg)
+                # print rm_folder
                 mk = 'mkdir -p ' + '/home/wwwroot/releases/' + filename
                 mkdir = saltapi.remote_execute(test_host, 'cmd.run', mk, 'glob')
                 tar = 'tar zxvf ' + dst + ' -C /home/wwwroot/releases/' + filename
@@ -259,33 +262,28 @@ def pushProd(request):
                 softlink = saltapi.remote_execute(test_host, 'cmd.run', ln, 'glob')
                 # update config and reload project
                 if project in node_project_list:
-                    rm, link = init_node_project_config(project, '/home/wwwroot/releases/' + filename)
+                    rm, link = init_node_project_config(project, '/home/wwwroot/releases/' + filename, 'prod')
                     init = 'python /apps/sh/node_init.py %s init' % project
                     rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
                     link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
                     init_run = saltapi.remote_execute(test_host, 'cmd.run', init, 'glob')
+                    # print init_run
                     record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
                     msg = {
                         'retcode': 3,
-                        'retdata': project + ' deploy testing successfully',
+                        'retdata': project + ' 提测成功',
                     }
                     return HttpResponse(json.dumps(msg))
                 elif project in php_project_list:
-                    rm, rm_next, link, link_next = init_php_project_config(project, '/home/wwwroot/releases/' + filename)
+                    rm, rm_next, link, link_next = init_php_project_config(project, '/home/wwwroot/releases/' + filename, 'prod')
                     rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
                     rm_next_run = saltapi.remote_execute(test_host, 'cmd.run', rm_next, 'glob')
                     link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
                     link_next_run = saltapi.remote_execute(test_host, 'cmd.run', link_next, 'glob')
-                    srv_arg = 'rm -rf ' + saltmaster_dir + tarfilename
-                    rm_srv = os.popen(srv_arg)
-                    tar_arg = 'rm -rf ' + tarfile_path + tarfilename
-                    rm_tar = os.popen(tar_arg)
-                    folder_arg = 'rm -rf ' + package_path + tarfilename
-                    rm_folder = os.popen(folder_arg)
-                    record = deployRecord.objects.create(project_name=project, project_owner='php', deploy_branch=branch, deploy_tag=tag)
+                    record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
                     msg = {
                         'retcode': 3,
-                        'retdata': project + ' deploy testing successfully',
+                        'retdata': project + ' 提测成功',
                     }
                     return HttpResponse(json.dumps(msg))
                 else:
@@ -300,32 +298,60 @@ def pushProd(request):
             msg = 'saltfile error'
             return HttpResponseServerError(json.dumps(msg))
 
-def init_php_project_config(project, path):
+def init_php_project_config(project, path, env):
     php_project_list = ['beeHive', 'uco2H5', 'kalachakraMS']
     if project in node_project_list:
-        test_path = path + '/Global/config.test.js'
-        cur_path = path + '/Global/config.js'
-        test_path_next = path + '/Interface/application/config.test.php'
-        cur_path_next = path + '/Interface/application/config.php'
-        rm = 'rm -f ' + cur_path
-        rm_next = 'rm -f ' + cur_path_next
-        link = 'ln -s ' + test_path + ' ' + cur_path
-        link_next = 'ln -s ' + test_path_next + ' ' + cur_path_next
-        return rm, rm_next, link, link_next
+        if env == 'test':
+            test_path = path + '/Global/config.test.js'
+            cur_path = path + '/Global/config.js'
+            test_path_next = path + '/Interface/application/config.test.php'
+            cur_path_next = path + '/Interface/application/config.php'
+            rm = 'rm -f ' + cur_path
+            rm_next = 'rm -f ' + cur_path_next
+            link = 'ln -s ' + test_path + ' ' + cur_path
+            link_next = 'ln -s ' + test_path_next + ' ' + cur_path_next
+            return rm, rm_next, link, link_next
+        elif env == 'prod':
+            prod_path = path + '/Global/config.prod.js'
+            cur_path = path + '/Global/config.js'
+            prod_path_next = path + '/Interface/application/config.prod.php'
+            cur_path_next = path + '/Interface/application/config.php'
+            rm = 'rm -f ' + cur_path
+            rm_next = 'rm -f ' + cur_path_next
+            link = 'ln -s ' + prod_path + ' ' + cur_path
+            link_next = 'ln -s ' + prod_path_next + ' ' + cur_path_next
+            return rm, rm_next, link, link_next
+        else:
+            msg = {
+                'retcode': -1
+                }
+                return msg
     else:
         msg = {
             'retcode': 1
         }
         return msg
 
-def init_node_project_config(project, path):
+def init_node_project_config(project, path, env):
     node_project_list = ['platformService', 'uco2Web', 'gdrManagerSystem', 'uco2Notice', 'YoungBody', 'kalachakraWeb', 'kalachakraService']
     if project in node_project_list:
-        test_path = path + '/global/config.test.js'
-        cur_path = path + '/global/config.js'
-        rm = 'rm -f ' + cur_path
-        link = 'ln -s ' + test_path + ' ' + cur_path
-        return rm, link
+        if env == 'test':
+            test_path = path + '/global/config.test.js'
+            cur_path = path + '/global/config.js'
+            rm = 'rm -f ' + cur_path
+            link = 'ln -s ' + test_path + ' ' + cur_path
+            return rm, link
+        elif env == 'prod':
+            prod_path = path + '/global/config.prod.js'
+            cur_path = path + '/global/config.js'
+            rm = 'rm -f ' + cur_path
+            link = 'ln -s ' + prod_path + ' ' + cur_path
+            return rm, link
+        else:
+            msg = {
+                'retcode': -1
+                }
+                return msg
     else:
         msg = {
             'retcode': 1
