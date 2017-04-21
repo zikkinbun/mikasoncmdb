@@ -106,6 +106,12 @@ def pushTest(request):
             rm_tar = saltapi.remote_execute(test_host, 'cmd.run', tar_rm, 'glob')
             upload = saltapi.file_copy(test_host, 'cp.get_file', src, dst, 'glob')
             if upload:
+                srv_arg = 'rm -rf ' + saltmaster_dir + tarfilename
+                rm_srv = os.popen(srv_arg)
+                tar_arg = 'rm -rf ' + tarfile_path + tarfilename
+                rm_tar = os.popen(tar_arg)
+                folder_arg = 'rm -rf ' + package_path + tarfilename
+                rm_folder = os.popen(folder_arg)
                 mk = 'mkdir -p ' + '/home/wwwroot/releases/' + filename
                 mkdir = saltapi.remote_execute(test_host, 'cmd.run', mk, 'glob')
                 tar = 'tar zxvf ' + dst + ' -C /home/wwwroot/releases/' + filename
@@ -121,12 +127,6 @@ def pushTest(request):
                     rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
                     link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
                     init_run = saltapi.remote_execute(test_host, 'cmd.run', init, 'glob')
-                    srv_arg = 'rm -rf ' + saltmaster_dir + tarfilename
-                    rm_srv = os.popen(srv_arg)
-                    tar_arg = 'rm -rf ' + tarfile_path + tarfilename
-                    rm_tar = os.popen(tar_arg)
-                    folder_arg = 'rm -rf ' + package_path + tarfilename
-                    rm_folder = os.popen(folder_arg)
                     record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
                     msg = {
                         'retcode': 3,
@@ -139,12 +139,6 @@ def pushTest(request):
                     rm_next_run = saltapi.remote_execute(test_host, 'cmd.run', rm_next, 'glob')
                     link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
                     link_next_run = saltapi.remote_execute(test_host, 'cmd.run', link_next, 'glob')
-                    srv_arg = 'rm -rf ' + saltmaster_dir + tarfilename
-                    rm_srv = os.popen(srv_arg)
-                    tar_arg = 'rm -rf ' + tarfile_path + tarfilename
-                    rm_tar = os.popen(tar_arg)
-                    folder_arg = 'rm -rf ' + package_path + tarfilename
-                    rm_folder = os.popen(folder_arg)
                     record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
                     msg = {
                         'retcode': 3,
