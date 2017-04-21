@@ -24,9 +24,6 @@ def pushTest(request):
         project = json.loads(request.body)[u'project']
         branch = json.loads(request.body)[u'branch']
         tag = json.loads(request.body)[u'tag']
-        # project = request.POST.get('project', '')
-        # branch = request.POST.get('branch', '')
-        # tag = request.POST.get('tag', '')
 
         test_host = 'web_test_1001'
         package_path = '/apps/packages/'
@@ -130,7 +127,7 @@ def pushTest(request):
                     rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
                     link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
                     init_run = saltapi.remote_execute(test_host, 'cmd.run', init, 'glob')
-                    record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
+                    # record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
                     msg = {
                         'retcode': 3,
                         'retdata': project + ' deploy testing successfully',
@@ -142,7 +139,7 @@ def pushTest(request):
                     rm_next_run = saltapi.remote_execute(test_host, 'cmd.run', rm_next, 'glob')
                     link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
                     link_next_run = saltapi.remote_execute(test_host, 'cmd.run', link_next, 'glob')
-                    record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
+                    # record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
                     msg = {
                         'retcode': 3,
                         'retdata': project + ' deploy testing successfully',
@@ -166,9 +163,6 @@ def pushProd(request):
         project = json.loads(request.body)[u'project']
         branch = json.loads(request.body)[u'branch']
         tag = json.loads(request.body)[u'tag']
-        # project = request.POST.get('project', '')
-        # branch = request.POST.get('branch', '')
-        # tag = request.POST.get('tag', '')
 
         test_host = 'web_prod_1001'
         package_path = '/apps/packages/'
@@ -269,7 +263,7 @@ def pushProd(request):
                     rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
                     link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
                     init_run = saltapi.remote_execute(test_host, 'cmd.run', init, 'glob')
-                    record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
+                    # record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
                     msg = {
                         'retcode': 3,
                         'retdata': project + ' deploy testing successfully',
@@ -287,7 +281,7 @@ def pushProd(request):
                     rm_tar = os.popen(tar_arg)
                     folder_arg = 'rm -rf ' + package_path + tarfilename
                     rm_folder = os.popen(folder_arg)
-                    record = deployRecord.objects.create(project_name=project, project_owner='php', deploy_branch=branch, deploy_tag=tag)
+                    # record = deployRecord.objects.create(project_name=project, project_owner='php', deploy_branch=branch, deploy_tag=tag)
                     msg = {
                         'retcode': 3,
                         'retdata': project + ' deploy testing successfully',
