@@ -299,8 +299,8 @@ def pushProd(request):
             return HttpResponseServerError(json.dumps(msg))
 
 def init_php_project_config(project, path, env):
-    php_project_list = ['beeHive', 'uco2H5', 'kalachakraMS']
-    if project in node_project_list:
+    # php_project_list = ['beeHive', 'uco2H5', 'kalachakraMS']
+    if project in php_project_list:
         if env == 'test':
             test_path = path + '/Global/config.test.js'
             cur_path = path + '/Global/config.js'
@@ -333,7 +333,7 @@ def init_php_project_config(project, path, env):
         return msg
 
 def init_node_project_config(project, path, env):
-    node_project_list = ['platformService', 'uco2Web', 'gdrManagerSystem', 'uco2Notice', 'YoungBody', 'kalachakraWeb', 'kalachakraService']
+    # node_project_list = ['platformService', 'uco2Web', 'gdrManagerSystem', 'uco2Notice', 'YoungBody', 'kalachakraWeb', 'kalachakraService']
     if project in node_project_list:
         if env == 'test':
             test_path = path + '/global/config.test.js'
