@@ -40,7 +40,7 @@ def pushTest(request):
         if branch != 'master':
             lcd = os.chdir(package_path)
             arg = 'git clone ' + url
-            clone = subprocess.Popen(arg)
+            clone = os.popen(arg).readlines()
             if os.path.exists(project_dir):
                 os.chdir(project_dir)
                 arg = 'git checkout -b ' + branch + ' origin/' + branch

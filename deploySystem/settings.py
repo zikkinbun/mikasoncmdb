@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'deploy',
     'asset',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
     'deployuser.apps.DeployuserConfig',
     'django_crontab',
