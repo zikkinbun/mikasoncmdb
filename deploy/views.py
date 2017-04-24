@@ -44,10 +44,10 @@ def pushTest(request):
             if os.path.exists(project_dir):
                 os.chdir(project_dir)
                 arg = 'git checkout -b ' + branch + ' origin/' + branch
-                checkout = subprocess.Popen(arg, shell=True, stdout=subprocess.PIPE)
-                return HttpResponse(checkout.stdout)
+                checkout = os.popen(arg)
+                # return HttpResponse(checkout.stdout)
             else:
-                msg = clone.stdout
+                msg = clone
                 return HttpResponse(msg)
         else:
             lcd = os.chdir(package_path)
