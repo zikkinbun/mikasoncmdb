@@ -165,7 +165,7 @@ def pushProd(request):
         branch = json.loads(request.body)[u'branch']
         tag = json.loads(request.body)[u'tag']
 
-        test_host = 'web_test_1001'
+        test_host = 'web_prod_1001'
         package_path = '/apps/packages/'
         tarfile_path = os.path.join(package_path, 'releases')
         project_dir = os.path.join(package_path, project)
@@ -180,14 +180,14 @@ def pushProd(request):
         if branch != 'master':
             lcd = os.chdir(package_path)
             arg = 'git clone ' + url
-            clone = subprocess.Popen(arg)
+            clone = os.popen(arg).readlines()
             if os.path.exists(project_dir):
                 os.chdir(project_dir)
                 arg = 'git checkout -b ' + branch + ' origin/' + branch
-                checkout = subprocess.Popen(arg, shell=True, stdout=subprocess.PIPE)
-                return HttpResponse(checkout.stdout)
+                checkout = os.popen(arg)
+                # return HttpResponse(checkout.stdout)
             else:
-                msg = clone.stdout
+                msg = clone
                 return HttpResponse(msg)
         else:
             lcd = os.chdir(package_path)
@@ -235,7 +235,7 @@ def pushProd(request):
         # 使用saltapi上传文件并进行初始化
         if os.path.exists(saltmaster_dir + tarfilename):
             saltapi = SaltAPI('https://112.74.164.242:7000', 'saltapi', 'saltadmin')
-            src = 'salt://prod/packages/' + tarfilename
+            src = 'salt://test/packages/' + tarfilename
             dst = '/home/wwwroot/releases/' + tarfilename
             ft_rm = 'rm -rf /home/wwwroot/releases/' + filename
             rm_ft = saltapi.remote_execute(test_host, 'cmd.run', ft_rm, 'glob')
@@ -262,7 +262,7 @@ def pushProd(request):
                 softlink = saltapi.remote_execute(test_host, 'cmd.run', ln, 'glob')
                 # update config and reload project
                 if project in node_project_list:
-                    rm, link = init_node_project_config(project, '/home/wwwroot/releases/' + filename, 'prod')
+                    rm, link = init_node_project_config(project, '/home/wwwroot/releases/' + filename, 'test')
                     init = 'python /apps/sh/node_init.py %s init' % project
                     rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
                     link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
@@ -271,11 +271,11 @@ def pushProd(request):
                     record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
                     msg = {
                         'retcode': 3,
-                        'retdata': project + u' 项目生产部署成功',
+                        'retdata': project + u' 项目部署成功',
                     }
                     return HttpResponse(json.dumps(msg))
                 elif project in php_project_list:
-                    rm, rm_next, link, link_next = init_php_project_config(project, '/home/wwwroot/releases/' + filename, 'prod')
+                    rm, rm_next, link, link_next = init_php_project_config(project, '/home/wwwroot/releases/' + filename, 'test')
                     rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
                     rm_next_run = saltapi.remote_execute(test_host, 'cmd.run', rm_next, 'glob')
                     link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
@@ -283,7 +283,7 @@ def pushProd(request):
                     record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
                     msg = {
                         'retcode': 3,
-                        'retdata': project + u' 项目生产部署成功',
+                        'retdata': project + u' 项目部署成功',
                     }
                     return HttpResponse(json.dumps(msg))
                 else:
@@ -350,7 +350,7 @@ def init_node_project_config(project, path, env):
         else:
             msg = {
                 'retcode': -1
-                }
+            }
             return msg
     else:
         msg = {
