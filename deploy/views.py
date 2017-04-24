@@ -235,7 +235,7 @@ def pushProd(request):
         # 使用saltapi上传文件并进行初始化
         if os.path.exists(saltmaster_dir + tarfilename):
             saltapi = SaltAPI('https://112.74.164.242:7000', 'saltapi', 'saltadmin')
-            src = 'salt://test/packages/' + tarfilename
+            src = 'salt://prod/packages/' + tarfilename
             dst = '/home/wwwroot/releases/' + tarfilename
             ft_rm = 'rm -rf /home/wwwroot/releases/' + filename
             rm_ft = saltapi.remote_execute(test_host, 'cmd.run', ft_rm, 'glob')
@@ -262,7 +262,7 @@ def pushProd(request):
                 softlink = saltapi.remote_execute(test_host, 'cmd.run', ln, 'glob')
                 # update config and reload project
                 if project in node_project_list:
-                    rm, link = init_node_project_config(project, '/home/wwwroot/releases/' + filename, 'test')
+                    rm, link = init_node_project_config(project, '/home/wwwroot/releases/' + filename, 'prod')
                     init = 'python /apps/sh/node_init.py %s init' % project
                     rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
                     link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
@@ -275,7 +275,7 @@ def pushProd(request):
                     }
                     return HttpResponse(json.dumps(msg))
                 elif project in php_project_list:
-                    rm, rm_next, link, link_next = init_php_project_config(project, '/home/wwwroot/releases/' + filename, 'test')
+                    rm, rm_next, link, link_next = init_php_project_config(project, '/home/wwwroot/releases/' + filename, 'prod')
                     rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
                     rm_next_run = saltapi.remote_execute(test_host, 'cmd.run', rm_next, 'glob')
                     link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
