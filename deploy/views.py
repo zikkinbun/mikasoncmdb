@@ -165,7 +165,7 @@ def pushProd(request):
         branch = json.loads(request.body)[u'branch']
         tag = json.loads(request.body)[u'tag']
 
-        test_host = 'web_prod_1001'
+        prod_host = 'web_prod_1001'
         package_path = '/apps/packages/'
         tarfile_path = os.path.join(package_path, 'releases')
         project_dir = os.path.join(package_path, project)
@@ -238,10 +238,10 @@ def pushProd(request):
             src = 'salt://prod/packages/' + tarfilename
             dst = '/home/wwwroot/releases/' + tarfilename
             ft_rm = 'rm -rf /home/wwwroot/releases/' + filename
-            rm_ft = saltapi.remote_execute(test_host, 'cmd.run', ft_rm, 'glob')
+            rm_ft = saltapi.remote_execute(prod_host, 'cmd.run', ft_rm, 'glob')
             tar_rm = 'rm -rf /home/wwwroot/releases/' + tarfilename
-            rm_tar = saltapi.remote_execute(test_host, 'cmd.run', tar_rm, 'glob')
-            upload = saltapi.file_copy(test_host, 'cp.get_file', src, dst, 'glob')
+            rm_tar = saltapi.remote_execute(prod_host, 'cmd.run', tar_rm, 'glob')
+            upload = saltapi.file_copy(prod_host, 'cp.get_file', src, dst, 'glob')
             if upload:
                 srv_arg = 'rm -rf ' + saltmaster_dir + tarfilename
                 rm_srv = os.popen(srv_arg)
@@ -253,20 +253,20 @@ def pushProd(request):
                 rm_folder = os.popen(folder_arg)
                 # print rm_folder
                 mk = 'mkdir -p ' + '/home/wwwroot/releases/' + filename
-                mkdir = saltapi.remote_execute(test_host, 'cmd.run', mk, 'glob')
+                mkdir = saltapi.remote_execute(prod_host, 'cmd.run', mk, 'glob')
                 tar = 'tar zxvf ' + dst + ' -C /home/wwwroot/releases/' + filename
-                untar = saltapi.remote_execute(test_host, 'cmd.run', tar, 'glob')
+                untar = saltapi.remote_execute(prod_host, 'cmd.run', tar, 'glob')
                 rm = 'rm -rf /home/wwwroot/current/' + project
-                remove = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
+                remove = saltapi.remote_execute(prod_host, 'cmd.run', rm, 'glob')
                 ln = 'ln -s /home/wwwroot/releases/' + filename + ' /home/wwwroot/current/' + project
-                softlink = saltapi.remote_execute(test_host, 'cmd.run', ln, 'glob')
+                softlink = saltapi.remote_execute(prod_host, 'cmd.run', ln, 'glob')
                 # update config and reload project
                 if project in node_project_list:
                     rm, link = init_node_project_config(project, '/home/wwwroot/releases/' + filename, 'prod')
                     init = 'python /apps/sh/node_init.py %s init' % project
-                    rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
-                    link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
-                    init_run = saltapi.remote_execute(test_host, 'cmd.run', init, 'glob')
+                    rm_run = saltapi.remote_execute(prod_host, 'cmd.run', rm, 'glob')
+                    link_run = saltapi.remote_execute(prod_host, 'cmd.run', link, 'glob')
+                    init_run = saltapi.remote_execute(prod_host, 'cmd.run', init, 'glob')
                     # print init_run
                     record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
                     msg = {
@@ -276,10 +276,10 @@ def pushProd(request):
                     return HttpResponse(json.dumps(msg))
                 elif project in php_project_list:
                     rm, rm_next, link, link_next = init_php_project_config(project, '/home/wwwroot/releases/' + filename, 'prod')
-                    rm_run = saltapi.remote_execute(test_host, 'cmd.run', rm, 'glob')
-                    rm_next_run = saltapi.remote_execute(test_host, 'cmd.run', rm_next, 'glob')
-                    link_run = saltapi.remote_execute(test_host, 'cmd.run', link, 'glob')
-                    link_next_run = saltapi.remote_execute(test_host, 'cmd.run', link_next, 'glob')
+                    rm_run = saltapi.remote_execute(prod_host, 'cmd.run', rm, 'glob')
+                    rm_next_run = saltapi.remote_execute(prod_host, 'cmd.run', rm_next, 'glob')
+                    link_run = saltapi.remote_execute(prod_host, 'cmd.run', link, 'glob')
+                    link_next_run = saltapi.remote_execute(prod_host, 'cmd.run', link_next, 'glob')
                     record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
                     msg = {
                         'retcode': 3,
