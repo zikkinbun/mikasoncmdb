@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework import routers, renderers
-from . import asset_api
+from . import asset_api, docker_api, docker_init_api
 
 urlpatterns = [
     url(
@@ -15,6 +15,29 @@ urlpatterns = [
     url(
         r'^delserver/(?P<pk>[0-9]+)/$',
         asset_api.ServerDelete.as_view()
+    ),
+    url(
+        r'^ckcontain/$',
+        docker_init_api.check_containers,
+        name='ckcontain'
+    ),
+    url(
+        r'^containlist/$',
+        docker_api.ContainerList.as_view()
+    ),
+    url(
+        r'^ckimage/$',
+        docker_init_api.check_images,
+        name='ckimage'
+    ),
+    url(
+        r'^imagelist/$',
+        docker_api.ImageList.as_view()
+    ),
+    url(
+        r'^container/detail/$',
+        docker_init_api.inspect_container,
+        name='inspect_container'
     ),
 ]
 

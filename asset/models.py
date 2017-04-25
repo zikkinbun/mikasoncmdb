@@ -16,37 +16,14 @@ class IDC(models.Model):
         return "{0}".format(self.Name)
 
 class Server(models.Model):
-
-    # CPU = (
-    #     ('16Core', '16'),
-    #     ('8Core','8'),
-    #     ('4Core', '4'),
-    #     ('2Core', '2')
-    # )
-    #
-    # MEM = (
-    #     ('32G', '32'),
-    #     ('16G', '16'),
-    #     ('8G', '8'),
-    #     ('4G', '4')
-    # )
-    #
-    # STATUS = (
-    #     ('Online', 'ON'),
-    #     ('Offline', 'OFF')
-    # )
-
     Name = models.CharField(max_length=32, blank=True, null=True, verbose_name=u'主机名')
     System = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'系统平台')
     GlobalIpAddr = models.CharField(max_length=255, blank=True, null=True, verbose_name=u'主机公网IP')
     PrivateIpAddr = models.CharField(max_length=255, blank=True, null=True, verbose_name=u'主机私网IP')
-    # CpuStat = models.CharField(max_length=32, choices=CPU, verbose_name=u'CPU')
-    # MemoryStat = models.CharField(max_length=32, choices=MEM, verbose_name=u'内存')
     CpuStat = models.CharField(max_length=32, blank=True, null=True, verbose_name=u'CPU')
     MemoryStat = models.CharField(max_length=32, blank=True, null=True, verbose_name=u'内存')
     HDDStorage = models.CharField(max_length=32, blank=True, null=True, verbose_name=u'硬盘')
     NetCard = models.CharField(max_length=32, blank=True, null=True, verbose_name=u'网卡带宽')
-    # Status = models.CharField(max_length=20, choices=STATUS, verbose_name=u'是否激活')
     Status = models.CharField(max_length=20, blank=True, null=True, verbose_name=u'是否在线')
     comment = models.CharField(max_length=255, blank=True, null=True, verbose_name=u'备注')
     CreateTime = models.DateTimeField(auto_now=True, null=True)
@@ -61,5 +38,26 @@ class Server(models.Model):
                                                                                        self.Status, self.CreateTime, self.comment)
 
 class Server_Status(models.Model):
-    server_id = models.IntegerField()
-    login_user = models.CharField(max_length=10, blank=True, null=True, verbose_name=u'用户登录数')
+    serverId = models.IntegerField()
+    loginUser = models.CharField(max_length=10, blank=True, null=True, verbose_name=u'用户登录数')
+    cpuLoad = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'CPU负载')
+    memLoad = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'内存负载')
+    procNum = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'进程数')
+    privateNetcardIncome = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'私网进流量')
+    privateNetcardOutgo = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'私网出流量')
+    globalNetcardIncome = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'公网进流量')
+    globalNetcardOutgo = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'公网出流量')
+
+class Docker_Container(models.Model):
+    hostName = models.CharField(max_length=32, blank=True, null=True, verbose_name=u'主机名')
+    containerId = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'容器ID')
+    containerName = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'容器名')
+    imageName = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'镜像名')
+    command = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'启动命令')
+    created = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'创建时间')
+    status = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'容器状态')
+
+class Docker_Image(models.Model):
+    imageName = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'镜像名')
+    created = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'创建时间')
+    size = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'镜像大小')

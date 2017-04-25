@@ -203,7 +203,7 @@ class SaltAPI(object):
         ret = content['return'][0][tgt]
         return ret
 
-if __name__ == '__main__':
-    url = 'https://112.74.164.242:7000'
-    test = SaltAPI(url, 'saltapi', 'saltadmin')
-    test.remote_execute('web_test_1001', 'cmd.run', 'python /apps/sh/node_init.py YoungBody init', 'glob')
+# if __name__ == '__main__':
+#     url = 'https://112.74.164.242:7000'
+#     test = SaltAPI(url, 'saltapi', 'saltadmin')
+#     test.remote_execute('web_test_1001', 'cmd.run', 'python /apps/sh/node_init.py YoungBody init', 'glob')
