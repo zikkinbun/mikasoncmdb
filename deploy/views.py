@@ -65,7 +65,7 @@ def pushTest(request):
             if os.path.exists(tag_dir):
                 os.chdir(tarfile_path)
                 # shutil.make_archive(filename, "gztar", root_dir=tag_dir)
-                tar = 'tar -zcvf %s.tar.gz %s' % (filename, package_path + filename)
+                tar = 'tar -zcvf %s.tar.gz %s' % (filename, tag_dir)
                 os.popen(tar)
                 msg = {
                     'retcode': '0',
