@@ -64,7 +64,9 @@ def pushTest(request):
             tag_dir = project_dir + '_test_' + branch + '_' + tag
             if os.path.exists(tag_dir):
                 os.chdir(tarfile_path)
-                shutil.make_archive(filename, "gztar", root_dir=tag_dir)
+                # shutil.make_archive(filename, "gztar", root_dir=tag_dir)
+                tar = 'tar -zcvf %s.tar.gz %s' % (filename, package_path + filename)
+                os.popen(tar)
                 msg = {
                     'retcode': '0',
                     'retmsg': 'tar dir success'
