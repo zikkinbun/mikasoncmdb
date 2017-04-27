@@ -66,7 +66,7 @@ def pushTest(request):
                 os.chdir(tarfile_path)
                 # shutil.make_archive(filename, "gztar", root_dir=tag_dir)
                 tar = 'tar -zcvf %s.tar.gz %s' % (filename, tag_dir)
-                os.popen(tar)
+                os.popen(tar).readlines()
                 msg = {
                     'retcode': '0',
                     'retmsg': 'tar dir success'
