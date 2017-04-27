@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
+    'djcelery',
     'deployuser.apps.DeployuserConfig',
     'django_crontab',
     'django.contrib.admin',
@@ -150,6 +152,7 @@ TEMPLATES = [
 SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 # SESSION_COOKIE_HTTPONLY = True
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = False
 
 AUTH_USER_MODEL = 'deployuser.CustomUser'
 
@@ -157,3 +160,20 @@ CRONJOBS = (
     ('*/5 * * * *', 'deploySystem.zabbixapi.api.agent_ping', '> /tmp/agent_ping.log'),
     ('*/5 * * * *', 'deploySystem.asset.cron.agent_ping', '> /tmp/agent_ping.log'),
     )
+
+CELERY_BROKER_URL='redis://:gdrdev2016@112.74.182.80:6379/7'
+CELERY_RESULT_BACKEND='redis://:gdrdev2016@112.74.182.80:6379/8'
+CELERYBEAT_SCHEDULE = {
+    'every-minute': {
+        'task': 'celery_tasks.overview_records',
+        # 'schedule': crontab(minute='*/1'),
+        # 'args': (1,2),
+        'schedule': timedelta(seconds=5)
+    },
+}
+
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_ACCEPT_CONTENT=['json']
+CELERY_TIMEZONE = 'Asia/Shanghai'
+CELERY_ENABLE_UTC = True

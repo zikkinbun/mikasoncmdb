@@ -13,7 +13,7 @@ import time
 
 @csrf_exempt
 def check_containers(request):
-    dockerd_url = 'http://112.74.182.80:4243/containers/json'
+    dockerd_url = 'http://112.74.182.80:4243/containers/json?all=1'
     if request.method == 'GET':
         headers = {'Content-Type': 'application/json'}
         r = requests.get(dockerd_url, headers=headers)
@@ -51,7 +51,8 @@ def check_containers(request):
                     'Status': data['State']
                     }
                 containers.append(container)
-                current_containers.update(status=data['State'])
+                remain_container = Docker_Container.objects.filter(containerId=container['id'])
+                remain_container.update(status=container['Status'])
             contain = json.dumps(containers)
             return HttpResponse(contain)
 
@@ -89,6 +90,25 @@ def check_images(request):
         return HttpResponse(local_image)
 
 @csrf_exempt
+def container_stat(request):
+    if request.method == 'POST':
+        # containerId = json.loads(request.body)['containerId']
+        containerId = request.POST.get('containerId', '')
+        dockerd_url = 'http://112.74.182.80:4243/containers/%s/stats' % containerId
+        headers = {'Content-Type': 'application/json'}
+        r = requests.get(dockerd_url, headers=headers)
+        datas = r.json()
+        payloads = []
+        for i in range(len(datas['Processes'])):
+            payload = {
+                'COMMAND': datas['Processes'][i][-1],
+                'CPU': datas['Processes'][i][2],
+                'MEM': datas['Processes'][i][3],
+            }
+            payloads.append(payload)
+        return HttpResponse(json.dumps(payloads))
+
+@csrf_exempt
 def inspect_container(request):
     if request.method == 'POST':
         # containerId = json.loads(request.body)['containerId']
@@ -106,3 +126,56 @@ def inspect_container(request):
             }
             payloads.append(payload)
         return HttpResponse(json.dumps(payloads))
+
+@csrf_exempt
+def stop_container(request):
+    if request.method == 'POST':
+        # containerId = json.loads(request.body)['containerId']
+        containerId = request.POST.get('containerId', '')
+        print containerId
+        dockerd_url = 'http://112.74.182.80:4243/containers/%s/stop' % containerId
+        headers = {'Content-Type': 'application/json'}
+        r = requests.post(dockerd_url, headers=headers)
+        code = r.status_code
+        if code == 200 or code == '200':
+            msg = {
+                'retmsg': 'container have stoped'
+            }
+            return HttpResponse(json.dumps(msg))
+        else:
+            return Http404
+
+@csrf_exempt
+def start_container(request):
+    if request.method == 'POST':
+        # containerId = json.loads(request.body)['containerId']
+        containerId = request.POST.get('containerId', '')
+        print containerId
+        dockerd_url = 'http://112.74.182.80:4243/containers/%s/start' % containerId
+        headers = {'Content-Type': 'application/json'}
+        r = requests.post(dockerd_url, headers=headers)
+        code = r.status_code
+        if code == 200 or code == '200':
+            msg = {
+                'retmsg': 'container have started'
+            }
+            return HttpResponse(json.dumps(msg))
+        else:
+            return Http404
+
+@csrf_exempt
+def delete_container(request):
+    if request.method == 'POST':
+        # containerId = json.loads(request.body)['containerId']
+        containerId = request.POST.get('containerId', '')
+        dockerd_url = 'http://112.74.182.80:4243/containers/%s' % containerId
+        headers = {'Content-Type': 'application/json'}
+        r = requests.delete(dockerd_url)
+        code = r.status_code
+        if code == 200 or code == '200':
+            msg = {
+                'retmsg': 'container have deleted'
+            }
+            return HttpResponse(json.dumps(msg))
+        else:
+            return Http404

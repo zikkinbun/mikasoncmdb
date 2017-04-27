@@ -39,6 +39,21 @@ urlpatterns = [
         docker_init_api.inspect_container,
         name='inspect_container'
     ),
+    url(
+        r'^container/stop/$',
+        docker_init_api.stop_container,
+        name='stop_container'
+    ),
+    url(
+        r'^container/start/$',
+        docker_init_api.start_container,
+        name='start_container'
+    ),
+    url(
+        r'^container/delete/$',
+        docker_init_api.delete_container,
+        name='delete_container'
+    ),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns, allowed=['json', 'html'])
