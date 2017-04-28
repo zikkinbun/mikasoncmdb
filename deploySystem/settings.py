@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'djcelery',
     'zabbixapi',
     'kombu.transport.django',
-    'deployuser.apps.DeployuserConfig',
+    'deployuser',
     'django_crontab',
     'django.contrib.admin',
     'django.contrib.auth',
