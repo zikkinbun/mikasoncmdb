@@ -22,15 +22,14 @@ def get_agent_cpu_data(request):
             args7 = './zabbix_get -s %s -p 10050 -k "system.cpu.util[,steal]"' % host
             args8 = './zabbix_get -s %s -p 10050 -k "system.cpu.util[,interrupt]"' % host
 
-            system = os.popen(args1).read().replace('\r\n', '')
-            user = os.popen(args2).read().replace('\r\n', '')
-            idle = os.popen(args3).read().replace('\r\n', '')
-            iowait = os.popen(args4).read().replace('\r\n', '')
-            nice = os.popen(args5).read().replace('\r\n', '')
-            softirq = os.popen(args6).read().replace('\r\n', '')
-            steal = os.popen(args7).read().replace('\r\n', '')
-            interrupt = os.popen(args8).read().replace('\r\n', '')
+            system = os.popen(args1).read()
+            user = os.popen(args2).read()
+            idle = os.popen(args3).read()
+            iowait = os.popen(args4).read()
+            nice = os.popen(args5).read()
+            softirq = os.popen(args6).read()
+            steal = os.popen(args7).read()
+            interrupt = os.popen(args8).read()
 
             cpustat.objects.create(system=system, user=user, idle=idle, iowait=iowait, nice=nice, \
                                 softirq=softirq, steal=steal, interrupt=interrupt)
-            return HttpResponse('ok')
