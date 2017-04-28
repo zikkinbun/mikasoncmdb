@@ -2,12 +2,14 @@
 import threading
 import os
 import json
+from celery import task
 
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import *
 
+@task
 def get_agent_cpu_data():
     hostlist = ['192.168.1.1', '127.0.0.1', '192.168.1.3', '192.168.1.6', '192.168.1.7', '192.168.1.8', '192.168.1.9']
     os.chdir('/usr/local/zabbix/bin')
@@ -33,6 +35,7 @@ def get_agent_cpu_data():
         cpustat.objects.create(hostip=host, system=system, user=user, idle=idle, iowait=iowait, nice=nice, \
                             softirq=softirq, steal=steal, interrupt=interrupt)
 
+@task
 def get_agent_cpu_load():
     hostlist = ['192.168.1.1', '127.0.0.1', '192.168.1.3', '192.168.1.6', '192.168.1.7', '192.168.1.8', '192.168.1.9']
     os.chdir('/usr/local/zabbix/bin')
@@ -47,6 +50,7 @@ def get_agent_cpu_load():
 
         cpuload.objects.create(hostip=host, avg1=avg1, avg5=avg5, avg15=avg15)
 
+@task
 def get_agent_mem_stat():
     hostlist = ['192.168.1.1', '127.0.0.1', '192.168.1.3', '192.168.1.6', '192.168.1.7', '192.168.1.8', '192.168.1.9']
     os.chdir('/usr/local/zabbix/bin')
