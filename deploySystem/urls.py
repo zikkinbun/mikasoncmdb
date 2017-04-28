@@ -20,7 +20,7 @@ from django.views.generic.base import TemplateView
 # from asset.urls import router
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    # url(r'^admin/', admin.site.urls),
     url(r'^api/', include('deploy.urls', namespace="api")),
     # url(r'^asset/', include(router.urls)),
     url(r'^hooks/', include('webhooks.urls', namespace="webhooks")),
