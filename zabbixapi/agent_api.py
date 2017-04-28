@@ -21,6 +21,7 @@ def get_agent_cpu_data(request):
             args7 = './zabbix_get -s %s -p 10050 -k "system.cpu.util[,steal]"' % host
             args8 = './zabbix_get -s %s -p 10050 -k "system.cpu.util[,interrupt]"' % host
 
+            os.chdir('/usr/local/zabbix/bin')
             system = os.popen(args1).read().replace('\r\n', '')
             user = os.popen(args2).read().replace('\r\n', '')
             idle = os.popen(args3).read().replace('\r\n', '')
