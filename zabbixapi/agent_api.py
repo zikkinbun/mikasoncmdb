@@ -11,6 +11,7 @@ from .models import *
 def get_agent_cpu_data(request):
     if request.method == 'GET':
         hostlist = ['192.168.1.1', '192.168.1.2', '192.168.1.3', '192.168.1.6', '192.168.1.7', '192.168.1.8', '192.168.1.9']
+        os.chdir('/usr/local/zabbix/bin')
         for host in hostlist:
             args1 = './zabbix_get -s %s -p 10050 -k "system.cpu.util[,system]"' % host
             args2 = './zabbix_get -s %s -p 10050 -k "system.cpu.util[,user]"' % host
@@ -21,7 +22,6 @@ def get_agent_cpu_data(request):
             args7 = './zabbix_get -s %s -p 10050 -k "system.cpu.util[,steal]"' % host
             args8 = './zabbix_get -s %s -p 10050 -k "system.cpu.util[,interrupt]"' % host
 
-            os.chdir('/usr/local/zabbix/bin')
             system = os.popen(args1).read().replace('\r\n', '')
             user = os.popen(args2).read().replace('\r\n', '')
             idle = os.popen(args3).read().replace('\r\n', '')
