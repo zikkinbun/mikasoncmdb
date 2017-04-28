@@ -160,10 +160,10 @@ CORS_ALLOW_CREDENTIALS = False
 
 AUTH_USER_MODEL = 'deployuser.CustomUser'
 
-CRONJOBS = (
-    ('*/5 * * * *', 'deploySystem.zabbixapi.api.agent_ping', '> /tmp/agent_ping.log'),
-    ('*/5 * * * *', 'deploySystem.asset.cron.agent_ping', '> /tmp/agent_ping.log'),
-    )
+# CRONJOBS = (
+#     ('*/5 * * * *', 'deploySystem.zabbixapi.api.agent_ping', '> /tmp/agent_ping.log'),
+#     ('*/5 * * * *', 'deploySystem.asset.cron.agent_ping', '> /tmp/agent_ping.log'),
+#     )
 
 BROKER_URL='redis://:gdrdev2016@112.74.182.80:6379/7'
 CELERY_RESULT_BACKEND='redis://:gdrdev2016@112.74.182.80:6379/8'

@@ -1,5 +1,4 @@
 # _*_ coding:utf-8_*_
-import threading
 import os
 import json
 from celery import task
