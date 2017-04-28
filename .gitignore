@@ -5,3 +5,6 @@ deploySystem/*.pyc
 webhooks/*.pyc
 zabbixapi/*.pyc
 *.pyc
+deploySystem/settings.pyc
+zabbixapi/api.pyc
+zabbixapi/urls.pyc

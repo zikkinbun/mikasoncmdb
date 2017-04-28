@@ -32,3 +32,4 @@ def get_agent_cpu_data(request):
 
             cpustat.objects.create(system=system, user=user, idle=idle, iowait=iowait, nice=nice, \
                                 softirq=softirq, steal=steal, interrupt=interrupt)
+            return HttpResponse('ok')
