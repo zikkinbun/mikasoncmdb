@@ -31,5 +31,5 @@ def get_agent_cpu_data(request):
             steal = os.popen(args7).read().strip()
             interrupt = os.popen(args8).read().strip()
 
-            cpustat.objects.create(system=system, user=user, idle=idle, iowait=iowait, nice=nice, \
+            cpustat.objects.create(hostip=host, system=system, user=user, idle=idle, iowait=iowait, nice=nice, \
                                 softirq=softirq, steal=steal, interrupt=interrupt)
