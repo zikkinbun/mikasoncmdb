@@ -1,6 +1,7 @@
 # _*_ coding:utf-8_*_
 import os
 import json
+from datetime import datetime
 from celery import task
 
 from django.http import HttpResponse, Http404, HttpResponseRedirect
@@ -32,7 +33,7 @@ def get_agent_cpu_data():
         interrupt = os.popen(args8).read().strip()
 
         cpustat.objects.create(hostip=host, system=system, user=user, idle=idle, iowait=iowait, nice=nice, \
-                            softirq=softirq, steal=steal, interrupt=interrupt)
+                            softirq=softirq, steal=steal, interrupt=interrupt, created=datetime.now())
 
 @task
 def get_agent_cpu_load():
@@ -60,4 +61,4 @@ def get_agent_mem_stat():
         available = os.popen(args1).read().strip()
         total = os.popen(args2).read().strip()
 
-        memstat.objects.create(hostip=host, available=available, avgtotal5=total)
+        memstat.objects.create(hostip=host, available=available, total=total, created=datetime.now())
