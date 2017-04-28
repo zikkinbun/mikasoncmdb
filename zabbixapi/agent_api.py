@@ -4,9 +4,6 @@ import json
 from datetime import datetime
 from celery import task
 
-from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.views.decorators.csrf import csrf_exempt
-
 from .models import *
 
 @task
