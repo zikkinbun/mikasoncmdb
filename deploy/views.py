@@ -367,3 +367,20 @@ def init_node_project_config(project, path, env):
             'retcode': 1
         }
         return msg
+
+"""
+    [02/May/2017 12:57:14] "POST /api/pushTest/ HTTP/1.1" 500 126683
+Traceback (most recent call last):
+  File "/usr/local/python2.7/lib/python2.7/wsgiref/handlers.py", line 86, in run
+    self.finish_response()
+  File "/usr/local/python2.7/lib/python2.7/wsgiref/handlers.py", line 128, in finish_response
+    self.write(data)
+  File "/usr/local/python2.7/lib/python2.7/wsgiref/handlers.py", line 217, in write
+    self._write(data)
+  File "/usr/local/python2.7/lib/python2.7/socket.py", line 328, in write
+    self.flush()
+  File "/usr/local/python2.7/lib/python2.7/socket.py", line 307, in flush
+    self._sock.sendall(view[write_offset:write_offset+buffer_size])
+error: [Errno 110] Connection timed out
+
+"""
