@@ -84,7 +84,7 @@ def get_project_api():  # search the project from gitlab
     projects = []
     for data in datas:
         project = {
-            # 'id': data[u'id'],
+            'id': data[u'id'],
             'name': data[u'name'],
             }
         projects.append(project)
