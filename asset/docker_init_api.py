@@ -13,7 +13,7 @@ import json
 import time
 
 @task
-def check_containers(request):
+def check_containers():
     dockerd_url = 'http://112.74.182.80:4243/containers/json?all=1'
     # if request.method == 'GET':
     headers = {'Content-Type': 'application/json'}
@@ -57,38 +57,37 @@ def check_containers(request):
         contain = json.dumps(containers)
         return contain
 
-@csrf_exempt
-def check_images(request):
+@task
+def check_images():
     dockerd_url = 'http://112.74.182.80:4243/images/json?all=0'
-    if request.method == 'GET':
-        headers = {'Content-Type': 'application/json'}
-        r = requests.get(dockerd_url, headers=headers)
-        datas = r.json()
-        images = []
-        current_images = Docker_Image.objects.all()
-        for data in datas:
-            x = time.localtime(data['Created'])
-            created = time.strftime('%Y-%m-%d %H:%M:%S', x)
-            y = int(data['Size'])/(1024*1024*8)
-            if len(data['RepoTags']) > 1:
-                for i in range(len(data['RepoTags'])):
-                    image = {
-                        'Name': data['RepoTags'][i],
-                        'Created': created,
-                        'Size': str(y) + ' MB'
-                        }
-                    images.append(image)
-                    current_images.update_or_create(imageName=image['Name'], created=image['Created'], size=image['Size'])
-            else:
+    headers = {'Content-Type': 'application/json'}
+    r = requests.get(dockerd_url, headers=headers)
+    datas = r.json()
+    images = []
+    current_images = Docker_Image.objects.all()
+    for data in datas:
+        x = time.localtime(data['Created'])
+        created = time.strftime('%Y-%m-%d %H:%M:%S', x)
+        y = int(data['Size'])/(1024*1024*8)
+        if len(data['RepoTags']) > 1:
+            for i in range(len(data['RepoTags'])):
                 image = {
-                    'Name': data['RepoTags'][0],
+                    'Name': data['RepoTags'][i],
                     'Created': created,
                     'Size': str(y) + ' MB'
                     }
                 images.append(image)
                 current_images.update_or_create(imageName=image['Name'], created=image['Created'], size=image['Size'])
-        local_image = json.dumps(images)
-        return HttpResponse(local_image)
+        else:
+            image = {
+                'Name': data['RepoTags'][0],
+                'Created': created,
+                'Size': str(y) + ' MB'
+                }
+            images.append(image)
+            current_images.update_or_create(imageName=image['Name'], created=image['Created'], size=image['Size'])
+    local_image = json.dumps(images)
+    return HttpResponse(local_image)
 
 @csrf_exempt
 def container_stat(request):
