@@ -3,6 +3,7 @@
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.response import Response
+from celery import task
 
 from .serializers import DockerContainerSerializers
 from .models import Docker_Container, Docker_Image
@@ -11,50 +12,50 @@ import requests
 import json
 import time
 
-@csrf_exempt
+@task
 def check_containers(request):
     dockerd_url = 'http://112.74.182.80:4243/containers/json?all=1'
-    if request.method == 'GET':
-        headers = {'Content-Type': 'application/json'}
-        r = requests.get(dockerd_url, headers=headers)
-        datas = r.json()
-        containers = []
-        current_containers = Docker_Container.objects.all()
-        if len(datas) != len(current_containers):
+    # if request.method == 'GET':
+    headers = {'Content-Type': 'application/json'}
+    r = requests.get(dockerd_url, headers=headers)
+    datas = r.json()
+    containers = []
+    current_containers = Docker_Container.objects.all()
+    if len(datas) != len(current_containers):
             # current_containers.delete()
-            for data in datas:
-                x = time.localtime(data['Created'])
-                created = time.strftime('%Y-%m-%d %H:%M:%S', x)
-                container = {
-                    'id': data['Id'][:12],
-                    'Name': data['Names'][0],
-                    'Image': data['Image'],
-                    'Command': data['Command'],
-                    'Created': created,
-                    'Status': data['State']
-                    }
-                containers.append(container)
-                current_containers.update_or_create(hostName='gdr_dev', containerId=container['id'], containerName=data['Names'][0], imageName=data['Image'], \
-                                            command=data['Command'], created=created, status=data['State'])
-            contain = json.dumps(containers)
-            return HttpResponse(contain)
-        else:
-            for data in datas:
-                x = time.localtime(data['Created'])
-                created = time.strftime('%Y-%m-%d %H:%M:%S', x)
-                container = {
-                    'id': data['Id'][:12],
-                    'Name': data['Names'][0],
-                    'Image': data['Image'],
-                    'Command': data['Command'],
-                    'Created': created,
-                    'Status': data['State']
-                    }
-                containers.append(container)
-                remain_container = Docker_Container.objects.filter(containerId=container['id'])
-                remain_container.update(status=container['Status'])
-            contain = json.dumps(containers)
-            return HttpResponse(contain)
+        for data in datas:
+            x = time.localtime(data['Created'])
+            created = time.strftime('%Y-%m-%d %H:%M:%S', x)
+            container = {
+                'id': data['Id'][:12],
+                'Name': data['Names'][0],
+                'Image': data['Image'],
+                'Command': data['Command'],
+                'Created': created,
+                'Status': data['State']
+                }
+            containers.append(container)
+            current_containers.update_or_create(hostName='gdr_dev', containerId=container['id'], containerName=data['Names'][0], imageName=data['Image'], \
+                                        command=data['Command'], created=created, status=data['State'])
+        contain = json.dumps(containers)
+        return contain
+    else:
+        for data in datas:
+            x = time.localtime(data['Created'])
+            created = time.strftime('%Y-%m-%d %H:%M:%S', x)
+            container = {
+                'id': data['Id'][:12],
+                'Name': data['Names'][0],
+                'Image': data['Image'],
+                'Command': data['Command'],
+                'Created': created,
+                'Status': data['State']
+                }
+            containers.append(container)
+            remain_container = Docker_Container.objects.filter(containerId=container['id'])
+            remain_container.update(status=container['Status'])
+        contain = json.dumps(containers)
+        return contain
 
 @csrf_exempt
 def check_images(request):

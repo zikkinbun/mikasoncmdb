@@ -2,6 +2,8 @@
 # The Auth ID Is: 5e7f7d055a05f3bfb9abecd77f9f0381
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import permission_required
+from celery import task
 from asset.models import Server
 
 import json
@@ -86,34 +88,33 @@ def get_boottime(request):
         r = json.dumps(series_data, encoding='utf-8')
         return HttpResponse(r)
 
-@csrf_exempt
+@task
 def agent_ping(request):
-    if request.method == 'GET':
-        itemlist = ['23682', '23804', '23870', '23911', '23952', '23993', '23287']
-        namelist = ['gdr_dev', 'gdr_test', 'gdr_rd_prod', 'gdr_sql_mt', 'gdr_sql_sl', 'gdr_web_prod', 'zabbix_server']
-        method = "history.get"
-        data = {}
-        for i in range(len(itemlist)):
-            params = {
-                    "output": "extend",
-                    "history": 3,
-                    "itemids": itemlist[i],
-                    "limit": 10
-                    }
-            origin = processData(method, params)
-            for host in origin:
-                ping = int(host[u'value'])
-                data[namelist[i]] = ping
-        servers = Server.objects.all()
-        for server in servers:
-            ping = data[server.Name]
+    itemlist = ['23682', '23804', '23870', '23911', '23952', '23993', '23287']
+    namelist = ['gdr_dev', 'gdr_test', 'gdr_rd_prod', 'gdr_sql_mt', 'gdr_sql_sl', 'gdr_web_prod', 'zabbix_server']
+    method = "history.get"
+    data = {}
+    for i in range(len(itemlist)):
+        params = {
+                "output": "extend",
+                "history": 3,
+                "itemids": itemlist[i],
+                "limit": 10
+                }
+        origin = processData(method, params)
+        for host in origin:
+            ping = int(host[u'value'])
+            data[namelist[i]] = ping
+    servers = Server.objects.all()
+    for server in servers:
+        ping = data[server.Name]
             # print type(ping)
-            if ping == int(1):
-                Server.objects.filter(Name=server.Name).update(Status='在线')
-            else:
-                Server.objects.filter(Name=server.Name).update(Status='不在线')
+        if ping == int(1):
+            Server.objects.filter(Name=server.Name).update(Status='在线')
+        else:
+            Server.objects.filter(Name=server.Name).update(Status='不在线')
 
-        return HttpResponse("{'data': '请求成功'}")
+    return "{'data': '请求成功'}"
 
 @csrf_exempt
 def get_runprocess(request):

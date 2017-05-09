@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import permission_required
 
 import requests
 import json
@@ -83,7 +84,7 @@ def get_project_api():  # search the project from gitlab
     projects = []
     for data in datas:
         project = {
-            'id': data[u'id'],
+            # 'id': data[u'id'],
             'name': data[u'name'],
             }
         projects.append(project)
