@@ -35,7 +35,7 @@ class CpuLoadList(APIView):
     def post(self, request, format=None):
         hostip = request.data.get('hostip')
         # print hostip
-        datas = cpuload.objects.filter(hostip=hostip)[:10]
+        datas = cpuload.objects.filter(hostip=hostip).order_by('-created')[:10]
         serializer = cpuloadSerializers(datas, many=True)
         return Response(serializer.data)
 
@@ -52,6 +52,6 @@ class MemStatList(APIView):
     def post(self, request, format=None):
         hostip = request.data.get('hostip')
         # print hostip
-        datas = memstat.objects.filter(hostip=hostip)[:10]
+        datas = memstat.objects.filter(hostip=hostip).order_by('-created')[:10]
         serializer = memstatSerializers(datas, many=True)
         return Response(serializer.data)

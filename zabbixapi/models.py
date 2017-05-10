@@ -16,14 +16,24 @@ class cpustat(models.Model):
     interrupt = models.CharField(max_length=32)
     created = models.DateField(auto_now=True, null=True)
 
+    class META:
+        ordering = ['-created']    
+
 class cpuload(models.Model):
     hostip = models.CharField(max_length=32)
     avg1 = models.CharField(max_length=32)
     avg5 = models.CharField(max_length=32)
     avg15 = models.CharField(max_length=32)
+    created = models.DateField(auto_now=True, null=True)
+
+    class META:
+        ordering = ['-created']
 
 class memstat(models.Model):
     hostip = models.CharField(max_length=32)
     available = models.CharField(max_length=32)
     total = models.CharField(max_length=32)
     created = models.DateField(auto_now=True, null=True)
+
+    class META:
+        ordering = ['-created']
