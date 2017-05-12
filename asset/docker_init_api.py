@@ -20,23 +20,28 @@ def check_containers():
     r = requests.get(dockerd_url, headers=headers)
     datas = r.json()
     containers = []
+    status = None
     current_containers = Docker_Container.objects.all()
     if len(datas) != len(current_containers):
             # current_containers.delete()
         for data in datas:
             x = time.localtime(data['Created'])
             created = time.strftime('%Y-%m-%d %H:%M:%S', x)
+            if data['State'] == 'running':
+                status = 0
+            else:
+                status = 1
             container = {
                 'id': data['Id'][:12],
                 'Name': data['Names'][0],
                 'Image': data['Image'],
                 'Command': data['Command'],
                 'Created': created,
-                'Status': data['State']
+                'Status': status
                 }
             containers.append(container)
             current_containers.update_or_create(hostName='gdr_dev', containerId=container['id'], containerName=data['Names'][0], imageName=data['Image'], \
-                                        command=data['Command'], created=created, status=data['State'])
+                                        command=data['Command'], created=created, status=status)
         contain = json.dumps(containers)
         return contain
     else:
