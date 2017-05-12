@@ -9,7 +9,7 @@ import json
 
 @csrf_exempt
 def get_project(request):  # search the project from gitlab
-    project_url = 'http://112.74.182.80:10080/api/v3/projects?private_token=1__kd35zHaxPyx21BnX6'
+    project_url = 'http://112.74.182.80:10080/api/v3/projects?per_page=50&private_token=1__kd35zHaxPyx21BnX6'
     r = requests.get(project_url)
     datas = r.json()
     # print datas
