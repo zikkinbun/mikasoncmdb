@@ -48,17 +48,21 @@ def check_containers():
         for data in datas:
             x = time.localtime(data['Created'])
             created = time.strftime('%Y-%m-%d %H:%M:%S', x)
+            if data['State'] == 'running':
+                status = 0
+            else:
+                status = 1
             container = {
                 'id': data['Id'][:12],
                 'Name': data['Names'][0],
                 'Image': data['Image'],
                 'Command': data['Command'],
                 'Created': created,
-                'Status': data['State']
+                'Status': status
                 }
             containers.append(container)
             remain_container = Docker_Container.objects.filter(containerId=container['id'])
-            remain_container.update(status=container['Status'])
+            remain_container.update(status=status)
         contain = json.dumps(containers)
         return contain
 
