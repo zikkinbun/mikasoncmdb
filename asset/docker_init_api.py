@@ -37,11 +37,11 @@ def check_containers():
                 'Image': data['Image'],
                 'Command': data['Command'],
                 'Created': created,
-                'Status': status
+                'Status': data['State']
                 }
             containers.append(container)
             current_containers.update_or_create(hostName='gdr_dev', containerId=container['id'], containerName=data['Names'][0], imageName=data['Image'], \
-                                        command=data['Command'], created=created, status=status)
+                                        command=data['Command'], created=created, status=data['State'])
         contain = json.dumps(containers)
         return contain
     else:
@@ -58,11 +58,11 @@ def check_containers():
                 'Image': data['Image'],
                 'Command': data['Command'],
                 'Created': created,
-                'Status': status
+                'Status': data['State']
                 }
             containers.append(container)
             remain_container = Docker_Container.objects.filter(containerId=container['id'])
-            remain_container.update(status=status)
+            remain_container.update(status=data['State'])
         contain = json.dumps(containers)
         return contain
 
