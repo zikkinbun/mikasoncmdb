@@ -89,7 +89,7 @@ def get_boottime(request):
         return HttpResponse(r)
 
 @task
-def agent_ping(request):
+def agent_ping():
     itemlist = ['23682', '23804', '23870', '23911', '23952', '23993', '23287']
     namelist = ['gdr_dev', 'gdr_test', 'gdr_rd_prod', 'gdr_sql_mt', 'gdr_sql_sl', 'gdr_web_prod', 'zabbix_server']
     method = "history.get"
@@ -113,7 +113,6 @@ def agent_ping(request):
             Server.objects.filter(Name=server.Name).update(Status='在线')
         else:
             Server.objects.filter(Name=server.Name).update(Status='不在线')
-
     return "{'data': '请求成功'}"
 
 @csrf_exempt
