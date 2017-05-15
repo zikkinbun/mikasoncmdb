@@ -96,7 +96,7 @@ def check_images():
             images.append(image)
             current_images.update_or_create(imageName=image['Name'], created=image['Created'], size=image['Size'])
     local_image = json.dumps(images)
-    return HttpResponse(local_image)
+    return local_image
 
 @csrf_exempt
 def container_stat(request):
