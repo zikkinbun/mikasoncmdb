@@ -45,7 +45,7 @@ def get_agent_cpu_load():
         avg5 = os.popen(args2).read().strip()
         avg15 = os.popen(args3).read().strip()
 
-        cpuload.objects.create(hostip=host, avg1=avg1, avg5=avg5, avg15=avg15)
+        cpuload.objects.create(hostip=host, avg1=avg1, avg5=avg5, avg15=avg15, created=datetime.now())
 
 @task
 def get_agent_mem_stat():
