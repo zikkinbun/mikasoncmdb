@@ -182,6 +182,7 @@ def delete_container(request):
         r = requests.delete(dockerd_url)
         code = r.status_code
         if code == 200 or code == '200':
+            current_containers.objects.filter(containerId=containerId).delete()
             msg = {
                 'retmsg': 'container have deleted'
             }

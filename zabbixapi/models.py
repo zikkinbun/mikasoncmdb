@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from datetime import datetime
 
 # Create your models here.
 
@@ -14,17 +15,17 @@ class cpustat(models.Model):
     softirq = models.CharField(max_length=32)
     steal = models.CharField(max_length=32)
     interrupt = models.CharField(max_length=32)
-    created = models.DateField(auto_now=True, null=True)
+    created = models.DateField(default=datetime.now(), null=True)
 
     class META:
-        ordering = ['-created']    
+        ordering = ['-created']
 
 class cpuload(models.Model):
     hostip = models.CharField(max_length=32)
     avg1 = models.CharField(max_length=32)
     avg5 = models.CharField(max_length=32)
     avg15 = models.CharField(max_length=32)
-    created = models.DateField(auto_now=True, null=True)
+    created = models.DateField(default=datetime.now(), null=True)
 
     class META:
         ordering = ['-created']
@@ -33,7 +34,7 @@ class memstat(models.Model):
     hostip = models.CharField(max_length=32)
     available = models.CharField(max_length=32)
     total = models.CharField(max_length=32)
-    created = models.DateField(auto_now=True, null=True)
+    created = models.DateField(default=datetime.now(), null=True)
 
     class META:
         ordering = ['-created']
