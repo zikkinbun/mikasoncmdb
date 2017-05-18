@@ -22,7 +22,7 @@ def check_containers():
     containers = []
     status = None
     current_containers = Docker_Container.objects.all()
-    if len(datas) != len(current_containers):
+    if len(datas) > len(current_containers):
             # current_containers.delete()
         for data in datas:
             x = time.localtime(data['Created'])
@@ -44,6 +44,9 @@ def check_containers():
                                         command=data['Command'], created=created, status=data['State'])
         contain = json.dumps(containers)
         return contain
+    elif len(datas) < len(current_containers):
+        for data in datas:
+            x = time.localtime(data['Created'])
     else:
         for data in datas:
             x = time.localtime(data['Created'])
