@@ -27,10 +27,6 @@ def check_containers():
         for data in datas:
             x = time.localtime(data['Created'])
             created = time.strftime('%Y-%m-%d %H:%M:%S', x)
-            if data['State'] == 'running':
-                status = 0
-            else:
-                status = 1
             container = {
                 'id': data['Id'][:12],
                 'Name': data['Names'][0],
@@ -45,16 +41,27 @@ def check_containers():
         contain = json.dumps(containers)
         return contain
     elif len(datas) < len(current_containers):
+        current_containers.delete()
         for data in datas:
             x = time.localtime(data['Created'])
+            reated = time.strftime('%Y-%m-%d %H:%M:%S', x)
+            container = {
+                'id': data['Id'][:12],
+                'Name': data['Names'][0],
+                'Image': data['Image'],
+                'Command': data['Command'],
+                'Created': created,
+                'Status': data['State']
+                }
+            containers.append(container)
+            current_containers.update_or_create(hostName='gdr_dev', containerId=container['id'], containerName=data['Names'][0], imageName=data['Image'], \
+                                        command=data['Command'], created=created, status=data['State'])
+        contain = json.dumps(containers)
+        return contain
     else:
         for data in datas:
             x = time.localtime(data['Created'])
             created = time.strftime('%Y-%m-%d %H:%M:%S', x)
-            if data['State'] == 'running':
-                status = 0
-            else:
-                status = 1
             container = {
                 'id': data['Id'][:12],
                 'Name': data['Names'][0],
