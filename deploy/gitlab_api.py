@@ -78,7 +78,7 @@ def get_branches(request):
         return HttpResponse(mybranches)
 
 def get_project_api():  # search the project from gitlab
-    project_url = 'http://112.74.182.80:10080/api/v3/projects?private_token=1__kd35zHaxPyx21BnX6'
+    project_url = 'http://112.74.182.80:10080/api/v3/projects?per_page=50&private_token=1__kd35zHaxPyx21BnX6'
     r = requests.get(project_url)
     datas = r.json()
     projects = []
@@ -130,7 +130,7 @@ def get_url_api(project_name):
     request_url = 'http://112.74.182.80:10080/api/v3/projects/' + str(project_id) + "?private_token=1__kd35zHaxPyx21BnX6"
     r = requests.get(request_url)
     data = r.json()
-    print data
+    # print data
     project_url = data[u'ssh_url_to_repo']
     print project_url
     # return project_url
