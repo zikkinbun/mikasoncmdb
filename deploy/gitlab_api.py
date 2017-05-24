@@ -132,5 +132,5 @@ def get_url_api(project_name):
     data = r.json()
     # print data
     project_url = data[u'ssh_url_to_repo']
-    print project_url
-    # return project_url
+    # print project_url
+    return project_url
