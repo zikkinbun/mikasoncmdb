@@ -125,6 +125,7 @@ def get_url_api(project_name):
     for project in projects:
         if project_name == project['name']:
             project_id = project['id']
+    print project_id
     request_url = 'http://112.74.182.80:10080/api/v3/projects/' + str(project_id) + "?private_token=1__kd35zHaxPyx21BnX6"
     r = requests.get(request_url)
     data = r.json()
