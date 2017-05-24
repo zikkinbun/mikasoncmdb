@@ -121,11 +121,12 @@ def get_branches_api(project_id):
 
 def get_url_api(project_name):
     projects = get_project_api()
+    print projects
     project_id = ''
     for project in projects:
         if project_name == project['name']:
             project_id = project['id']
-    print project_id
+            print project_id
     request_url = 'http://112.74.182.80:10080/api/v3/projects/' + str(project_id) + "?private_token=1__kd35zHaxPyx21BnX6"
     r = requests.get(request_url)
     data = r.json()
