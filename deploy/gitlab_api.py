@@ -121,7 +121,7 @@ def get_branches_api(project_id):
 
 def get_url_api(project_name):
     projects = get_project_api()
-    print projects
+    # print projects
     project_id = ''
     for project in projects:
         if project_name == project['name']:
