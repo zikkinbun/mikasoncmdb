@@ -28,7 +28,7 @@ SECRET_KEY = 'p49^exu142tv*kr1t_g^osg+1vs_hzq!#vby2rc2mihre@74qu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['112.74.182.80', '127.0.0.1', '112.74.164.242', 'operapi.uco2.com']
+ALLOWED_HOSTS = ['112.74.182.80', '127.0.0.1', '112.74.164.242', 'localhost', 'operapi.uco2.com']
 
 
 # CORS_ORIGIN_WHITELIST = (
@@ -88,16 +88,16 @@ WSGI_APPLICATION = 'deploySystem.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'deploySystem',
-#         'USER': 'db_admin',
-#         'PASSWORD': 'db_admin2016',
-#         'HOST': '112.74.188.202',
-#         'PORT': '3306'
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'deploySystem',
+        'USER': 'db_admin',
+        'PASSWORD': 'db_admin2015',
+        'HOST': '',
+        'PORT': ''
+    }
+}
 
 
 # Password validation
@@ -174,9 +174,8 @@ AUTH_USER_MODEL = 'deployuser.CustomUser'
 #     ('*/5 * * * *', 'deploySystem.asset.cron.agent_ping', '> /tmp/agent_ping.log'),
 #     )
 
-# BROKER_URL='redis://:gdrdev2016@112.74.182.80:6379/7'
-# CELERY_RESULT_BACKEND='redis://:gdrdev2016@112.74.182.80:6379/8'
-
+BROKER_URL='redis://:docker2016@localhost:6379/7'
+CELERY_RESULT_BACKEND='redis://:docker2016@localhost:6379/8'
 # CELERYBEAT_SCHEDULE = {
 #     'every-minute': {
 #         'task': 'celery_tasks.overview_records',
