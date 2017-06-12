@@ -260,7 +260,8 @@ def pushProd(request):
         branch = json.loads(request.body)[u'branch']
         tag = json.loads(request.body)[u'tag']
 
-        prod_host = 'web_prod_group'
+        # prod_host = 'web_prod_group'
+        prod_host = 'web_prod_1001'
         package_path = '/apps/packages/'
         tarfile_path = os.path.join(package_path, 'releases')
         project_dir = os.path.join(package_path, project)
