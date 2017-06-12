@@ -334,10 +334,10 @@ def pushProd(request):
             src = 'salt://prod/packages/' + tarfilename
             dst = '/home/wwwroot/releases/' + tarfilename
             ft_rm = 'rm -rf /home/wwwroot/releases/' + filename
-            rm_ft = saltapi.remote_execute(prod_host, 'cmd.run', ft_rm, 'glob')
             tar_rm = 'rm -rf /home/wwwroot/releases/' + tarfilename
-            rm_tar = saltapi.remote_execute(prod_host, 'cmd.run', tar_rm, 'glob')
             for prod_host in prod_host_list:
+                rm_ft = saltapi.remote_execute(prod_host, 'cmd.run', ft_rm, 'glob')
+                rm_tar = saltapi.remote_execute(prod_host, 'cmd.run', tar_rm, 'glob')
                 upload = saltapi.file_copy(prod_host, 'cp.get_file', src, dst, 'glob')
                 if upload:
                     srv_arg = 'rm -rf ' + saltmaster_dir + tarfilename
