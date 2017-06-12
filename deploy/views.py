@@ -367,12 +367,7 @@ def pushProd(request):
                         chown = 'chown -R prod.prod /home/wwwroot/releases/' + filename
                         chown_run = saltapi.remote_execute(prod_host, 'cmd.run', chown, 'glob')
                         # print init_run
-                        record = deployRecord.objects.create(project_name=project, project_owner='node', deploy_branch=branch, deploy_tag=tag)
-                        msg = {
-                            'retcode': 3,
-                            'retdata': project + u' 项目部署成功',
-                            }
-                        return HttpResponse(json.dumps(msg))
+                        record = deployRecord.objects.create(project_name=project, project_owner=prod_host, deploy_branch=branch, deploy_tag=tag)
                     elif project in php_project_list:
                         rm, rm_next, link, link_next = init_php_project_config(project, '/home/wwwroot/releases/' + filename, 'prod')
                         rm_run = saltapi.remote_execute(prod_host, 'cmd.run', rm, 'glob')
@@ -381,17 +376,17 @@ def pushProd(request):
                         link_next_run = saltapi.remote_execute(prod_host, 'cmd.run', link_next, 'glob')
                         chown = 'chown -R prod.prod /home/wwwroot/releases/' + filename
                         chown_run = saltapi.remote_execute(prod_host, 'cmd.run', chown, 'glob')
-                        record = deployRecord.objects.create(project_name=project, project_owner='php', deploy_branch=branch, deploy_tag=tag)
-                        msg = {
-                            'retcode': 3,
-                            'retdata': project + u' 项目部署成功',
-                        }
-                        return HttpResponse(json.dumps(msg))
+                        record = deployRecord.objects.create(project_name=project, project_owner=prod_host, deploy_branch=branch, deploy_tag=tag)
                     else:
                         msg = {
                             'retdata': 'current path is not exist'
                         }
                         return HttpResponseServerError(json.dumps(msg))
+                    msg = {
+                        'retcode': 3,
+                        'retdata': project + u' 项目部署成功',
+                    }
+                    return HttpResponse(json.dumps(msg))
                 else:
                     msg = 'upload failed'
                     return HttpResponseServerError(json.dumps(msg))
