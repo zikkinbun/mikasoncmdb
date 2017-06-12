@@ -27,5 +27,6 @@ urlpatterns = [
     url(r'^zabbixapi/', include('zabbixapi.urls', namespace="zabbixapi")),
     url(r'^asset/', include('asset.urls', namespace="asset")),
     url(r'^user/', include('deployuser.urls', namespace="user")),
+    url(r'^work/', include('work.urls', namespace="work")),
     url(r'^user/admin/', admin.site.urls),
 ]

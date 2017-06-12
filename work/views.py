@@ -7,45 +7,56 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 
 from rest_framework.views import APIView
+from rest_framework.response import Response
 
-from .models import Task, Script
-from .serializers import ScriptSerializers, TaskSerializers
+from .models import Task, ManualScript, UploadScript, ServerUser
+from .serializers import ServerUserSerializers
 
 import json
 import os
 import datetime
 
+class ServerUserApi(APIView):
+    """
+        list all servers or create a server
+    """
+
+    def get(self, request, format=None):
+        users = ServerUser.objects.all()
+        serializer = ServerUserSerializers(users, many=True)
+        return Response(serializer.data)
+
+@csrf_exempt
+def edit_file(request):
+    if request.method == 'POST':
+        origin = request.POST.get('origin', '')
+        path = ''
+        if origin == 1 or origin == '1':
+            name = request.POST.get('name', '')
+            user = request.POST.get('user', '')
+            content = request.POST.get('content', '')
+            params = request.POST.get('params', '')
+            destination = default_storage.save('./file/' + name + '.sh', ContentFile(content))
+            if default_storage.exists(destination):
+                path = os.path.join('./file', name + '.sh')
+                file = ManualScript.objects.create(name=name, params=params, content=content, path=path)
+            else:
+                msg = {
+                    'retcode': '-2',
+                    'retmsg': '文件保存失败'
+                }
+                return HttpResponse(msg)
+            msg = {
+                'retcode': '1',
+                'retmsg': '文件记录创建成功'
+                }
+            return HttpResponse(msg)
+
+
 @csrf_exempt
 def upload_file(request):
     if request.method == 'POST':
         file = request.FILES.get('myfile', None)
-        destination = ''
-        content = ''
-        if file:
-            if file.mutiple_chunks():
-                for chunk in file.chunks():
-                    destination = default_storage.save('../files/' + file.name, ContentFile(chunk))
-                    # destination.write(chunk)
-                # destination.close()
-            else:
-                destination = default_storage.save('../files/' + file.name, ContentFile(file.read()))
-                # destination.close()
-            if default_storage.exists(destination):
-                name = file.name
-                path = os.path.join('../files', file.name)
-                origin = json.loads(request.body[u'origin'])
-                content = json.loads(default_storage.open(destination).read())
-                params = json.loads(request.body[u'origin'])
-                Script.objects.create(name=name, path=path, origin=origin, content=content, params=params, created=datetime.datetime.now())
-            else:
-                msg = {
-                    'retcode': -2,
-                    'retmsg': '上传的文件不存在，请检查'
-                }
-                return HttpResponseServerError(msg)
-        else:
-            msg = {
-                'retcode': -1,
-                'retmsg': '上传失败'
-            }
-            return HttpResponseServerError(msg)
+        if not file:
+            return HttpResponseBadRequest("request not valid")
+        filename = file.name

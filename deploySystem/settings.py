@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'djcelery',
     'zabbixapi',
+    'work',
     'kombu.transport.django',
     'deployuser',
     'django_crontab',
