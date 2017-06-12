@@ -261,7 +261,7 @@ def pushProd(request):
         tag = json.loads(request.body)[u'tag']
 
         # prod_host = 'web_prod_1001'
-        prod_host_list = ['web_prod_1001'， 'redis_prod_1001']
+        prod_host_list = ['web_prod_1001', 'redis_prod_1001']
         package_path = '/apps/packages/'
         tarfile_path = os.path.join(package_path, 'releases')
         project_dir = os.path.join(package_path, project)
