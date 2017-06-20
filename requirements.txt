@@ -1,0 +1,12 @@
+celery==4.0.2
+django==1.11
+django_celery==3.2.1
+paramiko==1.17.2
+sqlalchemy==1.1.4
+pymysql==0.7.11
+redis==2.10.5
+requests==2.11.0
+djangorestframework==3.6.2
+uWSGI==2.0.15
+django_cors_headers==2.0.2
+django_crontab==0.7.1
