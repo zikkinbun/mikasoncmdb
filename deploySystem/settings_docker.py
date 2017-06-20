@@ -94,7 +94,7 @@ DATABASES = {
         'NAME': 'deploySystem',
         'USER': 'db_admin',
         'PASSWORD': 'db_admin2015',
-        'HOST': '',
+        'HOST': 'db',
         'PORT': ''
     }
 }

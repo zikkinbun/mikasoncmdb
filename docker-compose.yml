@@ -1,0 +1,21 @@
+db:
+  image: mysql
+  expose:
+    - "3307"
+  volumes:
+    - /apps/sh/Dockerfile/my.cnf:/etc/mysql/my.cnf
+    - /apps/mysql_docker_data:/var/lib/mysql
+  environment:
+    - MYSQL_DATABASE= deploySystem
+    - MYSQL_ROOT_PASSWORD=dockeradmin
+    - MYSQL_USER=db_admin
+    - MYSQL_PASSWORD=db_admin2015
+web:
+  build: .
+  command: python manage.py runserver 0.0.0.0:8000
+  volumes:
+    - .:/MikasonOperBackend
+  ports:
+    - "8000:8000"
+  links:
+    - db:db
