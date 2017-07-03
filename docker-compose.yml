@@ -1,12 +1,11 @@
 db:
-  image: mysql
-  expose:
-    - "3307"
+  image: mysql:5.6
+  ports:
+    - "3306:3306"
   volumes:
-    - /apps/sh/Dockerfile/my.cnf:/etc/mysql/my.cnf
-    - /apps/mysql_docker_data:/var/lib/mysql
+    - /Users/benson/mysql_data:/var/lib/mysql
   environment:
-    - MYSQL_DATABASE= deploySystem
+    - MYSQL_DATABASE=deploySystem
     - MYSQL_ROOT_PASSWORD=dockeradmin
     - MYSQL_USER=db_admin
     - MYSQL_PASSWORD=db_admin2015
