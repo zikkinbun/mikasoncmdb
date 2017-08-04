@@ -16,7 +16,7 @@ import shutil
 import json
 import os
 
-node_project_list = ['platformService', 'uco2Web', 'gdrManagerSystem', 'uco2Notice', 'YoungBody', 'kalachakraWeb', 'kalachakraService', 'providerSystem', 'tempSystem', 'uco2Mobile']
+node_project_list = ['platformService', 'uco2Web', 'gdrManagerSystem', 'uco2Notice', 'YoungBody', 'kalachakraWeb', 'kalachakraService', 'providerSystem', 'tempSystem', 'uco2Mobile', 'blackFaceWeb', 'blackfaceWap', 'blackfaceServer', 'blackfaceManage']
 php_project_list = ['beeHive', 'uco2H5', 'kalachakraMS']
 
 # @csrf_exempt
