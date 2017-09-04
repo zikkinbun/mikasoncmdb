@@ -97,8 +97,8 @@ def pushTest(request):
 
         # 使用saltapi上传文件并进行初始化
         if os.path.exists(saltmaster_dir + tarfilename):
-            saltapi = SaltAPI('https://112.74.164.242:7000', 'saltapi', 'saltadmin')
-            # saltapi = SaltAPI('https://120.77.46.79:7000', 'saltapi', 'saltadmin')
+            # saltapi = SaltAPI('https://112.74.164.242:7000', 'saltapi', 'saltadmin')
+            saltapi = SaltAPI('https://120.77.46.79:7000', 'saltapi', 'saltadmin')
             src = 'salt://test/packages/' + tarfilename
             dst = '/home/wwwroot/releases/' + tarfilename
             ft_rm = 'rm -rf /home/wwwroot/releases/' + filename
@@ -243,8 +243,8 @@ def pushProd(request):
 
         # 使用saltapi上传文件并进行初始化
         if os.path.exists(saltmaster_dir + tarfilename):
-            saltapi = SaltAPI('https://112.74.164.242:7000', 'saltapi', 'saltadmin')
-            # saltapi = SaltAPI('https://120.77.46.79:7000', 'saltapi', 'saltadmin')
+            # saltapi = SaltAPI('https://112.74.164.242:7000', 'saltapi', 'saltadmin')
+            saltapi = SaltAPI('https://120.77.46.79:7000', 'saltapi', 'saltadmin')
             src = 'salt://prod/packages/' + tarfilename
             dst = '/home/wwwroot/releases/' + tarfilename
             ft_rm = 'rm -rf /home/wwwroot/releases/' + filename

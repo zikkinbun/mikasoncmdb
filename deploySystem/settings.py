@@ -95,8 +95,8 @@ DATABASES = {
         'NAME': 'deploySystem',
         'USER': 'db_admin',
         'PASSWORD': 'db_admin2016',
-        'HOST': '112.74.188.202',
-        # 'HOST': '119.23.211.28',
+        # 'HOST': '112.74.188.202',
+        'HOST': '119.23.211.28',
         'PORT': '3306'
     }
 }
@@ -176,10 +176,10 @@ AUTH_USER_MODEL = 'deployuser.CustomUser'
 #     ('*/5 * * * *', 'deploySystem.asset.cron.agent_ping', '> /tmp/agent_ping.log'),
 #     )
 
-BROKER_URL='redis://:gdrdev2016@112.74.182.80:6379/7'
-CELERY_RESULT_BACKEND='redis://:gdrdev2016@112.74.182.80:6379/8'
-# BROKER_URL='redis://:gdrdev2016@39.108.141.79:6379/7'
-# CELERY_RESULT_BACKEND='redis://:gdrdev2016@39.108.141.79:6379/8'
+# BROKER_URL='redis://:gdrdev2016@112.74.182.80:6379/7'
+# CELERY_RESULT_BACKEND='redis://:gdrdev2016@112.74.182.80:6379/8'
+BROKER_URL='redis://:gdrdev2016@39.108.141.79:6379/7'
+CELERY_RESULT_BACKEND='redis://:gdrdev2016@39.108.141.79:6379/8'
 # CELERYBEAT_SCHEDULE = {
 #     'every-minute': {
 #         'task': 'celery_tasks.overview_records',
