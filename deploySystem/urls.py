@@ -23,7 +23,7 @@ urlpatterns = [
     # url(r'^admin/', admin.site.urls),
     url(r'^api/', include('deploy.urls', namespace="api")),
     # url(r'^asset/', include(router.urls)),
-    url(r'^hooks/', include('webhooks.urls', namespace="webhooks")),
+    # url(r'^hooks/', include('webhooks.urls', namespace="webhooks")),
     url(r'^zabbixapi/', include('zabbixapi.urls', namespace="zabbixapi")),
     url(r'^asset/', include('asset.urls', namespace="asset")),
     url(r'^user/', include('deployuser.urls', namespace="user")),
