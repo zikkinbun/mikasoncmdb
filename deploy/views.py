@@ -19,94 +19,6 @@ import os
 node_project_list = ['platformService', 'uco2Web', 'gdrManagerSystem', 'uco2Notice', 'YoungBody', 'kalachakraWeb', 'kalachakraService', 'providerSystem', 'tempSystem', 'uco2Mobile', 'blackFaceWeb', 'blackfaceWap', 'blackfaceServer', 'blackfaceManage']
 php_project_list = ['beeHive', 'uco2H5', 'kalachakraMS']
 
-# @csrf_exempt
-# def dict_init(requests):
-#     if request.POST:
-#         project = json.loads(request.body)[u'project']
-#         branch = json.loads(request.body)[u'branch']
-#         tag = json.loads(request.body)[u'tag']
-#         test_host = 'web_test_1001'
-#         deploy = deployOper(test_host, project, branch, tag)
-#         step = deploy.git_oper()
-#         if step['retcode'] == 0:
-#             msg = {
-#                 'retcode': 0,
-#                 'retmsg': '目录创建成功'
-#             }
-#             return HttpResponse(json.dumps(msg))
-#         else:
-#             msg = {
-#                 'retcode': -1,
-#                 'retmsg': '目录创建失败'
-#             }
-#             return HttpResponse(json.dumps(msg))
-#
-# @csrf_exempt
-# def dict_move(requests):
-#     if request.POST:
-#         project = json.loads(request.body)[u'project']
-#         branch = json.loads(request.body)[u'branch']
-#         tag = json.loads(request.body)[u'tag']
-#         test_host = 'web_test_1001'
-#         deploy = deployOper(test_host, project, branch, tag)
-#         step = deploy.move_oper()
-#         return HttpResponse(json.dumps(step))
-#
-# @csrf_exempt
-# def dict_tar(requests):
-#     if request.POST:
-#         project = json.loads(request.body)[u'project']
-#         branch = json.loads(request.body)[u'branch']
-#         tag = json.loads(request.body)[u'tag']
-#         test_host = 'web_test_1001'
-#         deploy = deployOper(test_host, project, branch, tag)
-#         step = deploy.tar_oper()
-#         return HttpResponse(json.dumps(step))
-#
-# @csrf_exempt
-# def dict_upload(requests):
-#     if request.POST:
-#         project = json.loads(request.body)[u'project']
-#         branch = json.loads(request.body)[u'branch']
-#         tag = json.loads(request.body)[u'tag']
-#         test_host = 'web_test_1001'
-#         deploy = deployOper(test_host, project, branch, tag)
-#         step = deploy.upload_oper()
-#         return HttpResponse(json.dumps(step))
-#
-# @csrf_exempt
-# def dict_config(requests):
-#     if request.POST:
-#         project = json.loads(request.body)[u'project']
-#         branch = json.loads(request.body)[u'branch']
-#         tag = json.loads(request.body)[u'tag']
-#         test_host = 'web_test_1001'
-#         deploy = deployOper(test_host, project, branch, tag)
-#         step = deploy.config_oper()
-#         return HttpResponse(json.dumps(step))
-#
-# @csrf_exempt
-# def file_config(requests):
-#     if request.POST:
-#         project = json.loads(request.body)[u'project']
-#         branch = json.loads(request.body)[u'branch']
-#         tag = json.loads(request.body)[u'tag']
-#         test_host = 'web_test_1001'
-#         deploy = deployOper(test_host, project, branch, tag)
-#         step = deploy.file_oper()
-#         return HttpResponse(json.dumps(step))
-#
-# @csrf_exempt
-# def service_init(requests):
-#     if request.POST:
-#         project = json.loads(request.body)[u'project']
-#         branch = json.loads(request.body)[u'branch']
-#         tag = json.loads(request.body)[u'tag']
-#         test_host = 'web_test_1001'
-#         deploy = deployOper(test_host, project, branch, tag)
-#         step = deploy.service_oper()
-#         return HttpResponse(json.dumps(step))
-
 @csrf_exempt
 def pushTest(request):
     if request.POST:
@@ -186,6 +98,7 @@ def pushTest(request):
         # 使用saltapi上传文件并进行初始化
         if os.path.exists(saltmaster_dir + tarfilename):
             saltapi = SaltAPI('https://112.74.164.242:7000', 'saltapi', 'saltadmin')
+            # saltapi = SaltAPI('https://120.77.46.79:7000', 'saltapi', 'saltadmin')
             src = 'salt://test/packages/' + tarfilename
             dst = '/home/wwwroot/releases/' + tarfilename
             ft_rm = 'rm -rf /home/wwwroot/releases/' + filename
@@ -331,6 +244,7 @@ def pushProd(request):
         # 使用saltapi上传文件并进行初始化
         if os.path.exists(saltmaster_dir + tarfilename):
             saltapi = SaltAPI('https://112.74.164.242:7000', 'saltapi', 'saltadmin')
+            # saltapi = SaltAPI('https://120.77.46.79:7000', 'saltapi', 'saltadmin')
             src = 'salt://prod/packages/' + tarfilename
             dst = '/home/wwwroot/releases/' + tarfilename
             ft_rm = 'rm -rf /home/wwwroot/releases/' + filename

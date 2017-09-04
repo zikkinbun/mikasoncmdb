@@ -28,7 +28,7 @@ SECRET_KEY = 'p49^exu142tv*kr1t_g^osg+1vs_hzq!#vby2rc2mihre@74qu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['112.74.182.80', '127.0.0.1', '112.74.164.242', 'operapi.uco2.com']
+ALLOWED_HOSTS = ['112.74.182.80', '127.0.0.1', '112.74.164.242', 'operapi.uco2.com', '120.77.46.79']
 
 
 # CORS_ORIGIN_WHITELIST = (
@@ -96,6 +96,7 @@ DATABASES = {
         'USER': 'db_admin',
         'PASSWORD': 'db_admin2016',
         'HOST': '112.74.188.202',
+        # 'HOST': '119.23.211.28',
         'PORT': '3306'
     }
 }
@@ -177,6 +178,8 @@ AUTH_USER_MODEL = 'deployuser.CustomUser'
 
 BROKER_URL='redis://:gdrdev2016@112.74.182.80:6379/7'
 CELERY_RESULT_BACKEND='redis://:gdrdev2016@112.74.182.80:6379/8'
+# BROKER_URL='redis://:gdrdev2016@39.108.141.79:6379/7'
+# CELERY_RESULT_BACKEND='redis://:gdrdev2016@39.108.141.79:6379/8'
 # CELERYBEAT_SCHEDULE = {
 #     'every-minute': {
 #         'task': 'celery_tasks.overview_records',
