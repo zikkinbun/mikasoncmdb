@@ -64,11 +64,11 @@ def get_branches(request):
     if request.POST:
         # project_id = request.POST.get('project_id', '')
         project_id = json.loads(request.body)[u'project_id']
-        # print request.body
-        # print type(project_id)
+        print request.body
+        print type(project_id)
         # branch_url = 'http://112.74.182.80:10080/api/v3/projects/' + str(project_id) + "/repository/branches?private_token=1__kd35zHaxPyx21BnX6"
         branch_url = 'http://39.108.141.79:10080/api/v3/projects/' + str(project_id) + "/repository/branches?private_token=1__kd35zHaxPyx21BnX6"
-        # print branch_url
+        print branch_url
         r = requests.get(branch_url)
         datas = r.json()
         branches_list = []
