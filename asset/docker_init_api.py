@@ -14,7 +14,7 @@ import time
 
 @task
 def check_containers():
-    dockerd_url = 'http://112.74.182.80:4243/containers/json?all=1'
+    dockerd_url = 'http://39.108.141.79:4243/containers/json?all=1'
     # if request.method == 'GET':
     headers = {'Content-Type': 'application/json'}
     r = requests.get(dockerd_url, headers=headers)
@@ -78,7 +78,7 @@ def check_containers():
 
 @task
 def check_images():
-    dockerd_url = 'http://112.74.182.80:4243/images/json?all=0'
+    dockerd_url = 'http://39.108.141.79:4243/images/json?all=0'
     headers = {'Content-Type': 'application/json'}
     r = requests.get(dockerd_url, headers=headers)
     datas = r.json()
@@ -113,7 +113,7 @@ def container_stat(request):
     if request.method == 'POST':
         # containerId = json.loads(request.body)['containerId']
         containerId = request.POST.get('containerId', '')
-        dockerd_url = 'http://112.74.182.80:4243/containers/%s/stats' % containerId
+        dockerd_url = 'http://39.108.141.79:4243/containers/%s/stats' % containerId
         headers = {'Content-Type': 'application/json'}
         r = requests.get(dockerd_url, headers=headers)
         datas = r.json()
@@ -132,7 +132,7 @@ def inspect_container(request):
     if request.method == 'POST':
         # containerId = json.loads(request.body)['containerId']
         containerId = request.POST.get('containerId', '')
-        dockerd_url = 'http://112.74.182.80:4243/containers/%s/top?ps_args=aux' % containerId
+        dockerd_url = 'http://39.108.141.79:4243/containers/%s/top?ps_args=aux' % containerId
         headers = {'Content-Type': 'application/json'}
         r = requests.get(dockerd_url, headers=headers)
         datas = r.json()
@@ -152,7 +152,7 @@ def stop_container(request):
         # containerId = json.loads(request.body)['containerId']
         containerId = request.POST.get('containerId', '')
         print containerId
-        dockerd_url = 'http://112.74.182.80:4243/containers/%s/stop' % containerId
+        dockerd_url = 'http://39.108.141.79:4243/containers/%s/stop' % containerId
         headers = {'Content-Type': 'application/json'}
         r = requests.post(dockerd_url, headers=headers)
         code = r.status_code
@@ -170,7 +170,7 @@ def start_container(request):
         # containerId = json.loads(request.body)['containerId']
         containerId = request.POST.get('containerId', '')
         print containerId
-        dockerd_url = 'http://112.74.182.80:4243/containers/%s/start' % containerId
+        dockerd_url = 'http://39.108.141.79:4243/containers/%s/start' % containerId
         headers = {'Content-Type': 'application/json'}
         r = requests.post(dockerd_url, headers=headers)
         code = r.status_code
@@ -187,7 +187,7 @@ def delete_container(request):
     if request.method == 'POST':
         # containerId = json.loads(request.body)['containerId']
         containerId = request.POST.get('containerId', '')
-        dockerd_url = 'http://112.74.182.80:4243/containers/%s' % containerId
+        dockerd_url = 'http://39.108.141.79:4243/containers/%s' % containerId
         headers = {'Content-Type': 'application/json'}
         r = requests.delete(dockerd_url)
         code = r.status_code
