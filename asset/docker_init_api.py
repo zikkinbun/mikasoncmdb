@@ -136,6 +136,7 @@ def inspect_container(request):
         headers = {'Content-Type': 'application/json'}
         r = requests.get(dockerd_url, headers=headers)
         datas = r.json()
+        print datas
         payloads = []
         for i in range(len(datas['Processes'])):
             payload = {
