@@ -94,9 +94,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'deploySystem',
         'USER': 'db_admin',
-        'PASSWORD': 'db_admin2016',
-        # 'HOST': '112.74.188.202',
-        'HOST': '192.168.1.209',
+        'PASSWORD': 'db_admin2015',
+        'HOST': '127.0.0.1',
         'PORT': '3306'
     }
 }
@@ -178,8 +177,8 @@ AUTH_USER_MODEL = 'deployuser.CustomUser'
 
 # BROKER_URL='redis://:gdrdev2016@112.74.182.80:6379/7'
 # CELERY_RESULT_BACKEND='redis://:gdrdev2016@112.74.182.80:6379/8'
-BROKER_URL='redis://:gdrdev2016@39.108.141.79:6379/7'
-CELERY_RESULT_BACKEND='redis://:gdrdev2016@39.108.141.79:6379/8'
+BROKER_URL='redis://:127.0.0.1:6379/0'
+CELERY_RESULT_BACKEND='redis://:127.0.0.1:6379/1'
 # CELERYBEAT_SCHEDULE = {
 #     'every-minute': {
 #         'task': 'celery_tasks.overview_records',

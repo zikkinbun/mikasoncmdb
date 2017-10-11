@@ -3,19 +3,19 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from datetime import datetime
 
 # Create your models here.
 class deployRecord(models.Model):
     project_name = models.CharField(max_length=50, verbose_name=u'发布项目名')
     project_owner = models.CharField(max_length=32, verbose_name=u'项目负责人')
+    project_type = models.CharField(max_length=32, blank=True, null=True, verbose_name=u'项目类型')
+    project_env = models.CharField(max_length=32, blank=True, null=True, verbose_name=u'项目环境')
     deploy_branch = models.CharField(max_length=32, verbose_name=u'发布分支')
     deploy_tag = models.CharField(max_length=32, verbose_name=u'发布标签')
-    deploy_time = models.DateField(auto_now=True, null=True)
+    deploy_status = models.CharField(max_length=32, verbose_name=u'发布状态')
+    comment = models.CharField(max_length=50, blank=True, null=True, verbose_name=u'备注')
+    deploy_time = models.DateField(blank=True, default=datetime.now)
 
-    def __str__(self):
-        return "{0}, {1}, {2}, {3}, {4}".format(self.project_name, self.project_owner, \
-                                                    self.deploy_branch, self.deploy_tag, \
-                                                    self.deploy_time)
-
-    def __unicode__(self):
-        return self.project_name
+class Projects(models.Model):
+    name = models.CharField(max_length=32, blank=True, null=True, verbose_name=u'项目名称')

@@ -1,58 +1,52 @@
 from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework import routers, renderers
-from . import asset_api, docker_api, docker_init_api
+from . import asset_api, docker_init_api
 
 urlpatterns = [
     url(
-        r'^list/$',
-        asset_api.ServerList.as_view()
+        r'^List$',
+        asset_api.ListServer.as_view()
     ),
     url(
-        r'^detail/(?P<pk>[0-9]+)/$',
-        asset_api.ServerDetail.as_view()
+        r'^CreateServer$',
+        asset_api.CreateServer.as_view()
     ),
     url(
-        r'^delserver/(?P<pk>[0-9]+)/$',
-        asset_api.ServerDelete.as_view()
+        r'^Detail$',
+        asset_api.getServerDetail.as_view()
     ),
     url(
-        r'^ckcontain/$',
-        docker_init_api.check_containers,
-        name='ckcontain'
+        r'^EditServer$',
+        asset_api.EditServerDetail.as_view()
     ),
     url(
-        r'^containlist/$',
-        docker_api.ContainerList.as_view()
+        r'^DeleteServer$',
+        asset_api.DeleteServer.as_view()
     ),
     url(
-        r'^ckimage/$',
-        docker_init_api.check_images,
-        name='ckimage'
+        r'^ListSwarmContainers$',
+        docker_init_api.ListSwarmContainer.as_view()
     ),
     url(
-        r'^imagelist/$',
-        docker_api.ImageList.as_view()
+        r'^ListImages$',
+        docker_init_api.ListSwarmImage.as_view()
     ),
     url(
-        r'^container/detail/$',
-        docker_init_api.inspect_container,
-        name='inspect_container'
+        r'^ContainerDetail$',
+        docker_init_api.InspectSwarmContain.as_view(),
     ),
     url(
-        r'^container/stop/$',
-        docker_init_api.stop_container,
-        name='stop_container'
+        r'^StopContainer$',
+        docker_init_api.StopSwarmContain.as_view()
     ),
     url(
-        r'^container/start/$',
-        docker_init_api.start_container,
-        name='start_container'
+        r'^StartContainer$',
+        docker_init_api.StartSwarmContain.as_view()
     ),
     url(
-        r'^container/delete/$',
-        docker_init_api.delete_container,
-        name='delete_container'
+        r'^DeleteContainer$',
+        docker_init_api.DeleteSwarmContain.as_view(),
     ),
 ]
 

@@ -16,6 +16,7 @@ import json
 @csrf_exempt
 def login(request):
     if request.method == 'POST':
+        # print request.body
         username = json.loads(request.body)[u'username']
         password = json.loads(request.body)[u'password']
         user = authenticate(username=username, password=password)

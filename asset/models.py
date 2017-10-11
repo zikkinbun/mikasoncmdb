@@ -54,10 +54,12 @@ class Docker_Container(models.Model):
     containerName = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'容器名')
     imageName = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'镜像名')
     command = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'启动命令')
-    created = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'创建时间')
-    status = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'容器状态')
+    status = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'持续时间')
+    state = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'容器状态')
+    createdate = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'创建时间')
 
 class Docker_Image(models.Model):
+    imageId = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'镜像ID')
     imageName = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'镜像名')
-    created = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'创建时间')
     size = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'镜像大小')
+    createdate = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'创建时间')
