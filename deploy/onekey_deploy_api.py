@@ -6,7 +6,7 @@ from django.db import DatabaseError
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import deployRecord
+from .models import Records
 # Create your views here.
 
 from .gitlab_api import *
@@ -43,7 +43,7 @@ class PushTest(APIView):
         project_dir = os.path.join(package_path, project)
         saltmaster_dir = '/srv/salt/test/packages/'
 
-        url_data = get_url_api(project)
+        url_data = get_url(project)
         url = url_data['url']
         owner = url_data['owner']
         record = {
@@ -247,7 +247,7 @@ class PushProd(APIView):
         project_dir = os.path.join(package_path, project)
         saltmaster_dir = '/srv/salt/test/packages/'
 
-        url_data = get_url_api(project)
+        url_data = get_url(project)
         url = url_data['url']
         owner = url_data['owner']
         record = {
