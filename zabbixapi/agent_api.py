@@ -5,6 +5,7 @@ from datetime import datetime
 from celery import task
 
 from .models import *
+from asset.models import Server
 
 @task
 def get_agent_cpu_data():
@@ -59,3 +60,30 @@ def get_agent_mem_stat():
         total = os.popen(args2).read().strip()
 
         memstat.objects.create(hostip=host, available=available, total=total, created=datetime.now())
+
+@task
+def agent_ping():
+    itemlist = ['23682', '23804', '23870', '23911', '23952', '23993', '23287']
+    namelist = ['gdr_dev', 'gdr_test', 'gdr_rd_prod', 'gdr_sql_mt', 'gdr_sql_sl', 'gdr_web_prod', 'zabbix_server']
+    method = "history.get"
+    data = {}
+    for i in range(len(itemlist)):
+        params = {
+                "output": "extend",
+                "history": 3,
+                "itemids": itemlist[i],
+                "limit": 10
+                }
+        origin = processData(method, params)
+        for host in origin:
+            ping = int(host[u'value'])
+            data[namelist[i]] = ping
+    servers = Server.objects.all()
+    for server in servers:
+        ping = data[server.Name]
+            # print type(ping)
+        if ping == int(1):
+            Server.objects.filter(Name=server.Name).update(Status='在线')
+        else:
+            Server.objects.filter(Name=server.Name).update(Status='不在线')
+    return "{'data': '请求成功'}"

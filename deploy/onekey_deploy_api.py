@@ -25,7 +25,7 @@ class PushTest(APIView):
 
     def create_record(self, record={}):
         try:
-            deployRecord.objects.create(project_name=record['project'], project_owner=record['project_owner'], \
+            Records.objects.create(project_name=record['project'], project_owner=record['project_owner'], \
                 deploy_branch=record['deploy_branch'], deploy_tag=record['deploy_tag'], \
                 project_type=record['type'], project_env=record['project_env'], deploy_status=record['status'], \
                 commnet=record['comment'])
@@ -229,7 +229,7 @@ class PushProd(APIView):
 
     def create_record(self, record={}):
         try:
-            deployRecord.objects.create(project_name=record['project'], project_owner=record['project_owner'], \
+            Records.objects.create(project_name=record['project'], project_owner=record['project_owner'], \
                 deploy_branch=record['deploy_branch'], deploy_tag=record['deploy_tag'], \
                 project_type=record['type'], project_env=record['project_env'], deploy_status=record['status'], \
                 commnet=record['comment'])

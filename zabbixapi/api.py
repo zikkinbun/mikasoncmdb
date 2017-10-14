@@ -1,19 +1,16 @@
 # _*_ coding:utf-8_*_
 # The Auth ID Is: 5e7f7d055a05f3bfb9abecd77f9f0381
-from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.decorators import permission_required
-from celery import task
-from asset.models import Server
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.views import APIView
+
 
 import json
 import urllib2
-import pymysql
-import redis
 import time
 
 def processData(method, params):
-    url = 'http://112.74.164.242:8001/api_jsonrpc.php'
+    url = 'http://120.77.46.79:8001/api_jsonrpc.php'
     header = {"Content-Type":"application/json"}
     data = {
         "jsonrpc": "2.0",
@@ -36,35 +33,9 @@ def processData(method, params):
         response = json.loads(result.read())
         return response['result']
 
-@csrf_exempt
-def get_uptime(request):
-    if request.method == 'GET':
-        itemlist = ['23708', '23830', '23896', '23937', '23978', '24019', '23313']
-        namelist = ['get_dev', 'gdr_test', 'gdr_rd_prod', 'gdr_sql_mt', 'gdr_sql_sl', 'gdr_web_prod', 'zabbix_server']
-        method = "history.get"
-        data = {}
-        for i in range(len(itemlist)):
-            params = {
-                    "output": "extend",
-                    "history": 3,
-                    "itemids": itemlist[i],
-                    "limit": 10
-                    }
-            origin = processData(method, params)
-            # print origin
-            for host in origin:
-                # print type(host)
-                day = int(host[u'value'])/(60*60*24) + 1
-                data[namelist[i]] = day
-        series_data = []
-        for name in namelist:
-            series_data.append(data[name])
-        r = json.dumps(series_data, encoding='utf-8')
-        return HttpResponse(r)
+class GetBootTime(APIView):
 
-@csrf_exempt
-def get_boottime(request):
-    if request.method == 'GET':
+    def post(self, request, format=None):
         itemlist = ['23688', '23810', '23876', '23917', '23958', '23999', '23293']
         namelist = ['get_dev', 'gdr_test', 'gdr_rd_prod', 'gdr_sql_mt', 'gdr_sql_sl', 'gdr_web_prod', 'zabbix_server']
         method = "history.get"
@@ -85,39 +56,44 @@ def get_boottime(request):
         series_data = []
         for name in namelist:
             series_data.append(data[name])
-        r = json.dumps(series_data, encoding='utf-8')
-        return HttpResponse(r)
+        r = {
+            'retcode': 0,
+            'retdata': series_data
+        }
+        return Response(r)
 
-@task
-def agent_ping():
-    itemlist = ['23682', '23804', '23870', '23911', '23952', '23993', '23287']
-    namelist = ['gdr_dev', 'gdr_test', 'gdr_rd_prod', 'gdr_sql_mt', 'gdr_sql_sl', 'gdr_web_prod', 'zabbix_server']
-    method = "history.get"
-    data = {}
-    for i in range(len(itemlist)):
-        params = {
-                "output": "extend",
-                "history": 3,
-                "itemids": itemlist[i],
-                "limit": 10
-                }
-        origin = processData(method, params)
-        for host in origin:
-            ping = int(host[u'value'])
-            data[namelist[i]] = ping
-    servers = Server.objects.all()
-    for server in servers:
-        ping = data[server.Name]
-            # print type(ping)
-        if ping == int(1):
-            Server.objects.filter(Name=server.Name).update(Status='在线')
-        else:
-            Server.objects.filter(Name=server.Name).update(Status='不在线')
-    return "{'data': '请求成功'}"
+class GetUptime(APIView):
 
-@csrf_exempt
-def get_runprocess(request):
-    if request.method == 'GET':
+    def post(self, request, format=None):
+        itemlist = ['23708', '23830', '23896', '23937', '23978', '24019', '23313']
+        namelist = ['get_dev', 'gdr_test', 'gdr_rd_prod', 'gdr_sql_mt', 'gdr_sql_sl', 'gdr_web_prod', 'zabbix_server']
+        method = "history.get"
+        data = {}
+        for i in range(len(itemlist)):
+            params = {
+                    "output": "extend",
+                    "history": 3,
+                    "itemids": itemlist[i],
+                    "limit": 10
+                    }
+            origin = processData(method, params)
+            # print origin
+            for host in origin:
+                # print type(host)
+                day = int(host[u'value'])/(60*60*24) + 1
+                data[namelist[i]] = day
+        series_data = []
+        for name in namelist:
+            series_data.append(data[name])
+        r = {
+            'retcode': 0,
+            'retdata': series_data
+        }
+        return Response(r)
+
+class GetRunProcess(APIView):
+
+    def post(self, request, format=None):
         itemlist = ['23687', '23809', '23875', '23916', '23957', '23998', '23292']
         namelist = ['get_dev', 'gdr_test', 'gdr_rd_prod', 'gdr_sql_mt', 'gdr_sql_sl', 'gdr_web_prod', 'zabbix_server']
         method = "history.get"
@@ -138,5 +114,8 @@ def get_runprocess(request):
         series_data = []
         for name in namelist:
             series_data.append(data[name])
-        r = json.dumps(series_data, encoding='utf-8')
-        return HttpResponse(r)
+        r = {
+            'retcode': 0,
+            'retdata': series_data
+        }
+        return Response(r)

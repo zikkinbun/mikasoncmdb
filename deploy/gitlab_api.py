@@ -145,10 +145,18 @@ class GetProjects(APIView):
 
 class GetTags(APIView):
 
+    def get_id(self, project):
+        try:
+            return Projects.objects.get(name=project)
+        except:
+            raise DatabaseError
+
     def post(self, request, format=None):
-        project_id = json.loads(request.body).get('project_id', None)
+        project_name = json.loads(request.body).get('project', None)
+        project = self.get_id(project_name)
+
         tag_url = "http://39.108.141.79:10080/api/v3/projects/" + \
-                str(project_id) + \
+                str(project.pid) + \
                 "/repository/tags?private_token=1__kd35zHaxPyx21BnX6"
         r = requests.get(tag_url)
         datas = r.json()
@@ -167,9 +175,17 @@ class GetTags(APIView):
 
 class GetBranchs(APIView):
 
+    def get_id(self, project):
+        try:
+            return Projects.objects.get(name=project)
+        except:
+            raise DatabaseError
+
     def post(self, request, format=None):
-        project_id = json.loads(request.body).get('project_id', None)
-        branch_url = 'http://39.108.141.79:10080/api/v3/projects/' + str(project_id) + "/repository/branches?private_token=1__kd35zHaxPyx21BnX6"
+        project_name = json.loads(request.body).get('project', None)
+        project = self.get_id(project_name)
+
+        branch_url = 'http://39.108.141.79:10080/api/v3/projects/' + str(project.pid) + "/repository/branches?private_token=1__kd35zHaxPyx21BnX6"
         r = requests.get(branch_url)
         datas = r.json()
         branches = []
