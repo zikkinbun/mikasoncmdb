@@ -28,7 +28,7 @@ SECRET_KEY = 'p49^exu142tv*kr1t_g^osg+1vs_hzq!#vby2rc2mihre@74qu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['112.74.182.80', '127.0.0.1', '112.74.164.242', 'operapi.uco2.com', '120.77.46.79']
+ALLOWED_HOSTS = ['127.0.0.1', 'operapi.uco2.com', '192.168.1.210', '120.77.46.79']
 
 
 # CORS_ORIGIN_WHITELIST = (
@@ -94,8 +94,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'deploySystem',
         'USER': 'db_admin',
-        'PASSWORD': 'db_admin2015',
-        'HOST': '127.0.0.1',
+        'PASSWORD': 'db_admin2016',
+        'HOST': '192.168.1.209',
         'PORT': '3306'
     }
 }
