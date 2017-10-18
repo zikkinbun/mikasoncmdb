@@ -2,7 +2,8 @@
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-
+from util.exception import BaseException, ParamException
+from util.error import BaseError, CommonError
 import json
 
 from .serializers import cpuloadSerializers, cpustatSerializers, memstatSerializers
@@ -41,6 +42,8 @@ class CpuLoadListByIP(APIView):
 
     def post(self, request, format=None):
         hostip = json.loads(request.body).get('hostip', None)
+        if hostip is None:
+            raise ParamException('hostip')
         # print hostip
         datas = cpuload.objects.filter(hostip=hostip).order_by('-created')[:10]
         serializer = cpuloadSerializers(datas, many=True)
@@ -69,6 +72,8 @@ class MemStatListByIP(APIView):
 
     def post(self, request, format=None):
         hostip = json.loads(request.body).get('hostip', None)
+        if hostip is None:
+            raise ParamException('hostip')
         # print hostip
         datas = memstat.objects.filter(hostip=hostip).order_by('-created')[:10]
         serializer = memstatSerializers(datas, many=True)

@@ -1,10 +1,9 @@
 # coding: utf-8
-from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse, Http404
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.decorators import api_view
 from rest_framework.views import APIView
+from util.exception import BaseException, ParamException
+from util.error import BaseError, CommonError
 
 from .models import Server, IDC
 from .serializers import ServerSerializers
@@ -51,6 +50,8 @@ class getServerDetail(APIView):
 
     def post(self, request, format=None):
         pk = json.loads(request.body).get('id', None)
+        if pk is None:
+            raise ParamException('id')
         server = self.get_object(pk)
         serializer = ServerSerializers(server)
         data = {
@@ -73,6 +74,8 @@ class EditServerDetail(APIView):
 
     def post(self, request, format=None):
         pk = json.loads(request.body).get('id', None)
+        if pk is None:
+            raise ParamException('id')
         server = self.get_object(pk)
         serializer = ServerSerializers(server, data=request.data)
         if serializer.is_valid():
@@ -94,6 +97,8 @@ class DeleteServer(APIView):
 
     def post(self, request, format=None):
         pk = json.loads(request.body).get('id', None)
+        if pk is None:
+            raise ParamException('id')
         server = self.get_object(pk)
         server.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

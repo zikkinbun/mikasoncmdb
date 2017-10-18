@@ -6,6 +6,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Projects
 from .serializers import ProjectsSerializers
+from util.exception import BaseException, ParamException
+from util.error import BaseError, CommonError
 
 import requests
 import json
@@ -96,8 +98,14 @@ class UpdateProjectInfo(APIView):
     def post(self, request, format=None):
 
         project_name = json.loads(request.body).get('name', None)
+        if name is None:
+            raise ParamException('name')
         project_type = json.loads(request.body).get('type', None)
+        if type is None:
+            raise ParamException('type')
         config = json.loads(request.body).get('config', None)
+        if config is None:
+            raise ParamException('config')
 
         setting = {
             'type': project_type,
@@ -153,6 +161,8 @@ class GetTags(APIView):
 
     def post(self, request, format=None):
         project_name = json.loads(request.body).get('project', None)
+        if project is None:
+            raise ParamException('project')
         project = self.get_id(project_name)
 
         tag_url = "http://39.108.141.79:10080/api/v3/projects/" + \
@@ -183,6 +193,8 @@ class GetBranchs(APIView):
 
     def post(self, request, format=None):
         project_name = json.loads(request.body).get('project', None)
+        if project is None:
+            raise ParamException('project')
         project = self.get_id(project_name)
 
         branch_url = 'http://39.108.141.79:10080/api/v3/projects/' + str(project.pid) + "/repository/branches?private_token=1__kd35zHaxPyx21BnX6"

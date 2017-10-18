@@ -5,6 +5,4 @@ from views import *
 
 app_name = 'work'
 urlpatterns = [
-    url(r'^editor/$', edit_file, name='edit_file'),
-    url(r'^users/$', ServerUserApi.as_view()),
 ]

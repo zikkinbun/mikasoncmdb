@@ -1,10 +1,11 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.db import DatabaseError
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
+from util.exception import BaseException, ParamException
+from util.error import BaseError, CommonError
 
 from .serializers import DockerContainerSerializers, DockerImageSerializers
 from .models import Docker_Container, Docker_Image
@@ -55,6 +56,8 @@ class InspectSwarmContain(APIView):
 
     def post(self, request, format=None):
         containerId = json.loads(request.body).get('container_id', None)
+        if containerId is None:
+            raise ParamException('container_id')
         dockerd_url = 'http://39.108.141.79:4000/containers/%s/top?ps_args=aux' % containerId
         headers = {'Content-Type': 'application/json'}
         r = requests.get(dockerd_url, headers=headers)
@@ -124,6 +127,8 @@ class StopSwarmContain(APIView):
 
     def post(self, request, format=None):
         containerId = json.loads(request.body).get('container_id', None)
+        if containerId is None:
+            raise ParamException('container_id')
         dockerd_url = 'http://39.108.141.79:4000/containers/%s/stop' % containerId
         headers = {'Content-Type': 'application/json'}
         r = requests.post(dockerd_url, headers=headers)
@@ -141,6 +146,8 @@ class StartSwarmContain(APIView):
 
     def post(self, request, format=None):
         containerId = json.loads(request.body).get('container_id', None)
+        if containerId is None:
+            raise ParamException('container_id')
         dockerd_url = 'http://39.108.141.79:4000/containers/%s/start' % containerId
         headers = {'Content-Type': 'application/json'}
         r = requests.post(dockerd_url, headers=headers)
@@ -158,6 +165,8 @@ class DeleteSwarmContain(APIView):
 
     def post(self, request, format=None):
         containerId = json.loads(request.body).get('container_id', None)
+        if containerId is None:
+            raise ParamException('container_id')
         dockerd_url = 'http://39.108.141.79:4000/containers/%s' % containerId
         r = requests.delete(dockerd_url)
         code = r.status_code

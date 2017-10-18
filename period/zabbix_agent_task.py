@@ -4,12 +4,11 @@ import json
 from datetime import datetime
 from celery import task
 
-from .models import *
 from asset.models import Server
 
 @task
 def get_agent_cpu_data():
-    hostlist = ['192.168.1.1', '127.0.0.1', '192.168.1.3', '192.168.1.6', '192.168.1.7', '192.168.1.8', '192.168.1.9']
+    hostlist = ['192.168.1.209', '127.0.0.1', '192.168.1.211', '192.168.1.212', '192.168.1.213', '192.168.1.214', '192.168.1.215']
     os.chdir('/usr/local/zabbix/bin')
     for host in hostlist:
         args1 = './zabbix_get -s %s -p 10050 -k "system.cpu.util[,system]"' % host
@@ -35,7 +34,7 @@ def get_agent_cpu_data():
 
 @task
 def get_agent_cpu_load():
-    hostlist = ['192.168.1.1', '127.0.0.1', '192.168.1.3', '192.168.1.6', '192.168.1.7', '192.168.1.8', '192.168.1.9']
+    hostlist = ['192.168.1.209', '127.0.0.1', '192.168.1.211', '192.168.1.213', '192.168.1.213', '192.168.1.214', '192.168.1.215']
     os.chdir('/usr/local/zabbix/bin')
     for host in hostlist:
         args1 = './zabbix_get -s %s -p 10050 -k "system.cpu.load[all,avg1]"' % host
@@ -50,7 +49,7 @@ def get_agent_cpu_load():
 
 @task
 def get_agent_mem_stat():
-    hostlist = ['192.168.1.1', '127.0.0.1', '192.168.1.3', '192.168.1.6', '192.168.1.7', '192.168.1.8', '192.168.1.9']
+    hostlist = ['192.168.1.209', '127.0.0.1', '192.168.1.211', '192.168.1.212', '192.168.1.213', '192.168.1.214', '192.168.1.215']
     os.chdir('/usr/local/zabbix/bin')
     for host in hostlist:
         args1 = './zabbix_get -s %s -p 10050 -k "vm.memory.size[available]"' % host

@@ -28,25 +28,19 @@ class Server(models.Model):
     comment = models.CharField(max_length=255, blank=True, null=True, verbose_name=u'备注')
     CreateTime = models.DateTimeField(auto_now=True, null=True)
 
-    def __unicode__(self):
-        return self.Name
+class Server_Service(models.Model):
+    server_id = models.IntegerField()
+    service_name = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'服务名称')
+    service_status = models.CharField(max_length=32, blank=True, null=True, verbose_name=u'服务状态')
+    service_port = models.CharField(max_length=32, blank=True, null=True, verbose_name=u'服务端口')
+    service_version = models.CharField(max_length=32, blank=True, null=True, verbose_name=u'服务版本')
+    service_cmd = models.CharField(max_length=255, blank=True, null=True, verbose_name=u'启动命令')
 
-    def __str__(self):
-        return "{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}".format(self.Name, \
-                                                                                       self.System, self.GlobalIpAddr, self.CpuStat, \
-                                                                                       self.MemoryStat, self.HDDStorage, self.NetCard, \
-                                                                                       self.Status, self.CreateTime, self.comment)
-
-class Server_Status(models.Model):
-    serverId = models.IntegerField()
-    loginUser = models.CharField(max_length=10, blank=True, null=True, verbose_name=u'用户登录数')
-    cpuLoad = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'CPU负载')
-    memLoad = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'内存负载')
-    procNum = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'进程数')
-    privateNetcardIncome = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'私网进流量')
-    privateNetcardOutgo = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'私网出流量')
-    globalNetcardIncome = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'公网进流量')
-    globalNetcardOutgo = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'公网出流量')
+class Server_NetWorkStatus(models.Model):
+    server_id = models.IntegerField()
+    tcp_status = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'TCP状态')
+    network_incoming = models.CharField(max_length=255, blank=True, null=True, verbose_name=u'公网流入')
+    network_outcoming = models.CharField(max_length=255, blank=True, null=True, verbose_name=u'公网流出')
 
 class Docker_Container(models.Model):
     hostName = models.CharField(max_length=32, blank=True, null=True, verbose_name=u'主机名')

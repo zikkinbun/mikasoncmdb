@@ -3,6 +3,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Records
+from util.exception import BaseException, ParamException
+from util.error import BaseError, CommonError
 
 from .gitlab_api import *
 from .salt_api import *
@@ -210,10 +212,20 @@ class Deploy(APIView):
 
     def post(self, request, format=None):
         project = json.loads(request.body).get('project', None)
+        if project is None:
+            raise ParamException('project')
         branch = json.loads(request.body).get('branch', None)
-        tag = json.loads(request.body).get('branch', None)
+        if branch is None:
+            raise ParamException('branch')
+        tag = json.loads(request.body).get('tag', None)
+        if tag is None:
+            raise ParamException('tag')
         env = json.loads(request.body).get('env', None)
+        if env is None:
+            raise ParamException('env')
         configfile = json.loads(request.body).get('configfile', None)
+        if configfile is None:
+            raise ParamException('configfile')
 
         if env == 'test':
             test_host = 'web_test_1001'
