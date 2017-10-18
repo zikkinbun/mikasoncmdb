@@ -47,7 +47,7 @@ class Deploy(APIView):
             clone = os.popen(arg).readlines()
             if os.path.exists(project_dir):
                 os.chdir(project_dir)
-                arg = 'git checkout -b ' + branch + ' origin/' + branch
+                arg = 'git checkout -b ' + record['deploy_branch'] + ' origin/' + record['deploy_branch']
                 checkout = os.popen(arg)
                 msg = {
                     'retcode': 0,
@@ -76,7 +76,7 @@ class Deploy(APIView):
     def tar_package(self, record, project_dir, tarfile_path, filename, env):
         if os.path.exists(project_dir):
             shutil.move(project_dir, project_dir + '_' + env +'_' + record['deploy_branch'] + '_' + record['deploy_tag'])
-            tag_dir = project_dir + '_prod_' + branch + '_' + tag
+            tag_dir = project_dir + '_prod_' + record['deploy_branch'] + '_' + record['deploy_tag']
             if os.path.exists(tag_dir):
                 os.chdir(tarfile_path)
                 shutil.make_archive(filename, "gztar", root_dir=tag_dir)
