@@ -54,9 +54,15 @@ class RequestProject(threading.Thread):
 
     def create_project(self, project={}):
         try:
-            Projects.objects.update_or_create(pid=project['id'], name=project['name'], owner=project['owner'], \
-                ssh_url=project['ssh_url'], http_url=project['http_url'], branches=project['branches'], \
-                tags=project['tags'])
+            exists = Projects.objects.filter(name=project['name'])
+            if exists:
+                    Projects.objects.update(pid=project['id'], name=project['name'], owner=project['owner'], \
+                        ssh_url=project['ssh_url'], http_url=project['http_url'], branches=project['branches'], \
+                        tags=project['tags'])
+            else:
+                Projects.objects.create(pid=project['id'], name=project['name'], owner=project['owner'], \
+                    ssh_url=project['ssh_url'], http_url=project['http_url'], branches=project['branches'], \
+                    tags=project['tags'])
         except:
             raise DatabaseError
 
