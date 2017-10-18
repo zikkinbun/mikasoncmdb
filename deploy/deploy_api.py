@@ -43,7 +43,7 @@ class Deploy(APIView):
         return cmds
 
     def clone_checkout(self, record, url, package_dir, project_dir):
-        if branch != 'master':
+        if record['deploy_branch'] != 'master':
             lcd = os.chdir(package_dir)
             arg = 'git clone ' + url
             clone = os.popen(arg).readlines()
