@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
 from django.db import DatabaseError
 from rest_framework.views import APIView
 from rest_framework.response import Response
