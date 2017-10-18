@@ -22,8 +22,8 @@ class GetProjectsInfo(APIView):
             raise DatabaseError
 
     def post(self, request, format=None):
-        request_project = RequestProject() # 初始化线程
-        request_project.start() # 开启多线程
+        # request_project = RequestProject() # 初始化线程
+        # request_project.start() # 开启多线程
 
         projects = self.get_project()
         serializer = ProjectsSerializers(projects, many=True)
@@ -50,7 +50,7 @@ class GetProjectsInfo(APIView):
         }
         return Response(response)
 
-class RequestProject(threading.Thread):
+class RequestProject(object):
 
     def create_project(self, project={}):
         try:
