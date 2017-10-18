@@ -23,7 +23,8 @@ class GetProjectsInfo(APIView):
 
     def post(self, request, format=None):
         request_project = RequestProject()
-        request_project.run() # 开启多线程
+        # request_project.run()
+        request_project.start() # 开启多线程
 
         projects = self.get_project()
         serializer = ProjectsSerializers(projects, many=True)
@@ -50,13 +51,13 @@ class GetProjectsInfo(APIView):
         }
         return Response(response)
 
-class RequestProject(object):
+class RequestProject(threading.Thread):
 
     def create_project(self, project={}):
         try:
-            exists = Projects.objects.filter(name=project['name'])
+            exists = Projects.objects.filter(pid=project['id'])
             if exists:
-                    Projects.objects.update(pid=project['id'], name=project['name'], owner=project['owner'], \
+                    exists.update(pid=project['id'], name=project['name'], owner=project['owner'], \
                         ssh_url=project['ssh_url'], http_url=project['http_url'], branches=project['branches'], \
                         tags=project['tags'])
             else:
