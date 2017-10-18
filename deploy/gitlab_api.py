@@ -105,10 +105,10 @@ class UpdateProjectInfo(APIView):
     def post(self, request, format=None):
 
         project_name = json.loads(request.body).get('name', None)
-        if name is None:
+        if project_name is None:
             raise ParamException('name')
         project_type = json.loads(request.body).get('type', None)
-        if type is None:
+        if project_type is None:
             raise ParamException('type')
         config = json.loads(request.body).get('config', None)
         if config is None:
