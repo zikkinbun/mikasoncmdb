@@ -22,12 +22,12 @@ class Deploy(APIView):
     def create_record(self, record):
         try:
             print record
-            return deployRecord.objects.create(project_name=record['project'], project_owner=record['project_owner'], \
+            return Records.objects.create(project_name=record['project'], project_owner=record['project_owner'], \
                 deploy_branch=record['deploy_branch'], deploy_tag=record['deploy_tag'], \
                 project_type=record['type'], project_env=record['project_env'], deploy_status=record['status'], \
                 commnet=record['comment'])
-        except:
-            raise DatabaseError
+        except Exception as e:
+            print e
 
     def reset_configfile(self, path, configfiles, env):
         cmds = []
