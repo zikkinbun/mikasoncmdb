@@ -29,15 +29,15 @@ class Deploy(APIView):
         except:
             raise DatabaseError
 
-    def reset_configfile(self, path, configfiles, env):
+    def reset_configfile(self, filename, path, configfiles, env):
         cmds = []
         for configfile in configfiles:
             config = str(configfile).split('/')
             _config = config.pop(-1).replace('config', 'config.%s' % env)
             config.append(_config)
             _configfile = '/'.join(config)
-            ln_cmd = 'ln -s ' + path + _configfile + ' ' + path + configfile
-            rm_cmd = 'rm -f ' + path + configfile
+            ln_cmd = 'ln -s ' + path + filename + _configfile + ' ' + path + filename + configfile
+            rm_cmd = 'rm -f ' + path + filename + configfile
             cmds.append(rm_cmd)
             cmds.append(ln_cmd)
 
@@ -257,7 +257,7 @@ class Deploy(APIView):
                 'deploy_tag': tag
             }
 
-            cmds = self.reset_configfile('/home/wwwroot/releases/', configfile, env)
+            cmds = self.reset_configfile(filename, '/home/wwwroot/releases/', configfile, env)
             print cmds
             checkout = self.clone_checkout(record, url, package_path, project_dir)
             if checkout['retcode'] == 0:
