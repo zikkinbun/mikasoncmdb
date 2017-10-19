@@ -5,3 +5,9 @@ deployuser/*.pyc
 deploySystem/*.pyc
 webhooks/*.pyc
 zabbixapi/*.pyc
+asset/migrations/*.pyc
+deploy/migrations/*.pyc
+deployuser/migrations/*.pyc
+work/migrations/*.pyc
+zabbixapi/migrations/*.pyc
+period/*.pyc
