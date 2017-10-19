@@ -230,6 +230,9 @@ class Deploy(APIView):
         configfile = json.loads(request.body).get('configfile', None)
         if configfile is None:
             raise ParamException('configfile')
+        type = json.loads(request.body).get('project_type', None)
+        if type is None:
+            raise ParamException('project_type')
 
         if env == 'test':
             test_host = 'web_test_1001'
@@ -249,6 +252,7 @@ class Deploy(APIView):
                 'project_name': project,
                 'project_owner': owner,
                 'project_env': 'TEST',
+                'project_type': type,
                 'deploy_branch': branch,
                 'deploy_tag': tag
             }
