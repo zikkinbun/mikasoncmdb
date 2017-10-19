@@ -301,6 +301,7 @@ class Deploy(APIView):
                 'project_name': project,
                 'project_owner': owner,
                 'project_env': 'PROD',
+                'project_type': type,
                 'deploy_branch': branch,
                 'deploy_tag': tag
             }
