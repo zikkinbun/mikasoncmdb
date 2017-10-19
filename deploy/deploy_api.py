@@ -80,19 +80,19 @@ class Deploy(APIView):
         if os.path.exists(project_dir):
             shutil.move(project_dir, project_dir + '_' + env +'_' + record['deploy_branch'] + '_' + record['deploy_tag'])
             tag_dir = project_dir + '_prod_' + record['deploy_branch'] + '_' + record['deploy_tag']
+            print os.path.exists(tag_dir)
             if os.path.exists(tag_dir):
                 os.chdir(tarfile_path)
                 shutil.make_archive(filename, "gztar", root_dir=tag_dir)
                 msg = {
-                    'retcode': '0',
+                    'retcode': 0,
                     'retmsg': 'tar dir success'
                 }
                 return msg
             else:
-
                 record['status'] = u'失败'
                 record['comment'] = 'The project dir is not exists'
-                print record
+                # print record
                 new_record = self.create_record(record)
                 msg = {
                     'retcode': -2,
@@ -100,7 +100,6 @@ class Deploy(APIView):
                     }
                 return msg
         else:
-
             record['status'] = '失败'
             record['comment'] = 'The filedir is not exists'
             new_record = self.create_record(record)
