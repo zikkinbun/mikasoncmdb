@@ -206,11 +206,11 @@ class Deploy(APIView):
 
         record['type'] = 'node'
         record['status'] = '成功'
-        record['comment'] = project + ' 项目部署成功'
+        record['comment'] = record['project_name'] + ' 项目部署成功'
         new_record = self.create_record(record)
         msg = {
             'retcode': 0,
-            'retmsg': project + ' 项目部署成功',
+            'retmsg': record['project_name'] + ' 项目部署成功',
         }
         return msg
 
