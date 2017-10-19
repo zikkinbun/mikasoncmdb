@@ -80,6 +80,7 @@ class Deploy(APIView):
         if os.path.exists(project_dir):
             shutil.move(project_dir, project_dir + '_' + env +'_' + record['deploy_branch'] + '_' + record['deploy_tag'])
             tag_dir = project_dir + '_prod_' + record['deploy_branch'] + '_' + record['deploy_tag']
+            print tag_dir
             print os.path.exists(tag_dir)
             if os.path.exists(tag_dir):
                 os.chdir(tarfile_path)
