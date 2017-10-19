@@ -21,12 +21,8 @@ class Deploy(APIView):
 
     def create_record(self, record):
         try:
-<<<<<<< HEAD
-            # print record
-=======
             print record
->>>>>>> dev
-            return Records.objects.create(project_name=record['project'], project_owner=record['project_owner'], \
+            return Records.objects.create(project_name=record['project_name'], project_owner=record['project_owner'], \
                 deploy_branch=record['deploy_branch'], deploy_tag=record['deploy_tag'], \
                 project_type=record['type'], project_env=record['project_env'], deploy_status=record['status'], \
                 commnet=record['comment'])
@@ -96,6 +92,7 @@ class Deploy(APIView):
 
                 record['status'] = '失败'
                 record['commnet'] = 'The project dir is not exists'
+                print record
                 new_record = self.create_record(record)
                 msg = {
                     'retcode': -2,
