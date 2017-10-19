@@ -34,7 +34,9 @@ class Deploy(APIView):
         for configfile in configfiles:
             config = str(configfile).split('/')
             _config = config.pop(-1).replace('config', 'config.%s' % env)
+            print _config
             config.append(_config)
+            print config
             _configfile = '/'.join(config)
             ln_cmd = 'ln -s ' + path + filename + _configfile + ' ' + path + filename + configfile
             rm_cmd = 'rm -f ' + path + filename + configfile
