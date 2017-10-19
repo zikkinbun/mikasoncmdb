@@ -258,6 +258,7 @@ class Deploy(APIView):
             }
 
             cmds = self.reset_configfile('/home/wwwroot/releases/', configfile, env)
+            print cmds
             checkout = self.clone_checkout(record, url, package_path, project_dir)
             if checkout['retcode'] == 0:
                 tar = self.tar_package(record, project_dir, tarfile_path, filename, env)
