@@ -25,7 +25,7 @@ class Deploy(APIView):
             return Records.objects.create(project_name=record['project_name'], project_owner=record['project_owner'], \
                 deploy_branch=record['deploy_branch'], deploy_tag=record['deploy_tag'], \
                 project_type=record['project_type'], project_env=record['project_env'], deploy_status=record['status'], \
-                commnet=record['comment'])
+                comment=record['comment'])
         except Exception as e:
             print e
 
@@ -90,7 +90,7 @@ class Deploy(APIView):
                 return msg
             else:
 
-                record['status'] = '失败'
+                record['status'] = u'失败'
                 record['commnet'] = 'The project dir is not exists'
                 print record
                 new_record = self.create_record(record)
