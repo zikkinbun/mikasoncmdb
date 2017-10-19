@@ -31,12 +31,17 @@ class Deploy(APIView):
 
     def reset_configfile(self, filename, path, configfiles, env):
         cmds = []
+        # print configfiles
         for configfile in configfiles:
+            # print configfile
             config = str(configfile).split('/')
-            _config = config.pop(-1).replace('config', 'config.%s' % env)
-            print _config
-            config.append(_config)
-            print config
+            # print config
+            _config = config.pop(-1)
+            # print _config
+            env_config = _config.replace('config', 'config.%s' % env)
+            # print env_config
+            config.append(env_config)
+            # print config
             _configfile = '/'.join(config)
             ln_cmd = 'ln -s ' + path + filename + _configfile + ' ' + path + filename + configfile
             rm_cmd = 'rm -f ' + path + filename + configfile
@@ -260,7 +265,7 @@ class Deploy(APIView):
             }
 
             cmds = self.reset_configfile(filename, '/home/wwwroot/releases/', configfile, env)
-            print cmds
+            # print cmds
             checkout = self.clone_checkout(record, url, package_path, project_dir)
             if checkout['retcode'] == 0:
                 tar = self.tar_package(record, project_dir, tarfile_path, filename, env)
@@ -309,7 +314,7 @@ class Deploy(APIView):
                 'deploy_tag': tag
             }
 
-            cmds = self.reset_configfile('/home/wwwroot/releases/', configfile, env)
+            cmds = self.reset_configfile(filename, '/home/wwwroot/releases/', configfile, env)
             checkout = self.clone_checkout(record, url, package_path, project_dir)
             if checkout['retcode'] == 0:
                 tar = self.tar_package(record, project_dir, tarfile_path, filename, env)
