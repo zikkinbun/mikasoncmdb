@@ -59,7 +59,7 @@ class Deploy(APIView):
                 return msg
             else:
                 record['status'] = '失败'
-                record['commnet'] = clone
+                record['comment'] = clone
                 new_record = self.create_record(record)
                 msg = {
                     'retcode': -1,
@@ -91,7 +91,7 @@ class Deploy(APIView):
             else:
 
                 record['status'] = u'失败'
-                record['commnet'] = 'The project dir is not exists'
+                record['comment'] = 'The project dir is not exists'
                 print record
                 new_record = self.create_record(record)
                 msg = {
@@ -102,7 +102,7 @@ class Deploy(APIView):
         else:
 
             record['status'] = '失败'
-            record['commnet'] = 'The filedir is not exists'
+            record['comment'] = 'The filedir is not exists'
             new_record = self.create_record(record)
             msg = {
                 'retcode': -2,
@@ -120,7 +120,7 @@ class Deploy(APIView):
             return msg
         else:
             record['status'] = '失败'
-            record['commnet'] = 'copy error'
+            record['comment'] = 'copy error'
             new_record = self.create_record(record)
             msg = {
                 'retcode': -1,
@@ -146,7 +146,7 @@ class Deploy(APIView):
                 return msg
             else:
                 record['status'] = '失败'
-                record['commnet'] = 'upload failed'
+                record['comment'] = 'upload failed'
                 new_record = self.create_record(record)
                 msg = {
                     'retcode': -1,
@@ -155,7 +155,7 @@ class Deploy(APIView):
                 return msg
         else:
             record['status'] = '失败'
-            record['commnet'] = 'The salt tar dir is not exists'
+            record['comment'] = 'The salt tar dir is not exists'
             new_record = self.create_record(record)
             msg = {
                 'retcode': -2,
@@ -187,7 +187,7 @@ class Deploy(APIView):
             return msg
         else:
             record['status'] = '失败'
-            record['commnet'] = 'fail to release'
+            record['comment'] = 'fail to release'
             new_record = self.create_record(record)
             msg = {
                 'retcode': -1,
@@ -206,7 +206,7 @@ class Deploy(APIView):
 
         record['type'] = 'node'
         record['status'] = '成功'
-        record['commnet'] = project + ' 项目部署成功'
+        record['comment'] = project + ' 项目部署成功'
         new_record = self.create_record(record)
         msg = {
             'retcode': 0,
