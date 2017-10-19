@@ -21,13 +21,13 @@ class Deploy(APIView):
 
     def create_record(self, record):
         try:
-            print record
+            # print record
             return Records.objects.create(project_name=record['project_name'], project_owner=record['project_owner'], \
                 deploy_branch=record['deploy_branch'], deploy_tag=record['deploy_tag'], \
                 project_type=record['project_type'], project_env=record['project_env'], deploy_status=record['status'], \
                 comment=record['comment'])
-        except Exception as e:
-            print e
+        except:
+            raise DatabaseError
 
     def reset_configfile(self, path, configfiles, env):
         cmds = []
@@ -80,8 +80,8 @@ class Deploy(APIView):
         if os.path.exists(project_dir):
             shutil.move(project_dir, project_dir + '_' + env +'_' + record['deploy_branch'] + '_' + record['deploy_tag'])
             tag_dir = project_dir + '_' + env + '_' + record['deploy_branch'] + '_' + record['deploy_tag']
-            print tag_dir
-            print os.path.exists(tag_dir)
+            # print tag_dir
+            # print os.path.exists(tag_dir)
             if os.path.exists(tag_dir):
                 os.chdir(tarfile_path)
                 shutil.make_archive(filename, "gztar", root_dir=tag_dir)
