@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^pushTest$', onekey_deploy_api.PushTest.as_view()),
     url(r'^pushProd$', onekey_deploy_api.PushProd.as_view()),
     url(r'^PtDeploy$', deploy_api.Deploy.as_view()),
+    url(r'^Rollback$', deploy_api.Rollback.as_view()),
 ]
