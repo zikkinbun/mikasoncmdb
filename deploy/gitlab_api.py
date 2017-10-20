@@ -168,7 +168,7 @@ class GetTags(APIView):
 
     def post(self, request, format=None):
         project_name = json.loads(request.body).get('project', None)
-        if project is None:
+        if project_name is None:
             raise ParamException('project')
         project = self.get_id(project_name)
 
@@ -200,7 +200,7 @@ class GetBranchs(APIView):
 
     def post(self, request, format=None):
         project_name = json.loads(request.body).get('project', None)
-        if project is None:
+        if project_name is None:
             raise ParamException('project')
         project = self.get_id(project_name)
 
