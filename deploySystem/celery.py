@@ -54,7 +54,7 @@ def deployTask():
 
 @app.task(name='periods.zabbix_agent_task.get_agent_cpu_data')
 def get_agent_cpu_data():
-    from asset.models import Server
+    from zabbixapi.models import cpustat
 
     hostlist = ['192.168.1.209', '127.0.0.1', '192.168.1.211', '192.168.1.212', '192.168.1.213', '192.168.1.214', '192.168.1.215']
     os.chdir('/usr/local/zabbix/bin')
@@ -82,7 +82,7 @@ def get_agent_cpu_data():
 
 @app.task(name='periods.zabbix_agent_task.get_agent_cpu_load')
 def get_agent_cpu_load():
-    from asset.models import Server
+    from zabbixapi.models import cpuload
 
     hostlist = ['192.168.1.209', '127.0.0.1', '192.168.1.211', '192.168.1.213', '192.168.1.213', '192.168.1.214', '192.168.1.215']
     os.chdir('/usr/local/zabbix/bin')
@@ -99,7 +99,7 @@ def get_agent_cpu_load():
 
 @app.task(name='periods.zabbix_agent_task.get_agent_mem_stat')
 def get_agent_mem_stat():
-    from asset.models import Server
+    from zabbixapi.models import memstat
 
     hostlist = ['192.168.1.209', '127.0.0.1', '192.168.1.211', '192.168.1.212', '192.168.1.213', '192.168.1.214', '192.168.1.215']
     os.chdir('/usr/local/zabbix/bin')
@@ -114,7 +114,7 @@ def get_agent_mem_stat():
 
 @app.task(name='periods.zabbix_agent_task.agent_ping')
 def agent_ping():
-    from asset.models import Server
+    from zabbixapi.models import Server
 
     itemlist = ['23682', '23804', '23870', '23911', '23952', '23993', '23287']
     namelist = ['gdr_dev', 'gdr_test', 'gdr_rd_prod', 'gdr_sql_mt', 'gdr_sql_sl', 'gdr_web_prod', 'zabbix_server']
