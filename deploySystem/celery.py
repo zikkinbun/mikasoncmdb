@@ -4,7 +4,8 @@ from __future__ import absolute_import, unicode_literals
 from django.conf import settings
 import os
 import time
-from datetime import time
+
+from datetime import datetime
 from celery import Celery
 
 
