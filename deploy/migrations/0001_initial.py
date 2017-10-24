@@ -14,4 +14,35 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.CreateModel(
+            name='Projects',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('pid', models.IntegerField(max_length=32, verbose_name='\u9879\u76eeID')),
+                ('name', models.CharField(blank=True, max_length=32, null=True, verbose_name='\u9879\u76ee\u540d\u79f0')),
+                ('type', models.CharField(blank=True, max_length=32, null=True, verbose_name='\u9879\u76ee\u7c7b\u578b')),
+                ('ssh_url', models.CharField(blank=True, max_length=255, null=True, verbose_name='\u9879\u76eeSSH\u5730\u5740')),
+                ('http_url', models.CharField(blank=True, max_length=255, null=True, verbose_name='\u9879\u76eeHTTP\u5730\u5740')),
+                ('branches', models.CharField(blank=True, max_length=255, null=True, verbose_name='\u9879\u76ee\u5206\u652f')),
+                ('tags', models.TextField(blank=True, max_length=1000, null=True, verbose_name='\u9879\u76ee\u6807\u7b7e')),
+                ('configfile', models.CharField(blank=True, max_length=255, null=True, verbose_name='\u9879\u76ee\u914d\u7f6e')),
+                ('owner', models.CharField(blank=True, max_length=32, null=True, verbose_name='\u9879\u76ee\u8d1f\u8d23\u4eba')),
+                ('createdate', models.DateField(blank=True, default=datetime.datetime(2017, 10, 24, 16, 38, 43, 512535))),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Records',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('project_name', models.CharField(max_length=50, verbose_name='\u53d1\u5e03\u9879\u76ee\u540d')),
+                ('project_owner', models.CharField(max_length=32, verbose_name='\u9879\u76ee\u8d1f\u8d23\u4eba')),
+                ('project_type', models.CharField(blank=True, max_length=32, null=True, verbose_name='\u9879\u76ee\u7c7b\u578b')),
+                ('project_env', models.CharField(blank=True, max_length=32, null=True, verbose_name='\u9879\u76ee\u73af\u5883')),
+                ('deploy_branch', models.CharField(max_length=32, verbose_name='\u53d1\u5e03\u5206\u652f')),
+                ('deploy_tag', models.CharField(max_length=32, verbose_name='\u53d1\u5e03\u6807\u7b7e')),
+                ('deploy_status', models.CharField(max_length=32, verbose_name='\u53d1\u5e03\u72b6\u6001')),
+                ('comment', models.CharField(blank=True, max_length=50, null=True, verbose_name='\u5907\u6ce8')),
+                ('deploy_time', models.DateField(blank=True, default=datetime.datetime.now)),
+            ],
+        ),    
     ]

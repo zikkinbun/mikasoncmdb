@@ -48,9 +48,10 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'djcelery',
+    'kombu.transport.django',
     'zabbixapi',
     'work',
-    # 'kombu.transport.django',
+    'periods',
     'deployuser',
     'django_crontab',
     'django.contrib.admin',
@@ -125,7 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -177,8 +178,8 @@ AUTH_USER_MODEL = 'deployuser.CustomUser'
 
 # BROKER_URL='redis://:gdrdev2016@112.74.182.80:6379/7'
 # CELERY_RESULT_BACKEND='redis://:gdrdev2016@112.74.182.80:6379/8'
-BROKER_URL='redis://:127.0.0.1:6379/0'
-CELERY_RESULT_BACKEND='redis://:127.0.0.1:6379/1'
+BROKER_URL='redis://127.0.0.1:6379/0'
+CELERY_RESULT_BACKEND='redis://127.0.0.1:6379/1'
 # CELERYBEAT_SCHEDULE = {
 #     'every-minute': {
 #         'task': 'celery_tasks.overview_records',
@@ -194,4 +195,4 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_ACCEPT_CONTENT=['json']
 CELERY_TIMEZONE = 'Asia/Shanghai'
 CELERY_ENABLE_UTC = True
-# CELERY_IMPORTS = ("",)
+# CELERY_IMPORTS = ("periods.deploy_task.deployTask",)
