@@ -249,7 +249,7 @@ class PeriodDeploy(object):
                 'deploy_tag': self.tag
             }
 
-            cmds = self.reset_configfile(filename, '/home/wwwroot/releases/', configfile, self.env)
+            cmds = self.reset_configfile(filename, '/home/wwwroot/releases/', self.config, self.env)
             # print cmds
             checkout = self.clone_checkout(record, url, package_path, project_dir)
             if checkout['retcode'] == 0:
@@ -296,7 +296,7 @@ class PeriodDeploy(object):
                 'deploy_tag': self.tag
             }
 
-            cmds = self.reset_configfile(filename, '/home/wwwroot/releases/', configfile, env)
+            cmds = self.reset_configfile(filename, '/home/wwwroot/releases/', self.config, env)
             checkout = self.clone_checkout(record, url, package_path, project_dir)
             if checkout['retcode'] == 0:
                 tar = self.tar_package(record, project_dir, tarfile_path, filename, self.env)

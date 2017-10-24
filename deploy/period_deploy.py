@@ -63,8 +63,7 @@ class PeriodDeploy(APIView):
             raise ParamException('time')
 
         date = time.strftime("%Y-%m-%d", time.localtime(float(str(crontab_date)[:10])))
-        current = time.strftime("%H:%M:%S", time.localtime(float(str(crontab_time)[:10])))
-
+        current = time.strftime("%H:%M", time.localtime(float(str(crontab_time)[:10])))
 
         task = {
             'name': name,
@@ -78,7 +77,7 @@ class PeriodDeploy(APIView):
             'status': 0
         }
         # status状态码：0 = 未执行 1 = 执行成功 2 = 执行失败
-        # print task
+        print task
 
         new_task = self.create_period(task)
 
