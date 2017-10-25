@@ -77,7 +77,7 @@ class PeriodDeploy(APIView):
             'status': 0
         }
         # status状态码：0 = 未执行 1 = 执行成功 2 = 执行失败
-        print task
+        # print task
 
         new_task = self.create_period(task)
 
