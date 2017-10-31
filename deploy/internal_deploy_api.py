@@ -19,7 +19,8 @@ class PeriodDeploy(object):
         self.branch = branch
         self.tag = tag
         self.env = env
-        self.config = config
+        self.config = []
+        self.config.append(config)
         self.type = type
 
     def create_record(self, record):
