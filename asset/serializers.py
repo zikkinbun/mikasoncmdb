@@ -1,6 +1,6 @@
 # coding: utf-8
 from django.db import models
-from .models import Server, IDC, Docker_Container, Docker_Image
+from .models import Server, Docker_Container, Docker_Image
 from rest_framework import serializers
 
 class ServerSerializers(serializers.ModelSerializer):

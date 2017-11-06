@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'kombu.transport.django',
     'zabbixapi',
     'work',
+    'network',
     'dbmonitor',
     'deployuser',
     'django_crontab',

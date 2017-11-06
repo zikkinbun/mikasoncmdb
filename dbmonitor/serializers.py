@@ -1,5 +1,5 @@
 # coding: utf-8
-from .models import Mysql_Monitor, Mysql_Replication, Mysql_Connection, Mysql_Status
+from .models import Mysql_Processlist, Mysql_Monitor, Mysql_Replication, Mysql_Connection, Mysql_Status
 from rest_framework import serializers
 
 class MysqlMonitorSerializers(serializers.ModelSerializer):
@@ -24,4 +24,10 @@ class MysqlConnSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Mysql_Connection
+        fields = '__all__'
+
+class MysqlProcSerializers(serializers.ModelSerializer):
+
+    class Meta:
+        model = Mysql_Processlist
         fields = '__all__'

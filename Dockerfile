@@ -1,13 +1,13 @@
 FROM python:2.7
 
-ENV PYTHONUNBUFFERED 1
+ADD . /usr/src/MikasonOperBackend
 
-RUN mkdir /MikasonOperBackend
+WORKDIR /usr/src/MikasonOperBackend
 
-WORKDIR /MikasonOperBackend
-
-ADD requirements.txt /MikasonOperBackend/
+ADD requirements.txt /usr/src/MikasonOperBackend
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-ADD . /MikasonOperBackend/
+CMD ["python", "./manage.py", "runserver", "0.0.0.0:8080"]
+
+EXPOSE 8080

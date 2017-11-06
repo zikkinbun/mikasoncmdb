@@ -43,12 +43,12 @@ class PeriodDeploy(APIView):
         if tag is None:
             raise ParamException('tag')
         env = json.loads(request.body).get('env', None)
-        if env is None:
-            raise ParamException('env')
         if env == u'生产环境':
             env = 'prod'
-        else:
+        elif env == u'测试环境':
             env = 'test'
+        else:
+            env = None   
         config = json.loads(request.body).get('config', None)
         if config is None:
             raise ParamException('config')
@@ -62,6 +62,8 @@ class PeriodDeploy(APIView):
         if crontab_time is None:
             raise ParamException('time')
 
+        target = json.loads(request.body).get('target', None)
+
         date = time.strftime("%Y-%m-%d", time.localtime(float(str(crontab_date)[:10])))
         current = time.strftime("%H:%M", time.localtime(float(str(crontab_time)[:10])))
 
@@ -72,6 +74,7 @@ class PeriodDeploy(APIView):
             'tag': tag,
             'env': env,
             'config': config,
+            'target': target,
             'type': type,
             'crontab': date + ' ' + current,
             'status': 0

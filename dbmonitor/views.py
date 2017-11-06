@@ -39,11 +39,59 @@ class MysqlStatus(APIView):
         }
         return Response(msg)
 
+class MysqlCom(APIView):
+
+    def get_com_data(self, ip):
+        try:
+            com_object = Mysql_Status.objects.filter(db_ip=ip).order_by('-create_time')[:100]
+            serializer = MysqlStatusSerializers(com_object, many=True)
+            Com_select = []
+            Com_insert = []
+            Com_update = []
+            Com_commit = []
+            Com_rollback = []
+            Com_delete = []
+            query = []
+            for data in serializer.data:
+                Com_select.append(int(data['com_select']))
+                Com_insert.append(int(data['com_insert']))
+                Com_update.append(int(data['com_update']))
+                Com_commit.append(int(data['com_commit']))
+                Com_rollback.append(int(data['com_rollback']))
+                Com_delete.append(int(data['com_delete']))
+                query.append(int(data['queries']))
+            response = {
+                'com_select': Com_select,
+                'com_insert': Com_insert,
+                'com_update': Com_update,
+                'com_commit': Com_commit,
+                'com_rollback': Com_rollback,
+                'com_delete': Com_delete,
+                'queries': query
+            }
+            return response
+        except Exception as e:
+            print e
+
+    def post(self, request, format=None):
+        ip = json.loads(request.body).get('ip', None)
+        if ip is None:
+            raise ParamException('ip')
+
+        data = self.get_com_data(ip)
+        if data:
+            msg = {
+                'retcode': 0,
+                'retdata': data,
+                'retmsg': 'success'
+            }
+            return Response(msg)
+
 class MysqlConns(APIView):
 
     def get_conn_by_ip(self, ip):
         try:
-            return Mysql_Connection.objects.filter(db_ip=ip).order_by('-create_time')
+            return Mysql_Connection.objects.filter(db_ip=ip).order_by('-create_time')[:10]
         except Exception as e:
             print e
 

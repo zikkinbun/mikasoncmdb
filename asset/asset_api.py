@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from util.exception import BaseException, ParamException
 from util.error import BaseError, CommonError
 
-from .models import Server, IDC
+from .models import Server
 from .serializers import ServerSerializers
 import json
 # Create your views here.

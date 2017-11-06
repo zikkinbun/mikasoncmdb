@@ -38,11 +38,11 @@ class ListSwarmImage(APIView):
                 'Created': created,
                 'Size': str(y) + ' MB'
             }
-            current_images = Docker_Image.objects.filter(imageId=image['Id'])
+            current_images = Docker_Image.objects.filter(image_id=image['Id'])
             if current_images:
-                current_images.update(imageId=image['Id'], imageName=image['Name'], size=image['Size'], createdate=image['Created'])
+                current_images.update(image_id=image['Id'], image_name=image['Name'], size=image['Size'], create_date=image['Created'])
             else:
-                current_images.create(imageId=image['Id'], imageName=image['Name'], size=image['Size'], createdate=image['Created'])
+                current_images.create(image_id=image['Id'], image_name=image['Name'], size=image['Size'], create_date=image['Created'])
 
         images = self.get_images()
         serializer = DockerImageSerializers(images, many=True)
@@ -109,12 +109,12 @@ class ListSwarmContainer(APIView):
                 'Status': data['Status'],
                 'Created': created,
                 }
-            current_containers = Docker_Container.objects.filter(containerId=container['id'])
+            current_containers = Docker_Container.objects.filter(container_id=container['id'])
             if current_containers:
                 current_containers.update(state=container['State'], status=container['Status'])
             else:
-                current_containers.create(hostName=container['host'], containerId=container['id'], containerName=container['Name'], imageName=container['Image'], \
-                                            command=container['Command'], createdate=container['Created'], state=container['State'], status=container['Status'])
+                current_containers.create(host_name=container['host'], container_id=container['id'], container_name=container['Name'], image_name=container['Image'], \
+                                            command=container['Command'], create_date=container['Created'], state=container['State'], status=container['Status'])
         containers = self.get_container()
         serializer = DockerContainerSerializers(containers, many=True)
         response = {
@@ -171,7 +171,7 @@ class DeleteSwarmContain(APIView):
         r = requests.delete(dockerd_url)
         code = r.status_code
         if code == '200' or code == 200 or code == '204' or code == 204:
-            Docker_Container.objects.filter(containerId=containerId).delete()
+            Docker_Container.objects.filter(container_id=containerId).delete()
             response = {
                 'retcode': 0,
                 'retmsg': 'delete success'

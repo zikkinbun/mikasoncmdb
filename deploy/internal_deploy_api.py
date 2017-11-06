@@ -14,11 +14,12 @@ import os
 
 class PeriodDeploy(object):
 
-    def __init__(self, project, branch, tag, env, config, type):
+    def __init__(self, project, branch, tag, env, config, type, target):
         self.project = project
         self.branch = branch
         self.tag = tag
         self.env = env
+        self.target = target
         self.config = []
         self.config.append(config)
         self.type = type
@@ -322,8 +323,49 @@ class PeriodDeploy(object):
             else:
                 return checkout
         else:
-            msg = {
-                'retcode': -3,
-                'retmsg': 'ENV is not setted'
-            }
-            return msg
+            if self.target:
+                host = self.target
+                self.env = "prod"
+                package_path = '/apps/packages/'
+                tarfile_path = os.path.join(package_path, 'releases')
+                project_dir = os.path.join(package_path, self.project)
+                saltmaster_dir = '/srv/salt/prod/packages/'
+
+                url_data = get_url(self.project)
+                url = url_data['url']
+                owner = url_data['owner']
+
+                dirname = self.project + '_prod_' + self.branch + '_' + self.tag
+                filename = self.project + '_prod_' + self.branch + '_' + self.tag + '_' + time.strftime("%Y%m%d")
+                tarfilename = self.project + '_prod_' + self.branch + '_' + self.tag + '_' + time.strftime("%Y%m%d") + '.tar.gz'
+                record = {
+                    'project_name': self.project,
+                    'project_owner': owner,
+                    'project_env': 'PROD',
+                    'project_type': self.type,
+                    'deploy_branch': self.branch,
+                    'deploy_tag': self.tag
+                }
+                cmds = self.reset_configfile(filename, '/home/wwwroot/releases/', self.config, self.env)
+                checkout = self.clone_checkout(record, url, package_path, project_dir)
+                if checkout['retcode'] == 0:
+                    tar = self.tar_package(record, project_dir, tarfile_path, filename, self.env)
+                    if tar['retcode'] == 0:
+                        cp = self.cp_saltdir(record, tarfile_path, tarfilename, saltmaster_dir)
+                        if cp['retcode'] == 0:
+                            upload = self.saltApi_copy_dst(record, host, saltmaster_dir, tarfilename, filename, self.env)
+                            if upload['retcode'] == 0:
+                                release = self.saltApi_release_dir(record, host, saltmaster_dir, tarfilename, tarfile_path, package_path, dirname, filename)
+                                if release['retcode'] == 0:
+                                    config = self.saltApi_config_dir(cmds, host, record)
+                                    return config
+                                else:
+                                    return release
+                            else:
+                                return upload
+                        else:
+                            return cp
+                    else:
+                        return tar
+                else:
+                    return checkout
