@@ -87,7 +87,7 @@ def get_agent_cpu_data():
 def get_agent_cpu_load():
     from zabbixapi.models import cpuload
 
-    hostlist = ['192.168.1.209', '127.0.0.1', '192.168.1.211', '192.168.1.213', '192.168.1.213', '192.168.1.214', '192.168.1.215']
+    hostlist = ['192.168.1.209', '127.0.0.1', '192.168.1.211', '192.168.1.212', '192.168.1.213', '192.168.1.214', '192.168.1.215']
     os.chdir('/usr/local/zabbix/bin')
     for host in hostlist:
         args1 = './zabbix_get -s %s -p 10050 -k "system.cpu.load[all,avg1]"' % host
