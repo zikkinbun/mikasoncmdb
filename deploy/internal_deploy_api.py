@@ -325,6 +325,7 @@ class PeriodDeploy(object):
         else:
             if self.target:
                 host = self.target
+                print self.target
                 self.env = "prod"
                 package_path = '/apps/packages/'
                 tarfile_path = os.path.join(package_path, 'releases')
