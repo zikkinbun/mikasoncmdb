@@ -42,7 +42,7 @@ def deployTask():
                 # time_range = current_time - task['period']
                 # print time_ranger
                 if str(task['period']) == current_time:
-                    periodtask = PeriodDeploy(task['project'], task['branch'], task['tag'], task['env'], task['config'], task['type'])
+                    periodtask = PeriodDeploy(task['project'], task['branch'], task['tag'], task['config'], task['type'], task['env'], task['target'])
                     status = periodtask.run()
                     if status['retcode'] == 0:
                         PeriodTask.objects.filter(id=task['id']).update(status=1)
