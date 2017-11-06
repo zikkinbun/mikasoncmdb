@@ -11,3 +11,5 @@ deployuser/migrations/*.pyc
 work/migrations/*.pyc
 zabbixapi/migrations/*.pyc
 period/*.pyc
+dbmonitor/migrations/*.pyc
+network/migrations/*.pyc

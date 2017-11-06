@@ -14,7 +14,7 @@ import os
 
 class PeriodDeploy(object):
 
-    def __init__(self, project, branch, tag, env, config, type, target):
+    def __init__(self, project, branch, tag, env=None, config, type, target=None):
         self.project = project
         self.branch = branch
         self.tag = tag
@@ -299,7 +299,7 @@ class PeriodDeploy(object):
                 'deploy_tag': self.tag
             }
 
-            cmds = self.reset_configfile(filename, '/home/wwwroot/releases/', self.config, env)
+            cmds = self.reset_configfile(filename, '/home/wwwroot/releases/', self.config, self.env)
             checkout = self.clone_checkout(record, url, package_path, project_dir)
             if checkout['retcode'] == 0:
                 tar = self.tar_package(record, project_dir, tarfile_path, filename, self.env)
