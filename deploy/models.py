@@ -29,7 +29,6 @@ class Projects(models.Model):
     owner = models.CharField(max_length=32, blank=True, null=True, verbose_name=u'项目负责人')
     createdate = models.DateField(blank=True, default=datetime.now())
 
-
 class PeriodTask(models.Model):
     name = models.CharField(max_length=32, blank=True, null=True, verbose_name=u'任务名称')
     project = models.CharField(max_length=50, verbose_name=u'项目名称')

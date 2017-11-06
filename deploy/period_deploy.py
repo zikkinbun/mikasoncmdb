@@ -23,7 +23,7 @@ class PeriodDeploy(APIView):
     def create_period(self, task):
         try:
             return PeriodTask.objects.create(name=task['name'], project=task['project'], branch=task['branch'], \
-                tag=task['tag'], env=task['env'], config=task['config'], type=task['type'], period=task['crontab'], status=task['status'])
+                tag=task['tag'], env=task['env'], target=task['target'], config=task['config'], type=task['type'], period=task['crontab'], status=task['status'])
         except Exception as e:
             print e
 
@@ -48,7 +48,7 @@ class PeriodDeploy(APIView):
         elif env == u'测试环境':
             env = 'test'
         else:
-            env = None   
+            env = None
         config = json.loads(request.body).get('config', None)
         if config is None:
             raise ParamException('config')
