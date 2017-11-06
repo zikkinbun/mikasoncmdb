@@ -40,4 +40,5 @@ class PeriodTask(models.Model):
     type = models.CharField(max_length=32, verbose_name=u'项目类型')
     period = models.CharField(max_length=64, blank=True, null=True, verbose_name=u'定时器')
     status = models.IntegerField(verbose_name=u'状态')
+    target = models.CharField(max_length=64, blank=True, null=True, verbose_name=u'目标')
     createdate = models.DateField(blank=True, default=datetime.now())
