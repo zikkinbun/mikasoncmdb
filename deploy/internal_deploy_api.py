@@ -14,7 +14,7 @@ import os
 
 class PeriodDeploy(object):
 
-    def __init__(self, project, branch, tag, env=None, config, type, target=None):
+    def __init__(self, project, branch, tag, env='', config, type, target=''):
         self.project = project
         self.branch = branch
         self.tag = tag
