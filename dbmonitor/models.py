@@ -26,6 +26,7 @@ class Mysql_Monitor(models.Model):
     delay_threshold = models.IntegerField(default=3600)
     check_slave = models.IntegerField(default=0)
     replchannel = models.CharField(max_length=32, blank=True, null=True)
+    check_status = models.IntegerField(default=0)
     alarm_times = models.IntegerField(default=3)
     alarm_interval = models.IntegerField(default=60)
     mail_to = models.CharField(max_length=255, blank=True, null=True)

@@ -147,44 +147,41 @@ def agent_ping():
 
 @app.task(name='dbmonitor.task.get_replication')
 def get_replication():
+    from dbmonitor.models import Mysql_Monitor
+    from dbmonitor.serializers import MysqlMonitorSerializers
     from dbmonitor.mysql_library import repl_update_or_create
     from dbmonitor.connector import mysql_connector
 
-    cursor = mysql_connector('39.108.177.246', 3306, 'slave', 'xdzDW73ozbQ4')
+    infos = Mysql_Monitor.objects.all()
+    serializer = MysqlMonitorSerializers(infos, many=True)
     sql = 'show slave status'
-    data = cursor.select_all(sql)
-    # print data[0]
-    record = repl_update_or_create(data, '39.108.177.246', 3306)
+    if serializer.data:
+        for info in serializer.data:
+            if info['check_slave'] == 1 or info['check_slave'] == '1':
+                cursor = mysql_connector(info['db_ip'], info['db_port'], info['db_user'], info['db_pass'])
+                data = cursor.select_all(sql)
+                record = repl_update_or_create(data, info['db_ip'], info['db_port'])
 
 @app.task(name='dbmonitor.task.get_global_status')
 def get_global_status():
+    from dbmonitor.models import Mysql_Monitor
+    from dbmonitor.serializers import MysqlMonitorSerializers
     from dbmonitor.mysql_library import status_create, status_querySet
     from dbmonitor.connector import mysql_connector
 
-    master = {
-        'host': '39.108.131.173',
-        'port': 3306
-    }
-    slave = {
-        'host': '39.108.177.246',
-        'port': 3306
-    }
-    cursor_master = mysql_connector(master['host'], master['port'], 'db_writer', '8^>ozBE?A.Zw')
-    cursor_slave = mysql_connector(slave['host'], slave['port'], 'slave', 'xdzDW73ozbQ4')
-
+    infos = Mysql_Monitor.objects.all()
+    serializer = MysqlMonitorSerializers(infos, many=True)
     sql = "show global status"
-
-    slave_datas = cursor_slave.select_all(sql)
-    master_datas = cursor_master.select_all(sql)
-
-    slave_status_dataset = status_querySet(slave_datas)
-    master_status_dataset = status_querySet(master_datas)
-
-    # print slave_status_dataset
-    # print master_status_dataset
-
-    master_record = status_create(master_status_dataset, master['host'], master['port'])
-    slave_record = status_create(slave_status_dataset, slave['host'], slave['port'])
+    if serializer.data:
+        for info in serializer.data:
+            if info['check_status'] == 1 or info['check_status'] == '1':
+                # print info['check_status']
+                cursor = mysql_connector(info['db_ip'], info['db_port'], info['db_user'], info['db_pass'])
+                datas = cursor.select_all(sql)
+                # print datas
+                status_dataset = status_querySet(datas)
+                # print status_dataset
+                record = status_create(status_dataset, info['db_ip'], info['db_port'])
     # print dataset
 
 @app.task(name='dbmonitor.task.get_connections')
@@ -201,7 +198,10 @@ def get_connections():
     if serializer.data:
         for info in serializer.data:
             # print info
-            cursor = mysql_connector(info['db_ip'], info['db_port'], info['db_user'], info['db_pass'])
-            datas = cursor.select_all(sql)
-            dataset = connection_querySet(datas)
-            record = connection_create(dataset, info['db_ip'], info['db_port'])
+            if info['check_connections'] == 1 or info['check_connections'] == '1':
+                cursor = mysql_connector(info['db_ip'], info['db_port'], info['db_user'], info['db_pass'])
+                datas = cursor.select_all(sql)
+                dataset = connection_querySet(datas)
+                record = connection_create(dataset, info['db_ip'], info['db_port'])
+            else:
+                break

@@ -2,7 +2,10 @@
 from __future__ import unicode_literals
 
 from django.utils import timezone
+from django.utils.timezone import utc
 from .models import Mysql_Status, Mysql_Replication, Mysql_Connection, Mysql_Monitor
+
+from datetime import datetime
 
 def status_update_or_create(dataset, ip, port):
     record = Mysql_Status.objects.filter(db_ip=ip)
@@ -217,7 +220,7 @@ def repl_update_or_create(data, ip, port):
             master_server=data[0]['Master_Host'], master_user=data[0]['Master_User'], master_port=data[0]['Master_Port'], \
             slave_io_run=data[0]['Slave_IO_Running'], slave_sql_run=data[0]['Slave_SQL_Running'], delay=data[0]['SQL_Delay'], \
             current_binlog_file=data[0]['Relay_Log_File'], current_binlog_pos=data[0]['Relay_Log_Pos'], master_binlog_file=data[0]['Master_Log_File'], \
-            master_binlog_pos=data[0]['Read_Master_Log_Pos'], master_binlog_space=data[0]['Relay_Log_Space'], slave_sql_running_state=data[0]['Slave_SQL_Running_State'])
+            master_binlog_pos=data[0]['Read_Master_Log_Pos'], master_binlog_space=data[0]['Relay_Log_Space'], slave_sql_running_state=data[0]['Slave_SQL_Running_State'], create_time=datetime.now().replace(tzinfo=utc))
     else:
         Mysql_Replication.objects.create(db_ip=ip, db_port=port, is_slave=1, \
             master_server=data[0]['Master_Host'], master_user=data[0]['Master_User'], master_port=data[0]['Master_Port'], \
