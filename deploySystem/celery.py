@@ -161,6 +161,8 @@ def get_replication():
                 cursor = mysql_connector(info['db_ip'], info['db_port'], info['db_user'], info['db_pass'])
                 data = cursor.select_all(sql)
                 record = repl_update_or_create(data, info['db_ip'], info['db_port'])
+            else:
+                continue
 
 @app.task(name='dbmonitor.task.get_global_status')
 def get_global_status():
@@ -182,8 +184,9 @@ def get_global_status():
                 status_dataset = status_querySet(datas)
                 # print status_dataset
                 record = status_create(status_dataset, info['db_ip'], info['db_port'])
-    # print dataset
-
+            else:
+                continue
+            
 @app.task(name='dbmonitor.task.get_connections')
 def get_connections():
     from dbmonitor.models import Mysql_Monitor
@@ -204,4 +207,4 @@ def get_connections():
                 dataset = connection_querySet(datas)
                 record = connection_create(dataset, info['db_ip'], info['db_port'])
             else:
-                break
+                continue
