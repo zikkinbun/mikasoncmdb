@@ -117,10 +117,11 @@ def get_agent_mem_stat():
 
 @app.task(name='periods.zabbix_agent_task.agent_ping')
 def agent_ping():
-    from zabbixapi.models import Server
+    from asset.models import Server
 
     itemlist = ['23682', '23804', '23870', '23911', '23952', '23993', '23287']
-    namelist = ['gdr_dev', 'gdr_test', 'gdr_rd_prod', 'gdr_sql_mt', 'gdr_sql_sl', 'gdr_web_prod', 'zabbix_server']
+    namelist = ['uco2_dev', 'uco2_test', 'uco2_rd_prod', 'uco2_sql_mt', 'uco2_sql_sl', 'uco2_web_prod', 'uco2_oper']
+    idlist = [9, 2, 3, 4, 5, 6, 7]
     method = "history.get"
     data = {}
     for i in range(len(itemlist)):
@@ -136,12 +137,12 @@ def agent_ping():
             data[namelist[i]] = ping
     servers = Server.objects.all()
     for server in servers:
-        ping = data[server.Name]
+        ping = data[server[name]]
             # print type(ping)
-        if ping == int(1):
-            Server.objects.filter(Name=server.Name).update(Status='在线')
+        if ping == 1:
+            Server.objects.filter(name=server[name]).update(status='在线')
         else:
-            Server.objects.filter(Name=server.Name).update(Status='不在线')
+            Server.objects.filter(name=server[name]).update(status='不在线')
     return "{'data': '请求成功'}"
 
 
@@ -186,7 +187,7 @@ def get_global_status():
                 record = status_create(status_dataset, info['db_ip'], info['db_port'])
             else:
                 continue
-            
+
 @app.task(name='dbmonitor.task.get_connections')
 def get_connections():
     from dbmonitor.models import Mysql_Monitor
