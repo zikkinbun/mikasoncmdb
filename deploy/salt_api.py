@@ -77,7 +77,7 @@ class SaltAPI(object):
         ret = content['return'][0]['data']['success']
         return ret
 
-    def accept_key(self,node_name):
+    def accept_key(self, node_name):
         '''
         接受salt主机
         '''
@@ -89,7 +89,7 @@ class SaltAPI(object):
         ret = content['return'][0]['data']['success']
         return ret
 
-    def salt_runner(self,jid):
+    def salt_runner(self, jid):
         '''
         通过jid获取执行结果
         '''
@@ -113,7 +113,7 @@ class SaltAPI(object):
         ret = content['return'][0]
         return ret
 
-    def salt_state(self,tgt,arg,expr_form):
+    def salt_state(self, tgt, arg, expr_form):
         '''
         sls文件
         '''
@@ -125,7 +125,7 @@ class SaltAPI(object):
         return ret
 
 
-    def project_manage(self,tgt,fun,arg1,arg2,arg3,arg4,arg5,expr_form):
+    def project_manage(self, tgt, fun, arg1, arg2, arg3, arg4, arg5, expr_form):
         '''
         文件上传、备份到minion、项目管理
         '''

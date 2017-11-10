@@ -204,7 +204,7 @@ class Deploy(APIView):
 
     def saltApi_config_dir(self, cmds, target, record):
         saltapi = SaltAPI('https://120.77.46.79:7000', 'saltapi', 'saltadmin')
-        init = 'sh /apps/sh/node_init.sh %s init' % record['project_name']
+        init = 'python /apps/sh/node_init.py %s init' % record['project_name']
         # chown = 'chown -R prod.prod /home/wwwroot/releases/' + filename
         for cmd in cmds:
             saltapi.remote_execute(target, 'cmd.run', cmd, 'glob')
@@ -525,7 +525,7 @@ class Rollback(APIView):
 
     def saltApi_config_dir(self, cmds, target, record):
         saltapi = SaltAPI('https://120.77.46.79:7000', 'saltapi', 'saltadmin')
-        init = 'sh /apps/sh/node_init.sh %s init' % record['project_name']
+        init = 'python /apps/sh/node_init.py %s init' % record['project_name']
         # chown = 'chown -R prod.prod /home/wwwroot/releases/' + filename
         for cmd in cmds:
             saltapi.remote_execute(target, 'cmd.run', cmd, 'glob')
