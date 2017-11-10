@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 from django.db import DatabaseError
+from django.http import Http404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
@@ -52,6 +53,26 @@ class ListSwarmImage(APIView):
         }
         return Response(response)
 
+class DeletaSwarmImages(APIView):
+
+    def post(self, request, format=None):
+        imageId = json.loads(request.body).get('image_id', None)
+        if imageId is None:
+            raise ParamException('image_id')
+        dockerd_url = 'http://39.108.141.79:4000/images/%s' % imageId
+        r = requests.delete(dockerd_url)
+        code = r.status_code
+        if code == '200' or code == 200 or code == '204' or code == 204:
+            Docker_Image.objects.filter(image_id=imageId).delete()
+            response = {
+                'retcode': 0,
+                'retmsg': 'delete success'
+            }
+            return Response(response)
+        else:
+            raise Http404('image is not exist')
+
+
 class InspectSwarmContain(APIView):
 
     def post(self, request, format=None):
@@ -79,7 +100,7 @@ class InspectSwarmContain(APIView):
             }
             return Response(response)
         else:
-            return Http404
+            raise Http404('container is not exist')
 
 class ListSwarmContainer(APIView):
 
@@ -140,7 +161,7 @@ class StopSwarmContain(APIView):
             }
             return Response(response)
         else:
-            return Http404
+            raise Http404('container is not exist')
 
 class StartSwarmContain(APIView):
 
@@ -159,7 +180,7 @@ class StartSwarmContain(APIView):
             }
             return Response(response)
         else:
-            return Http404
+            raise Http404('container is not exist')
 
 class DeleteSwarmContain(APIView):
 
@@ -178,4 +199,4 @@ class DeleteSwarmContain(APIView):
             }
             return Response(response)
         else:
-            return Http404
+            raise Http404('container is not exist')

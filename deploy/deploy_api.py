@@ -466,6 +466,7 @@ class Rollback(APIView):
             tar_rm = 'rm -rf /home/wwwroot/releases/' + tarfilename
             rm_tar = saltapi.remote_execute(target, 'cmd.run', tar_rm, 'glob')
             upload = saltapi.file_copy(target, 'cp.get_file', src, dst, 'glob')
+            # upload = saltapi.file_copy(target, 'cp.get_file', src, dst, 'nodegroup')
             if upload:
                 msg = {
                     'retcode': 0,
@@ -530,6 +531,8 @@ class Rollback(APIView):
         for cmd in cmds:
             saltapi.remote_execute(target, 'cmd.run', cmd, 'glob')
         init_run = saltapi.remote_execute(target, 'cmd.run', init, 'glob')
+        # 目标为某组服务器
+        # init_run = saltapi.remote_execute(target, 'cmd.run', init, 'nodegroup')
         # chown_run = saltapi.remote_execute(prod_host, 'cmd.run', chown, 'glob')
 
         record['type'] = 'node'

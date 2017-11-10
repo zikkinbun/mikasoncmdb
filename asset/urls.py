@@ -33,6 +33,10 @@ urlpatterns = [
         docker_init_api.ListSwarmImage.as_view()
     ),
     url(
+        r'^DeleteImages$',
+        docker_init_api.DeletaSwarmImages.as_view()
+    ),
+    url(
         r'^ContainerDetail$',
         docker_init_api.InspectSwarmContain.as_view(),
     ),
