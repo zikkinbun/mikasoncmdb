@@ -22,12 +22,8 @@ from django.views.generic.base import TemplateView
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
     url(r'^deploy/', include('deploy.urls', namespace="deploy")),
-    # url(r'^asset/', include(router.urls)),
-    # url(r'^hooks/', include('webhooks.urls', namespace="webhooks")),
-    url(r'^zabbixapi/', include('zabbixapi.urls', namespace="zabbixapi")),
-    url(r'^asset/', include('asset.urls', namespace="asset")),
+    url(r'^server/', include('server.urls', namespace="server")),
     url(r'^user/', include('deployuser.urls', namespace="user")),
-    url(r'^work/', include('work.urls', namespace="work")),
-    url(r'^db/', include('dbmonitor.urls', namespace="db")),
+    url(r'^monitor/', include('monitor.urls', namespace="monitor")),
     url(r'^user/admin/', admin.site.urls),
 ]

@@ -1,0 +1,5 @@
+2017-11-16 22:02:16,173 [Thread-2:123145512792064] [sourceDns.webdns.views:328] [server_api_views:get_server_func_by_id] [ERROR]- global name 'ServerMonitorFuncRelation_func_id' is not defined
+2017-11-17 11:26:54,451 [Thread-2:123145506852864] [sourceDns.webdns.views:329] [server_api_views:get_server_func_by_id] [ERROR]- 'DatabaseWrapper' object has no attribute 'dictcursor'
+2017-11-17 11:27:12,322 [Thread-2:123145573666816] [sourceDns.webdns.views:329] [server_api_views:get_server_func_by_id] [ERROR]- 'DatabaseWrapper' object has no attribute 'Dictcursor'
+2017-11-17 11:29:56,021 [Thread-2:123145506721792] [sourceDns.webdns.views:330] [server_api_views:get_server_func_by_id] [ERROR]- cursor() takes exactly 1 argument (2 given)
+2017-11-17 11:29:57,421 [Thread-3:123145506721792] [sourceDns.webdns.views:330] [server_api_views:get_server_func_by_id] [ERROR]- cursor() takes exactly 1 argument (2 given)

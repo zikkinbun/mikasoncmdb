@@ -4,8 +4,9 @@ from django.db import DatabaseError
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Projects
-from .serializers import ProjectsSerializers
+
+from server.models import ServerProjects
+from server.serializers import ServerProjectsSerializers
 from util.exception import BaseException, ParamException
 from util.error import BaseError, CommonError
 
@@ -17,7 +18,7 @@ class GetProjectsInfo(APIView):
 
     def get_project(self):
         try:
-            return Projects.objects.all()
+            return ServerProjects.objects.all()
         except:
             raise DatabaseError
 
@@ -27,7 +28,7 @@ class GetProjectsInfo(APIView):
         request_project.start() # 开启多线程
 
         projects = self.get_project()
-        serializer = ProjectsSerializers(projects, many=True)
+        serializer = ServerProjectsSerializers(projects, many=True)
         datas = serializer.data
         rebuild = []
         for data in datas:
@@ -55,13 +56,13 @@ class RequestProject(threading.Thread):
 
     def create_project(self, project={}):
         try:
-            exists = Projects.objects.filter(pid=project['id'])
+            exists = ServerProjects.objects.filter(pid=project['id'])
             if exists:
                     exists.update(pid=project['id'], name=project['name'], owner=project['owner'], \
                         ssh_url=project['ssh_url'], http_url=project['http_url'], branches=project['branches'], \
                         tags=project['tags'])
             else:
-                Projects.objects.create(pid=project['id'], name=project['name'], owner=project['owner'], \
+                ServerProjects.objects.create(pid=project['id'], name=project['name'], owner=project['owner'], \
                     ssh_url=project['ssh_url'], http_url=project['http_url'], branches=project['branches'], \
                     tags=project['tags'])
         except:
@@ -90,7 +91,7 @@ class UpdateProjectInfo(APIView):
 
     def update_project(self, name, setting={}):
         try:
-            project = Projects.objects.filter(name=name)
+            project = ServerProjects.objects.filter(name=name)
             if project:
                 project.update(type=setting['type'], configfile=setting['config'])
         except:
@@ -98,7 +99,7 @@ class UpdateProjectInfo(APIView):
 
     def get_project(self, name):
         try:
-            return Projects.objects.get(name=name)
+            return ServerProjects.objects.get(name=name)
         except:
             raise DatabaseError
 
@@ -122,7 +123,7 @@ class UpdateProjectInfo(APIView):
 
         project = self.get_project(project_name)
         if project:
-            serializer = ProjectsSerializers(project)
+            serializer = ServerProjectsSerializers(project)
             response = {
                 'retcode': 0,
                 'retdata': serializer.data,
@@ -162,7 +163,7 @@ class GetTags(APIView):
 
     def get_id(self, project):
         try:
-            return Projects.objects.get(name=project)
+            return ServerProjects.objects.get(name=project)
         except:
             raise DatabaseError
 
@@ -194,7 +195,7 @@ class GetBranchs(APIView):
 
     def get_id(self, project):
         try:
-            return Projects.objects.get(name=project)
+            return ServerProjects.objects.get(name=project)
         except:
             raise DatabaseError
 
