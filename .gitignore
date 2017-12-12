@@ -15,3 +15,9 @@ dbmonitor/migrations/*.pyc
 network/migrations/*.pyc
 monitor/migrations/*.pyc
 server/migrations/*.pyc
+bussiness/migrations/*.pyc
+bussiness/*.pyc
+module/migrations/*.pyc
+module/*.pyc
+job/*.pyc
+job/migrations/*.pyc
