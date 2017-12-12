@@ -1,7 +1,7 @@
 # coding: utf-8
 from django.db import models
 from .models import Server, ServerContainer, ServerImage, ServerDetail, \
-    ServerMonitorFuncRelation, ServerProjects, ServerSevice
+    ServerMonitorFuncRelation, ServerProjects, ServerClusterRelate, Cluster
 from rest_framework import serializers
 
 class ServerSerializers(serializers.ModelSerializer):
@@ -41,8 +41,14 @@ class ServerProjectsSerializers(serializers.ModelSerializer):
         model = ServerProjects
         fields = '__all__'
 
-class ServerSeviceSerializers(serializers.ModelSerializer):
+class ClusterSerializers(serializers.ModelSerializer):
 
     class Meta:
-        model = ServerSevice
+        model = Cluster
+        fields = '__all__'
+
+class ServerClusterRelateSerializers(serializers.ModelSerializer):
+
+    class Meta:
+        model = ServerClusterRelate
         fields = '__all__'

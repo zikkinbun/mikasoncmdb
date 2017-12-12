@@ -10,3 +10,4 @@ djangorestframework==3.6.2
 uWSGI==2.0.15
 django_cors_headers==2.0.2
 django_crontab==0.7.1
+djangorestframework-jwt==1.11.0

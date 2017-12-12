@@ -24,16 +24,16 @@ class MysqlStatus(APIView):
         except Exception as e:
             logger.error(e)
 
-    def get_status_by_ip(self, ip):
+    def get_status_by_id(self, serverId):
         try:
-            return MonitorMysqlStatus.objects.filter(db_ip=ip)
+            return MonitorMysqlStatus.objects.filter(serverId=serverId)
         except Exception as e:
             logger.error(e)
 
     def post(self, request, format=None):
-        ip = json.loads(request.body).get('ip', None)
+        serverId = json.loads(request.body).get('serverId', None)
 
-        datas = self.get_status_by_ip(ip)
+        datas = self.get_status_by_id(serverId)
         serializer = MysqlStatusSerializers(datas, many=True)
         msg = {
             'retcode': 0,
@@ -44,9 +44,9 @@ class MysqlStatus(APIView):
 
 class MysqlCom(APIView):
 
-    def get_com_data(self, ip):
+    def get_com_data(self, serverId):
         try:
-            com_object = MonitorMysqlStatus.objects.filter(db_ip=ip).order_by('-create_time')[:100]
+            com_object = MonitorMysqlStatus.objects.filter(serverId=serverId).order_by('-create_time')[:100]
             serializer = MysqlStatusSerializers(com_object, many=True)
             Com_select = []
             Com_insert = []
@@ -77,11 +77,11 @@ class MysqlCom(APIView):
             logger.error(e)
 
     def post(self, request, format=None):
-        ip = json.loads(request.body).get('ip', None)
-        if ip is None:
-            raise ParamException('ip')
+        serverId = json.loads(request.body).get('serverId', None)
+        if serverId is None:
+            raise ParamException('serverId')
 
-        data = self.get_com_data(ip)
+        data = self.get_com_data(serverId)
         if data:
             msg = {
                 'retcode': 0,
@@ -92,9 +92,9 @@ class MysqlCom(APIView):
 
 class MysqlConns(APIView):
 
-    def get_conn_by_ip(self, ip):
+    def get_conn_by_id(self, serverId):
         try:
-            return MonitorMysqlConnection.objects.filter(db_ip=ip).order_by('-create_time')[:10]
+            return MonitorMysqlConnection.objects.filter(serverId=serverId).order_by('-create_time')[:10]
         except Exception as e:
             logger.error(e)
 

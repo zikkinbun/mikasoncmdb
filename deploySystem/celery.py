@@ -2,13 +2,16 @@
 # coding: utf-8
 from __future__ import absolute_import, unicode_literals
 from django.conf import settings
+from django.db import connection
 import os
 import time
+import inspect
+import logging
 
 from datetime import datetime
 from celery import Celery
 
-
+logger = logging.getLogger('sourceDns.webdns.views')
 
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'deploySystem.settings')
@@ -55,157 +58,138 @@ def deployTask():
     except Exception as e:
         print e
 
-@app.task(name='periods.zabbix_agent_task.get_agent_cpu_data')
+
+@app.task(name='monitor.task.get_agent_cpu_data')
 def get_agent_cpu_data():
-    from zabbixapi.models import cpustat
+    pass
 
-    hostlist = ['192.168.1.209', '127.0.0.1', '192.168.1.211', '192.168.1.212', '192.168.1.213', '192.168.1.214', '192.168.1.215']
-    os.chdir('/usr/local/zabbix/bin')
-    for host in hostlist:
-        args1 = './zabbix_get -s %s -p 10050 -k "system.cpu.util[,system]"' % host
-        args2 = './zabbix_get -s %s -p 10050 -k "system.cpu.util[,user]"' % host
-        args3 = './zabbix_get -s %s -p 10050 -k "system.cpu.util[,idle]"' % host
-        args4 = './zabbix_get -s %s -p 10050 -k "system.cpu.util[,iowait]"' % host
-        args5 = './zabbix_get -s %s -p 10050 -k "system.cpu.util[,nice]"' % host
-        args6 = './zabbix_get -s %s -p 10050 -k "system.cpu.util[,softirq]"' % host
-        args7 = './zabbix_get -s %s -p 10050 -k "system.cpu.util[,steal]"' % host
-        args8 = './zabbix_get -s %s -p 10050 -k "system.cpu.util[,interrupt]"' % host
 
-        system = os.popen(args1).read().strip()
-        user = os.popen(args2).read().strip()
-        idle = os.popen(args3).read().strip()
-        iowait = os.popen(args4).read().strip()
-        nice = os.popen(args5).read().strip()
-        softirq = os.popen(args6).read().strip()
-        steal = os.popen(args7).read().strip()
-        interrupt = os.popen(args8).read().strip()
-
-        cpustat.objects.create(hostip=host, system=system, user=user, idle=idle, iowait=iowait, nice=nice, \
-                            softirq=softirq, steal=steal, interrupt=interrupt, created=datetime.now())
-
-@app.task(name='periods.zabbix_agent_task.get_agent_cpu_load')
+@app.task(name='monitor.task.get_agent_cpu_load')
 def get_agent_cpu_load():
-    from zabbixapi.models import cpuload
+    pass
 
-    hostlist = ['192.168.1.209', '127.0.0.1', '192.168.1.211', '192.168.1.212', '192.168.1.213', '192.168.1.214', '192.168.1.215']
-    os.chdir('/usr/local/zabbix/bin')
-    for host in hostlist:
-        args1 = './zabbix_get -s %s -p 10050 -k "system.cpu.load[all,avg1]"' % host
-        args2 = './zabbix_get -s %s -p 10050 -k "system.cpu.load[all,avg5]"' % host
-        args3 = './zabbix_get -s %s -p 10050 -k "system.cpu.load[all,avg15]"' % host
 
-        avg1 = os.popen(args1).read().strip()
-        avg5 = os.popen(args2).read().strip()
-        avg15 = os.popen(args3).read().strip()
-
-        cpuload.objects.create(hostip=host, avg1=avg1, avg5=avg5, avg15=avg15, created=datetime.now())
-
-@app.task(name='periods.zabbix_agent_task.get_agent_mem_stat')
+@app.task(name='monitor.task.get_agent_mem_stat')
 def get_agent_mem_stat():
-    from zabbixapi.models import memstat
+    pass
 
-    hostlist = ['192.168.1.209', '127.0.0.1', '192.168.1.211', '192.168.1.212', '192.168.1.213', '192.168.1.214', '192.168.1.215']
-    os.chdir('/usr/local/zabbix/bin')
-    for host in hostlist:
-        args1 = './zabbix_get -s %s -p 10050 -k "vm.memory.size[available]"' % host
-        args2 = './zabbix_get -s %s -p 10050 -k "vm.memory.size[total]"' % host
 
-        available = os.popen(args1).read().strip()
-        total = os.popen(args2).read().strip()
-
-        memstat.objects.create(hostip=host, available=available, total=total, created=datetime.now())
-
-@app.task(name='periods.zabbix_agent_task.agent_ping')
+@app.task(name='monitor.task.agent_ping')
 def agent_ping():
-    from asset.models import Server
-
-    itemlist = ['23682', '23804', '23870', '23911', '23952', '23993', '23287']
-    namelist = ['uco2_dev', 'uco2_test', 'uco2_rd_prod', 'uco2_sql_mt', 'uco2_sql_sl', 'uco2_web_prod', 'uco2_oper']
-    idlist = [9, 2, 3, 4, 5, 6, 7]
-    method = "history.get"
-    data = {}
-    for i in range(len(itemlist)):
-        params = {
-                "output": "extend",
-                "history": 3,
-                "itemids": itemlist[i],
-                "limit": 10
-                }
-        origin = processData(method, params)
-        for host in origin:
-            ping = int(host[u'value'])
-            data[namelist[i]] = ping
-    servers = Server.objects.all()
-    for server in servers:
-        ping = data[server[name]]
-            # print type(ping)
-        if ping == 1:
-            Server.objects.filter(name=server[name]).update(status='在线')
-        else:
-            Server.objects.filter(name=server[name]).update(status='不在线')
-    return "{'data': '请求成功'}"
+    pass
 
 
-@app.task(name='dbmonitor.task.get_replication')
+@app.task(name='monitor.task.get_replication')
 def get_replication():
-    from dbmonitor.models import Mysql_Monitor
-    from dbmonitor.serializers import MysqlMonitorSerializers
-    from dbmonitor.mysql_library import repl_update_or_create
-    from dbmonitor.connector import mysql_connector
+    from monitor.mysql_library import repl_update_or_create
+    from monitor.connector import mysql_connector
 
-    infos = Mysql_Monitor.objects.all()
-    serializer = MysqlMonitorSerializers(infos, many=True)
     sql = 'show slave status'
-    if serializer.data:
-        for info in serializer.data:
-            if info['check_slave'] == 1 or info['check_slave'] == '1':
-                cursor = mysql_connector(info['db_ip'], info['db_port'], info['db_user'], info['db_pass'])
-                data = cursor.select_all(sql)
-                record = repl_update_or_create(data, info['db_ip'], info['db_port'])
-            else:
-                continue
+    try:
+        with connection.cursor() as cursor:
+            query = 'SELECT a.serverId, a.is_actived FROM server_monitor_func_relation a, monitor_function b WHERE a.funcId = b.id AND b.module = "%s"' % inspect.stack()[0][3]
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            for row in fows:
+                serverId = row[0]
+                is_actived = row[1]
+                if is_actived == 1:
+                    query = 'SELECT a.global_ip, b.username, b.password, c.port, c.is_actived FROM server_detail a, monitor_mysql_user b, server_service c WHERE a.serverId = b.serverId = c.serverId = "%s" AND c.name = "Mysql"' % serverId
+                    cursor.execute(query)
+                    row = cursor.fetchone()
+                    global_ip = row[0]
+                    username = row[1]
+                    password = row[2]
+                    ports = str(row[3]).replace('"', '').replace('[', '').replace(']', '').split(', ')
+                    service_actived = row[4]
+                    if service_actived == 1:
+                        for port in ports:
+                            remote_cursor = mysql_connector(global_ip, port, username, password)
+                            datas = remote_cursor.select_all(sql)
+                            record = repl_update_or_create(datas, serverId, port)
+                    else:
+                        msg = 'this Server have not acvtied Mysql monitor'
+                        logger.info(msg)
+                else:
+                    msg = 'this Server have not acvtied this monitor function'
+                    logger.info(msg)
+    except Exception as e:
+        logger.error(e)
 
-@app.task(name='dbmonitor.task.get_global_status')
+
+@app.task(name='monitor.task.get_global_status')
 def get_global_status():
-    from dbmonitor.models import Mysql_Monitor
-    from dbmonitor.serializers import MysqlMonitorSerializers
-    from dbmonitor.mysql_library import status_create, status_querySet
-    from dbmonitor.connector import mysql_connector
+    from monitor.mysql_library import status_create, status_querySet
+    from monitor.connector import mysql_connector
 
-    infos = Mysql_Monitor.objects.all()
-    serializer = MysqlMonitorSerializers(infos, many=True)
     sql = "show global status"
-    if serializer.data:
-        for info in serializer.data:
-            if info['check_status'] == 1 or info['check_status'] == '1':
-                # print info['check_status']
-                cursor = mysql_connector(info['db_ip'], info['db_port'], info['db_user'], info['db_pass'])
-                datas = cursor.select_all(sql)
-                # print datas
-                status_dataset = status_querySet(datas)
-                # print status_dataset
-                record = status_create(status_dataset, info['db_ip'], info['db_port'])
-            else:
-                continue
+    try:
+        with connection.cursor() as cursor:
+            query = 'SELECT a.serverId, a.is_actived FROM server_monitor_func_relation a, monitor_function b WHERE a.funcId = b.id AND b.module = "%s"' % inspect.stack()[0][3]
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            for row in fows:
+                serverId = row[0]
+                is_actived = row[1]
+                if is_actived == 1:
+                    query = 'SELECT a.global_ip, b.username, b.password, c.port, c.is_actived FROM server_detail a, monitor_mysql_user b, server_service c WHERE a.serverId = b.serverId = c.serverId = "%s" AND c.name = "Mysql"' % serverId
+                    cursor.execute(query)
+                    row = cursor.fetchone()
+                    global_ip = row[0]
+                    username = row[1]
+                    password = row[2]
+                    ports = str(row[3]).replace('"', '').replace('[', '').replace(']', '').split(', ')
+                    service_actived = row[4]
+                    if service_actived == 1:
+                        for port in ports:
+                            remote_cursor = mysql_connector(global_ip, port, username, password)
+                            datas = remote_cursor.select_all(sql)
+                            status_dataset = status_querySet(datas)
+                            record = status_create(status_dataset, serverId, port)
+                    else:
+                        msg = 'this Server have not acvtied Mysql monitor'
+                        logger.info(msg)
+                else:
+                    msg = 'this Server have not acvtied this monitor function'
+                    logger.info(msg)
+    except Exception as e:
+        logger.error(e)
 
-@app.task(name='dbmonitor.task.get_connections')
+
+@app.task(name='monitor.task.get_connections')
 def get_connections():
-    from dbmonitor.models import Mysql_Monitor
-    from dbmonitor.serializers import MysqlMonitorSerializers
-    from dbmonitor.mysql_library import connection_querySet, connection_update_or_create, connection_create
-    from dbmonitor.connector import mysql_connector
+    from monitor.mysql_library import connection_querySet, connection_update_or_create, connection_create
+    from monitor.connector import mysql_connector
 
     sql = "show status like '%connect%'"
-    infos = Mysql_Monitor.objects.all()
-    # print infos
-    serializer = MysqlMonitorSerializers(infos, many=True)
-    if serializer.data:
-        for info in serializer.data:
-            # print info
-            if info['check_connections'] == 1 or info['check_connections'] == '1':
-                cursor = mysql_connector(info['db_ip'], info['db_port'], info['db_user'], info['db_pass'])
-                datas = cursor.select_all(sql)
-                dataset = connection_querySet(datas)
-                record = connection_create(dataset, info['db_ip'], info['db_port'])
-            else:
-                continue
+    try:
+        with connection.cursor() as cursor:
+            query = 'SELECT a.serverId, a.is_actived FROM server_monitor_func_relation a, monitor_function b WHERE a.funcId = b.id AND b.module = "%s"' % inspect.stack()[0][3]
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            for row in fows:
+                serverId = row[0]
+                is_actived = row[1]
+                if is_actived == 1:
+                    query = 'SELECT a.global_ip, b.username, b.password, c.port, c.is_actived FROM server_detail a, monitor_mysql_user b, server_service c WHERE a.serverId = b.serverId = c.serverId = "%s" AND c.name = "Mysql"' % serverId
+                    cursor.execute(query)
+                    row = cursor.fetchone()
+                    global_ip = row[0]
+                    username = row[1]
+                    password = row[2]
+                    ports = str(row[3]).replace('"', '').replace('[', '').replace(']', '').split(', ')
+                    service_actived = row[4]
+                    if service_actived == 1:
+                        for port in ports:
+                            remote_cursor = mysql_connector(global_ip, port, username, password)
+                            datas = remote_cursor.select_all(sql)
+                            dataset = connection_querySet(datas)
+                            record = connection_create(dataset, serverId, port)
+                    else:
+                        msg = 'this Server have not acvtied Mysql monitor'
+                        logger.info(msg)
+                else:
+                    msg = 'this Server have not acvtied this monitor function'
+                    logger.info(msg)
+    except Exception as e:
+        logger.error(e)

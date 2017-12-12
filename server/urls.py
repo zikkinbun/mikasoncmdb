@@ -1,12 +1,16 @@
 from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework import routers, renderers
-from . import server_api_views, docker_init_api
+from . import server_api_views, docker_init_api, cluster_api_views
 
 urlpatterns = [
     url(
         r'^ListServer$',
-        server_api_views.ListServer.as_view()
+        server_api_views.ListAllServer.as_view()
+    ),
+    url(
+        r'^ListServerName$',
+        server_api_views.ListServerName.as_view()
     ),
     url(
         r'^CreateServer$',
@@ -17,6 +21,10 @@ urlpatterns = [
         server_api_views.EditServer.as_view()
     ),
     url(
+        r'^EditServerMonitor$',
+        server_api_views.EditServerMonitor.as_view()
+    ),
+    url(
         r'^DeleteServer$',
         server_api_views.DeleteServer.as_view()
     ),
@@ -25,12 +33,20 @@ urlpatterns = [
         server_api_views.CreateServerDetail.as_view()
     ),
     url(
+        r'^ListDetail$',
+        server_api_views.ListServerAllDetail.as_view()
+    ),
+    url(
         r'^GetDetail$',
         server_api_views.GetServerDetail.as_view()
     ),
     url(
         r'^EditDetail$',
         server_api_views.EditServerDetail.as_view()
+    ),
+    url(
+        r'^EditServerDetail$',
+        server_api_views.EditServerAndDetail.as_view()
     ),
     url(
         r'^CreateService$',
@@ -87,6 +103,26 @@ urlpatterns = [
     url(
         r'^GetServerFunc$',
         server_api_views.GetServerFunc.as_view(),
+    ),
+    url(
+        r'^CreateCluster$',
+        cluster_api_views.CreateCluster.as_view(),
+    ),
+    url(
+        r'^GetCluster$',
+        cluster_api_views.GetCluster.as_view(),
+    ),
+    url(
+        r'^SetCluster$',
+        cluster_api_views.SetCluster.as_view(),
+    ),
+    url(
+        r'^DelCluster$',
+        cluster_api_views.DelCluster.as_view(),
+    ),
+    url(
+        r'^BindServer$',
+        cluster_api_views.BindClusterServer.as_view(),
     ),
 ]
 

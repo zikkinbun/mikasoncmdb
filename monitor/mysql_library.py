@@ -3,14 +3,14 @@ from __future__ import unicode_literals
 
 from django.utils import timezone
 from django.utils.timezone import utc
-from .models import Mysql_Status, Mysql_Replication, Mysql_Connection, Mysql_Monitor
+from .models import MonitorMysqlStatus, MonitorMysqlReplication, MonitorMysqlConnection
 
 from datetime import datetime
 
-def status_update_or_create(dataset, ip, port):
-    record = Mysql_Status.objects.filter(db_ip=ip)
+def status_update_or_create(dataset, serverId, port):
+    record = MonitorMysqlStatus.objects.filter(serverId=serverId)
     if record:
-        record.update(db_ip=ip, db_port=port, connect='', role='', uptime=dataset['Uptime'], connections=dataset['Connections'], \
+        record.update(serverId=serverId, db_port=port, connect='', role='', uptime=dataset['Uptime'], connections=dataset['Connections'], \
             aborted_clients=dataset['Aborted_clients'], aborted_connects=dataset['Aborted_connects'], max_used_connections=dataset['Max_used_connections'], \
             open_files=dataset['Open_files'], open_table_definitions=dataset['Open_table_definitions'], open_tables=dataset['Open_tables'], opened_files=dataset['Opened_files'], \
             opened_tables=dataset['Opened_tables'], opened_table_definitions=dataset['Opened_table_definitions'], threads_connected=dataset['Threads_connected'], \
@@ -26,7 +26,7 @@ def status_update_or_create(dataset, ip, port):
             qcache_free_blocks=dataset['Qcache_free_blocks'], qcache_free_memory=dataset['Qcache_free_memory'], select_full_join=dataset['Select_full_join'], select_full_range_join=dataset['Select_full_range_join'], select_scan=dataset['Select_scan'], sort_scan=dataset['Sort_scan'], sort_rows=dataset['Sort_rows'], \
             table_locks_immediate=dataset['Table_locks_immediate'], table_locks_waited=dataset['Table_locks_waited'], table_open_cache_hits=dataset['Table_open_cache_hits'], table_open_cache_misses=dataset['Table_open_cache_misses'], table_open_cache_overflows=dataset['Table_open_cache_overflows'])
     else:
-        Mysql_Status.objects.create(db_ip=ip, db_port=port, connect='', role='', uptime=dataset[u'Uptime'], connections=dataset[u'Connections'], \
+        MonitorMysqlStatus.objects.create(serverId=serverId, db_port=port, connect='', role='', uptime=dataset[u'Uptime'], connections=dataset[u'Connections'], \
             aborted_clients=dataset[u'Aborted_clients'], aborted_connects=dataset[u'Aborted_connects'], max_used_connections=dataset[u'Max_used_connections'], \
             open_files=dataset['Open_files'], open_table_definitions =dataset['Open_table_definitions'], open_tables=dataset['Open_tables'], opened_files=dataset['Opened_files'], \
             opened_tables=dataset['Opened_tables'], opened_table_definitions =dataset['Opened_table_definitions'], threads_connected=dataset['Threads_connected'], \
@@ -42,9 +42,9 @@ def status_update_or_create(dataset, ip, port):
             qcache_free_blocks=dataset['Qcache_free_blocks'], qcache_free_memory=dataset['Qcache_free_memory'], select_full_join=dataset['Select_full_join'], select_full_range_join=dataset['Select_full_range_join'], select_scan=dataset['Select_scan'], sort_scan=dataset['Sort_scan'], sort_rows=dataset['Sort_rows'], \
             table_locks_immediate=dataset['Table_locks_immediate'], table_locks_waited=dataset['Table_locks_waited'], table_open_cache_hits=dataset['Table_open_cache_hits'], table_open_cache_misses=dataset['Table_open_cache_misses'], table_open_cache_overflows=dataset['Table_open_cache_overflows'])
 
-def status_create(dataset, ip, port):
+def status_create(dataset, serverId, port):
     try:
-        Mysql_Status.objects.create(db_ip=ip, db_port=port, connect='', role='', uptime=dataset[u'Uptime'], connections=dataset[u'Connections'], \
+        MonitorMysqlStatus.objects.create(serverId=serverId, db_port=port, connect='', role='', uptime=dataset[u'Uptime'], connections=dataset[u'Connections'], \
             aborted_clients=dataset[u'Aborted_clients'], aborted_connects=dataset[u'Aborted_connects'], max_used_connections=dataset[u'Max_used_connections'], \
             open_files=dataset['Open_files'], open_table_definitions =dataset['Open_table_definitions'], open_tables=dataset['Open_tables'], opened_files=dataset['Opened_files'], \
             opened_tables=dataset['Opened_tables'], opened_table_definitions =dataset['Opened_table_definitions'], threads_connected=dataset['Threads_connected'], \
@@ -212,17 +212,17 @@ def status_querySet(datas):
 
     return dataset
 
-def repl_update_or_create(data, ip, port):
+def repl_update_or_create(data, serverId, port):
 
-    record = Mysql_Replication.objects.filter(db_ip=ip)
+    record = MonitorMysqlReplication.objects.filter(serverId=serverId)
     if record:
-        record.update(db_ip=ip, db_port=port, is_slave=1, \
+        record.update(serverId=serverId, port=port, is_slave=1, \
             master_server=data[0]['Master_Host'], master_user=data[0]['Master_User'], master_port=data[0]['Master_Port'], \
             slave_io_run=data[0]['Slave_IO_Running'], slave_sql_run=data[0]['Slave_SQL_Running'], delay=data[0]['SQL_Delay'], \
             current_binlog_file=data[0]['Relay_Log_File'], current_binlog_pos=data[0]['Relay_Log_Pos'], master_binlog_file=data[0]['Master_Log_File'], \
             master_binlog_pos=data[0]['Read_Master_Log_Pos'], master_binlog_space=data[0]['Relay_Log_Space'], slave_sql_running_state=data[0]['Slave_SQL_Running_State'], create_time=datetime.now().replace(tzinfo=utc))
     else:
-        Mysql_Replication.objects.create(db_ip=ip, db_port=port, is_slave=1, \
+        MonitorMysqlReplication.objects.create(serverId=serverId, port=port, is_slave=1, \
             master_server=data[0]['Master_Host'], master_user=data[0]['Master_User'], master_port=data[0]['Master_Port'], \
             slave_io_run=data[0]['Slave_IO_Running'], slave_sql_run=data[0]['Slave_SQL_Running'], delay=data[0]['SQL_Delay'], \
             current_binlog_file=data[0]['Relay_Log_File'], current_binlog_pos=data[0]['Relay_Log_Pos'], master_binlog_file=data[0]['Master_Log_File'], \
@@ -243,20 +243,20 @@ def connection_querySet(datas):
 
     return dataset
 
-def connection_create(dataset, ip, port):
+def connection_create(dataset, serverId, port):
     try:
         # print timezone.localtime(timezone.now())
-        Mysql_Connection.objects.create(db_ip=ip, db_port=port, connect_count=dataset['Connections'], thead_connect=dataset['Threads_connected'], \
+        MonitorMysqlConnection.objects.create(serverId=serverId, port=port, connect_count=dataset['Connections'], thead_connect=dataset['Threads_connected'], \
             max_connect=dataset['Max_used_connections'])
     except Exception as e:
         print e
 
-def connection_update_or_create(dataset, ip, port):
+def connection_update_or_create(dataset, serverId, port):
 
-    record = Mysql_Connection.objects.filter(db_ip=ip)
+    record = MonitorMysqlConnection.objects.filter(serverId=serverId)
     if record:
-        record.update(db_ip=ip, db_port=port, connect_count=dataset['Connections'], thead_connect=dataset['Threads_connected'], \
+        record.update(serverId=serverId, port=port, connect_count=dataset['Connections'], thead_connect=dataset['Threads_connected'], \
             max_connect=dataset['Max_used_connections'])
     else:
-        Mysql_Connection.objects.create(db_ip=ip, db_port=port, connect_count=dataset['Connections'], thead_connect=dataset['Threads_connected'], \
+        MonitorMysqlConnection.objects.create(serverId=serverId, port=port, connect_count=dataset['Connections'], thead_connect=dataset['Threads_connected'], \
             max_connect=dataset['Max_used_connections'])

@@ -9,7 +9,7 @@ from datetime import datetime
 
 
 class MonitorCpuLoad(models.Model):
-    server_id = models.IntegerField()
+    serverId = models.IntegerField()
     avg1 = models.BigIntegerField()
     avg5 = models.BigIntegerField()
     avg15 = models.BigIntegerField()
@@ -31,7 +31,7 @@ class MonitorFunction(models.Model):
 
 
 class MonitorHddStat(models.Model):
-    server_id = models.IntegerField(blank=True, null=True)
+    serverId = models.IntegerField(blank=True, null=True)
     disk = models.CharField(max_length=255, blank=True, null=True)
     total = models.BigIntegerField(blank=True, null=True)
     used = models.BigIntegerField(blank=True, null=True)
@@ -45,7 +45,7 @@ class MonitorHddStat(models.Model):
 
 
 class MonitorMemStat(models.Model):
-    server_id = models.IntegerField()
+    serverId = models.IntegerField()
     available = models.BigIntegerField()
     total = models.BigIntegerField()
     createdate = models.DateTimeField(default=datetime.now().replace(tzinfo=utc))
@@ -56,8 +56,8 @@ class MonitorMemStat(models.Model):
 
 
 class MonitorMysqlConnection(models.Model):
-    db_ip = models.CharField(max_length=32, blank=True, null=True)
-    db_port = models.IntegerField()
+    serverId = models.IntegerField()
+    port = models.IntegerField()
     connect_count = models.CharField(max_length=32, blank=True, null=True)
     max_connect = models.CharField(max_length=32, blank=True, null=True)
     thead_connect = models.CharField(max_length=32, blank=True, null=True)
@@ -69,7 +69,7 @@ class MonitorMysqlConnection(models.Model):
 
 
 class MonitorMysqlProcesslist(models.Model):
-    server_id = models.IntegerField(blank=True, null=True)
+    serverId = models.IntegerField(blank=True, null=True)
     port = models.IntegerField(blank=True, null=True)
     pid = models.IntegerField(blank=True, null=True)
     db = models.CharField(max_length=255, blank=True, null=True)
@@ -84,7 +84,7 @@ class MonitorMysqlProcesslist(models.Model):
 
 
 class MonitorMysqlReplication(models.Model):
-    server_id = models.IntegerField(blank=True, null=True)
+    serverId = models.IntegerField(blank=True, null=True)
     port = models.IntegerField()
     is_master = models.IntegerField()
     is_slave = models.IntegerField()
@@ -110,7 +110,7 @@ class MonitorMysqlReplication(models.Model):
 
 
 class MonitorMysqlStatus(models.Model):
-    server_id = models.IntegerField(blank=True, null=True)
+    serverId = models.IntegerField(blank=True, null=True)
     db_port = models.CharField(max_length=32, blank=True, null=True)
     connect = models.CharField(max_length=32, blank=True, null=True)
     role = models.CharField(max_length=32, blank=True, null=True)
@@ -204,7 +204,7 @@ class MonitorMysqlStatus(models.Model):
 
 
 class MonitorNetworkLoad(models.Model):
-    server_id = models.IntegerField(blank=True, null=True)
+    serverId = models.IntegerField(blank=True, null=True)
     private_incoming = models.FloatField(blank=True, null=True)
     private_outgoing = models.FloatField(blank=True, null=True)
     global_incoming = models.FloatField(blank=True, null=True)
@@ -217,7 +217,7 @@ class MonitorNetworkLoad(models.Model):
 
 
 class MonitorNginxStatus(models.Model):
-    server_id = models.IntegerField(blank=True, null=True)
+    serverId = models.IntegerField(blank=True, null=True)
     active = models.IntegerField(blank=True, null=True)
     reading = models.IntegerField(blank=True, null=True)
     writing = models.IntegerField(blank=True, null=True)
@@ -230,7 +230,7 @@ class MonitorNginxStatus(models.Model):
 
 
 class MonitorOnlineUser(models.Model):
-    server_id = models.IntegerField(blank=True, null=True)
+    serverId = models.IntegerField(blank=True, null=True)
     username = models.CharField(max_length=32, blank=True, null=True)
     pid = models.IntegerField(blank=True, null=True)
     ip = models.CharField(max_length=32, blank=True, null=True)
@@ -244,7 +244,7 @@ class MonitorOnlineUser(models.Model):
 
 
 class MonitorTcpStatus(models.Model):
-    server_id = models.IntegerField(blank=True, null=True)
+    serverId = models.IntegerField(blank=True, null=True)
     listen = models.IntegerField(blank=True, null=True)
     established = models.IntegerField(blank=True, null=True)
     time_wait = models.IntegerField(blank=True, null=True)
@@ -260,8 +260,20 @@ class MonitorTcpStatus(models.Model):
         db_table = 'monitor_tcp_status'
 
 
+class MonitorMysqlUser(models.Model):
+    serverId = models.IntegerField(blank=True, null=True)
+    username = models.CharField(max_length=255, blank=True, null=True)
+    password = models.CharField(max_length=255, blank=True, null=True)
+    tag = models.CharField(max_length=32, blank=True, null=True)
+    createdate = models.DateTimeField(default=datetime.now().replace(tzinfo=utc))
+
+    class Meta:
+        managed = False
+        db_table = 'monitor_mysql_user'
+
+
 class MonitorMysqlSlowQueryHis(models.Model):
-    server_id = models.IntegerField(blank=True, null=True)
+    serverId = models.IntegerField(blank=True, null=True)
     hostname_max = models.CharField(max_length=64, blank=True, null=True)
     db_max = models.CharField(max_length=64, blank=True, null=True),
     checksum = models.BigIntegerField(20)

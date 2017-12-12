@@ -11,6 +11,8 @@ from django.utils import timezone
 from django.utils.http import urlquote
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
+
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     """
     A custom user class that basically mirrors Django's `AbstractUser` class
@@ -25,12 +27,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         validators.RegexValidator(re.compile(
             '^[\w.@+-]+$'), _('Enter a valid username.'), 'invalid')
     ])
-    full_name = models.CharField(_('full name'), max_length=254, blank=True)
-    short_name = models.CharField(_('short name'), max_length=30, blank=True)
+    # password = models.CharField(_('password'), max_length=254, blank=True, null=True)
     email = models.EmailField(_('email address'), max_length=254, unique=True)
-    is_staff = models.BooleanField(_('staff status'), default=False,
-                                   help_text=_('Designates whether the user can log into this admin '
-                                               'site.'))
+    staff = models.IntegerField(blank=True, null=True)
+    phone = models.CharField(max_length=30, blank=True, null=True)
     is_active = models.BooleanField(_('active'), default=True,
                                     help_text=_('Designates whether this user should be treated as '
                                                 'active. Unselect this instead of deleting accounts.'))
@@ -51,24 +51,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def get_absolute_url(self):
         return "/users/%s/" % urlquote(self.username)
 
-    def get_full_name(self):
-        """
-        Returns the first_name plus the last_name, with a space in between.
-        """
-        full_name = self.full_name
-        return full_name.strip()
-
-    def get_short_name(self):
-        "Returns the short name for the user."
-        return self.short_name.strip()
-
     def email_user(self, subject, message, from_email=None):
         """
         Sends an email to this User.
         """
-# send_mail(subject, message, from_email, [self.email])
-
-# content_type = ContentType.objects.get_for_model(CustomUser)
-# permission = Permission.objects.create(codename='view_user',
-#                                        name='can see user list',
-#                                        content_type=content_type)

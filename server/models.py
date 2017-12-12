@@ -10,7 +10,7 @@ class Server(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True)
     alias = models.CharField(max_length=255, blank=True, null=True)
     tag = models.CharField(max_length=255, blank=True, null=True)
-    status = models.IntegerField(blank=True, null=True)
+    status = models.IntegerField(default=0)
     is_monitor = models.IntegerField(default=0)
     createdate = models.DateTimeField(default=datetime.now().replace(tzinfo=utc))
 
@@ -20,7 +20,7 @@ class Server(models.Model):
 
 
 class ServerContainer(models.Model):
-    server_id = models.IntegerField(blank=True, null=True)
+    serverId = models.IntegerField(blank=True, null=True)
     container_id = models.CharField(max_length=255, blank=True, null=True)
     container_name = models.CharField(max_length=255, blank=True, null=True)
     image_name = models.CharField(max_length=255, blank=True, null=True)
@@ -35,13 +35,15 @@ class ServerContainer(models.Model):
 
 
 class ServerDetail(models.Model):
-    server_id = models.IntegerField(blank=True, null=True)
+    serverId = models.IntegerField(blank=True, null=True)
     cpu = models.CharField(max_length=255, blank=True, null=True)
     mem = models.CharField(max_length=255, blank=True, null=True)
     netflow = models.CharField(max_length=255, blank=True, null=True)
     hdd = models.CharField(max_length=255, blank=True, null=True)
     system = models.CharField(max_length=255, blank=True, null=True)
     core = models.CharField(max_length=255, blank=True, null=True)
+    global_ip = models.CharField(max_length=255, blank=True, null=True)
+    private_ip = models.CharField(max_length=255, blank=True, null=True)
     createdate = models.DateTimeField(default=datetime.now().replace(tzinfo=utc))
 
     class Meta:
@@ -50,7 +52,7 @@ class ServerDetail(models.Model):
 
 
 class ServerImage(models.Model):
-    server_id = models.IntegerField(blank=True, null=True)
+    serverId = models.IntegerField(blank=True, null=True)
     image_id = models.CharField(max_length=255, blank=True, null=True)
     image_name = models.CharField(max_length=255, blank=True, null=True)
     size = models.CharField(max_length=32, blank=True, null=True)
@@ -62,8 +64,8 @@ class ServerImage(models.Model):
 
 
 class ServerMonitorFuncRelation(models.Model):
-    server_id = models.IntegerField(blank=True, null=True)
-    func_id = models.IntegerField(blank=True, null=True)
+    serverId = models.IntegerField(blank=True, null=True)
+    funcId = models.IntegerField(blank=True, null=True)
     is_actived = models.IntegerField(default=0)
     createdate = models.DateTimeField(default=datetime.now().replace(tzinfo=utc))
 
@@ -86,18 +88,36 @@ class ServerProjects(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'server_projects'
+        db_table = 'project'
 
 
-class ServerSevice(models.Model):
-    server_id = models.IntegerField(blank=True, null=True)
+class ServerUser(models.Model):
+    serverid = models.IntegerField(db_column='serverId', blank=True, null=True)  # Field name made lowercase.
+    groupid = models.IntegerField(db_column='groupId', blank=True, null=True)  # Field name made lowercase.
+    username = models.CharField(max_length=255, blank=True, null=True)
+    password = models.CharField(max_length=255, blank=True, null=True)
+    creatdate = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'server_user'
+
+
+class Cluster(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True)
-    port = models.CharField(max_length=255, blank=True, null=True)
-    project_id = models.IntegerField(blank=True, null=True)
-    version = models.CharField(max_length=255, blank=True, null=True)
-    is_actived = models.IntegerField(default=0)
+    type = models.CharField(max_length=255, blank=True, null=True)
+    region = models.CharField(max_length=255, blank=True, null=True)
     createdate = models.DateTimeField(default=datetime.now().replace(tzinfo=utc))
 
     class Meta:
         managed = False
-        db_table = 'server_sevice'
+        db_table = 'cluster'
+
+
+class ServerClusterRelate(models.Model):
+    serverid = models.IntegerField(db_column='serverId', blank=True, null=True)
+    clusterid = models.IntegerField(db_column='clusterId', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'server_cluster_relate'

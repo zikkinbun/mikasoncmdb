@@ -1,4 +1,6 @@
-2017-11-15 16:27:59,180 [Thread-5:123145390776320] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/CreateServer
+2017-12-07 15:55:57,752 [Thread-3:123145341300736] [django.request:152] [base:get_response] [WARNING]- Not Found: /user/login/
+2017-12-07 17:46:28,164 [Thread-2:123145393844224] [django.request:152] [base:get_response] [WARNING]- Not Found: /getUser
+2017-12-07 17:46:53,940 [Thread-2:123145374760960] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /user/getUser
 Traceback (most recent call last):
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
     response = get_response(request)
@@ -16,12 +18,10 @@ Traceback (most recent call last):
     self.raise_uncaught_exception(exc)
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
     response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/server_api_views.py", line 33, in post
-    'name': json.loads(request.data).get('name', None),
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/lib-python/2.7/json/__init__.py", line 345, in loads
-    return _pypyjson.loads(s)
-TypeError: expected string, got dict object
-2017-11-15 16:29:09,839 [Thread-2:123145439649792] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/CreateServer
+  File "/Users/benson/Projects/MikasonOperBackend/deployuser/views.py", line 141, in post
+    raise ParamException('userid')
+NameError: global name 'ParamException' is not defined
+2017-12-07 18:44:33,608 [Thread-2:123145506902016] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /bussiness/GetBussiness
 Traceback (most recent call last):
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
     response = get_response(request)
@@ -39,12 +39,10 @@ Traceback (most recent call last):
     self.raise_uncaught_exception(exc)
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
     response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/server_api_views.py", line 33, in post
-    'name': json.loads(request.data).get('name', None),
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/lib-python/2.7/json/__init__.py", line 345, in loads
-    return _pypyjson.loads(s)
-TypeError: expected string, got dict object
-2017-11-15 16:29:17,040 [Thread-3:123145439649792] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/CreateServer
+  File "/Users/benson/Projects/MikasonOperBackend/bussiness/views.py", line 91, in post
+    'operator': operator.username,
+AttributeError: 'NoneType' object has no attribute 'username'
+2017-12-07 18:45:04,504 [Thread-2:123145313849344] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /bussiness/GetBussiness
 Traceback (most recent call last):
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
     response = get_response(request)
@@ -62,12 +60,10 @@ Traceback (most recent call last):
     self.raise_uncaught_exception(exc)
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
     response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/server_api_views.py", line 33, in post
-    'name': json.loads(request.data).get('name', None),
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/lib-python/2.7/json/__init__.py", line 345, in loads
-    return _pypyjson.loads(s)
-TypeError: expected string, got dict object
-2017-11-15 16:29:48,992 [Thread-2:123145510543360] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/CreateServer
+  File "/Users/benson/Projects/MikasonOperBackend/bussiness/views.py", line 91, in post
+    'operator': operator.username,
+AttributeError: 'dict' object has no attribute 'username'
+2017-12-07 18:46:54,596 [Thread-2:123145416777728] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /bussiness/GetBussiness
 Traceback (most recent call last):
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
     response = get_response(request)
@@ -85,10 +81,10 @@ Traceback (most recent call last):
     self.raise_uncaught_exception(exc)
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
     response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/server_api_views.py", line 37, in post
-    is_monitor: json.loads(request.body).get('is_monitor', None)
-NameError: global name 'is_monitor' is not defined
-2017-11-15 19:05:12,452 [Thread-12:123145460408320] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ServerDetail
+  File "/Users/benson/Projects/MikasonOperBackend/bussiness/views.py", line 94, in post
+    'creator': bus.creator
+AttributeError: 'QuerySet' object has no attribute 'creator'
+2017-12-07 18:46:57,579 [Thread-3:123145416777728] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /bussiness/GetBussiness
 Traceback (most recent call last):
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
     response = get_response(request)
@@ -106,12 +102,10 @@ Traceback (most recent call last):
     self.raise_uncaught_exception(exc)
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
     response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/server_api_views.py", line 83, in post
-    server_id = json.loads(request.body).get('server_id', None)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/lib-python/2.7/json/__init__.py", line 345, in loads
-    return _pypyjson.loads(s)
-ValueError: No JSON object could be decoded: unexpected '}' at char 19
-2017-11-15 19:16:45,306 [Thread-2:123145431707648] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ServerDetail
+  File "/Users/benson/Projects/MikasonOperBackend/bussiness/views.py", line 94, in post
+    'creator': bus.creator
+AttributeError: 'QuerySet' object has no attribute 'creator'
+2017-12-07 18:49:14,485 [Thread-4:123145416777728] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /bussiness/GetBussiness
 Traceback (most recent call last):
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
     response = get_response(request)
@@ -129,18 +123,10 @@ Traceback (most recent call last):
     self.raise_uncaught_exception(exc)
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
     response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/server_api_views.py", line 92, in post
-    'retdata': serializer.data
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/serializers.py", line 739, in data
-    ret = super(ListSerializer, self).data
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/serializers.py", line 263, in data
-    self._data = self.to_representation(self.instance)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/serializers.py", line 657, in to_representation
-    self.child.to_representation(item) for item in iterable
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/query.py", line 1245, in __iter__
-    raise InvalidQuery('Raw query must include the primary key')
-InvalidQuery: Raw query must include the primary key
-2017-11-15 19:16:46,772 [Thread-3:123145431707648] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ServerDetail
+  File "/Users/benson/Projects/MikasonOperBackend/bussiness/views.py", line 94, in post
+    'creator': bus.creator
+AttributeError: 'QuerySet' object has no attribute 'creator'
+2017-12-07 18:50:58,596 [Thread-2:123145493397504] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /bussiness/GetBussiness
 Traceback (most recent call last):
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
     response = get_response(request)
@@ -158,18 +144,10 @@ Traceback (most recent call last):
     self.raise_uncaught_exception(exc)
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
     response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/server_api_views.py", line 92, in post
-    'retdata': serializer.data
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/serializers.py", line 739, in data
-    ret = super(ListSerializer, self).data
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/serializers.py", line 263, in data
-    self._data = self.to_representation(self.instance)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/serializers.py", line 657, in to_representation
-    self.child.to_representation(item) for item in iterable
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/query.py", line 1245, in __iter__
-    raise InvalidQuery('Raw query must include the primary key')
-InvalidQuery: Raw query must include the primary key
-2017-11-16 13:36:17,766 [Thread-3:123145508630528] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/CreateService
+  File "/Users/benson/Projects/MikasonOperBackend/bussiness/views.py", line 94, in post
+    'hostnum': bus.hostNum,
+AttributeError: 'Bussiness' object has no attribute 'hostNum'
+2017-12-07 18:51:02,762 [Thread-3:123145493397504] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /bussiness/GetBussiness
 Traceback (most recent call last):
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
     response = get_response(request)
@@ -187,12 +165,10 @@ Traceback (most recent call last):
     self.raise_uncaught_exception(exc)
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
     response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/server_api_views.py", line 167, in post
-    'server_id': json.loads(request.body).get('server_id', None),
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/lib-python/2.7/json/__init__.py", line 345, in loads
-    return _pypyjson.loads(s)
-ValueError: Unexpected '8' when decoding object (char 49)
-2017-11-16 14:07:10,117 [Thread-2:123145528733696] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/GetService
+  File "/Users/benson/Projects/MikasonOperBackend/bussiness/views.py", line 94, in post
+    'hostnum': bus.hostNum,
+AttributeError: 'Bussiness' object has no attribute 'hostNum'
+2017-12-07 18:51:24,642 [Thread-2:123145336164352] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /bussiness/GetBussiness
 Traceback (most recent call last):
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
     response = get_response(request)
@@ -210,12 +186,10 @@ Traceback (most recent call last):
     self.raise_uncaught_exception(exc)
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
     response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/server_api_views.py", line 219, in post
-    server_id = json.loads(request.body).get('server_id', None)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/lib-python/2.7/json/__init__.py", line 345, in loads
-    return _pypyjson.loads(s)
-ValueError: No JSON object could be decoded: unexpected '}' at char 19
-2017-11-16 14:07:13,580 [Thread-3:123145528733696] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/GetService
+  File "/Users/benson/Projects/MikasonOperBackend/bussiness/views.py", line 94, in post
+    'hostnum': bus.hostNum,
+AttributeError: 'Bussiness' object has no attribute 'hostNum'
+2017-12-07 18:51:37,230 [Thread-2:123145405108224] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /bussiness/GetBussiness
 Traceback (most recent call last):
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
     response = get_response(request)
@@ -233,296 +207,282 @@ Traceback (most recent call last):
     self.raise_uncaught_exception(exc)
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
     response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/server_api_views.py", line 222, in post
-    service = self.get_object(server_id)
-  File "/Users/benson/Projects/MikasonOperBackend/server/server_api_views.py", line 214, in get_object
-    return ServerSevice.objects.get(server_id=server_id)
+  File "/Users/benson/Projects/MikasonOperBackend/bussiness/views.py", line 94, in post
+    'hostnum': bus.hostNum,
+AttributeError: 'Bussiness' object has no attribute 'hostNum'
+2017-12-07 18:52:01,158 [Thread-2:123145359437824] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /bussiness/GetBussiness
+Traceback (most recent call last):
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/benson/Projects/MikasonOperBackend/bussiness/views.py", line 94, in post
+    'hostnum': bus.hostNum,
+AttributeError: 'Bussiness' object has no attribute 'hostNum'
+2017-12-07 18:52:42,784 [Thread-2:123145337925632] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /bussiness/GetBussiness
+Traceback (most recent call last):
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/benson/Projects/MikasonOperBackend/bussiness/views.py", line 94, in post
+    'operator': operator.get('username'),
+AttributeError: 'Bussiness' object has no attribute 'hostNum'
+2017-12-07 18:52:43,837 [Thread-3:123145337925632] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /bussiness/GetBussiness
+Traceback (most recent call last):
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/benson/Projects/MikasonOperBackend/bussiness/views.py", line 94, in post
+    'operator': operator.get('username'),
+AttributeError: 'Bussiness' object has no attribute 'hostNum'
+2017-12-07 18:52:44,715 [Thread-4:123145337925632] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /bussiness/GetBussiness
+Traceback (most recent call last):
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/benson/Projects/MikasonOperBackend/bussiness/views.py", line 94, in post
+    'operator': operator.get('username'),
+AttributeError: 'Bussiness' object has no attribute 'hostNum'
+2017-12-07 18:52:45,449 [Thread-5:123145337925632] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /bussiness/GetBussiness
+Traceback (most recent call last):
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/benson/Projects/MikasonOperBackend/bussiness/views.py", line 94, in post
+    'operator': operator.get('username'),
+AttributeError: 'Bussiness' object has no attribute 'hostNum'
+2017-12-07 18:52:46,167 [Thread-6:123145337925632] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /bussiness/GetBussiness
+Traceback (most recent call last):
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/benson/Projects/MikasonOperBackend/bussiness/views.py", line 94, in post
+    'operator': operator.get('username'),
+AttributeError: 'Bussiness' object has no attribute 'hostNum'
+2017-12-07 18:52:52,447 [Thread-7:123145337925632] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /bussiness/GetBussiness
+Traceback (most recent call last):
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/benson/Projects/MikasonOperBackend/bussiness/views.py", line 94, in post
+    'operator': operator.get('username'),
+AttributeError: 'Bussiness' object has no attribute 'hostNum'
+2017-12-07 18:53:13,102 [Thread-2:123145404379136] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /bussiness/GetBussiness
+Traceback (most recent call last):
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/benson/Projects/MikasonOperBackend/bussiness/views.py", line 93, in post
+    'hostnum': bus.hostNum,
+AttributeError: 'Bussiness' object has no attribute 'hostNum'
+2017-12-07 18:55:14,205 [Thread-2:123145402572800] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /bussiness/GetBussiness
+Traceback (most recent call last):
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/benson/Projects/MikasonOperBackend/bussiness/views.py", line 86, in post
+    for bus in serializer.data:
+UnboundLocalError: local variable 'serializer' referenced before assignment
+2017-12-07 18:55:21,761 [Thread-2:123145475428352] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /bussiness/GetBussiness
+Traceback (most recent call last):
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/benson/Projects/MikasonOperBackend/bussiness/views.py", line 87, in post
+    operator = self.get_user(bus.operatorid)
+AttributeError: 'OrderedDict' object has no attribute 'operatorid'
+2017-12-07 18:55:25,271 [Thread-3:123145475428352] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /bussiness/GetBussiness
+Traceback (most recent call last):
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/benson/Projects/MikasonOperBackend/bussiness/views.py", line 87, in post
+    operator = self.get_user(bus.operatorid)
+AttributeError: 'OrderedDict' object has no attribute 'operatorid'
+2017-12-08 14:44:51,072 [Thread-3:123145326198784] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/CreateCluster
+Traceback (most recent call last):
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/Users/benson/Projects/MikasonOperBackend/server/cluster_api_views.py", line 25, in post
+    serializer.save()
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/serializers.py", line 215, in save
+    self.instance = self.create(validated_data)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/serializers.py", line 916, in create
+    instance = ModelClass.objects.create(**validated_data)
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/manager.py", line 85, in manager_method
     return getattr(self.get_queryset(), name)(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/query.py", line 384, in get
-    (self.model._meta.object_name, num)
-MultipleObjectsReturned: get() returned more than one ServerSevice -- it returned 4!
-2017-11-16 14:10:34,811 [Thread-2:123145498116096] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/GetService
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/server_api_views.py", line 222, in post
-    service = self.get_object(server_id)
-  File "/Users/benson/Projects/MikasonOperBackend/server/server_api_views.py", line 214, in get_object
-    return ServerSevice.objects.get(server_id=server_id)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/query.py", line 394, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/base.py", line 807, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/base.py", line 837, in save_base
+    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/base.py", line 923, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/base.py", line 962, in _do_insert
+    using=using, raw=raw)
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/manager.py", line 85, in manager_method
     return getattr(self.get_queryset(), name)(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/query.py", line 384, in get
-    (self.model._meta.object_name, num)
-MultipleObjectsReturned: get() returned more than one ServerSevice -- it returned 4!
-2017-11-16 16:01:19,264 [Thread-2:123145535688704] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 134, in post
-    server_id = Server.objects.get(name=container['Host']).get('id')
-AttributeError: 'Server' object has no attribute 'get'
-2017-11-16 16:01:53,378 [Thread-2:123145453621248] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 134, in post
-    server_id = (Server.objects.get(name=container['Host']))['id']
-TypeError: 'Server' object is not subscriptable
-2017-11-16 16:02:21,313 [Thread-2:123145563590656] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 135, in post
-    server_id = server['id']
-TypeError: 'Server' object is not subscriptable
-2017-11-16 16:03:11,990 [Thread-2:123145439444992] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 136, in post
-    server_id = server['id']
-TypeError: 'Server' object is not subscriptable
-2017-11-16 16:11:45,437 [Thread-2:123145431109632] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 142, in post
-    command=container['Command'], createdate=container['Created'], state=container['State'], status=container['Status'])
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/query.py", line 392, in create
-    obj = self.model(**kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/base.py", line 572, in __init__
-    raise TypeError("'%s' is an invalid keyword argument for this function" % list(kwargs)[0])
-TypeError: 'host_name' is an invalid keyword argument for this function
-2017-11-16 16:13:58,549 [Thread-2:123145536425984] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 136, in post
-    server_id = server['id']
-TypeError: 'ListSerializer' object is not subscriptable
-2017-11-16 16:14:38,878 [Thread-2:123145477668864] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 136, in post
-    server_id = server['id']
-TypeError: 'ListSerializer' object is not subscriptable
-2017-11-16 16:15:38,127 [Thread-2:123145376808960] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 136, in post
-    server_id = server.data.get('id')
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/serializers.py", line 739, in data
-    ret = super(ListSerializer, self).data
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/serializers.py", line 263, in data
-    self._data = self.to_representation(self.instance)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/serializers.py", line 657, in to_representation
-    self.child.to_representation(item) for item in iterable
-TypeError: 'Server' object is not iterable
-2017-11-16 16:16:26,737 [Thread-2:123145563877376] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 135, in post
-    serializer = ServerSerializers(server_data, many=True)
-NameError: global name 'server_data' is not defined
-2017-11-16 16:16:43,340 [Thread-2:123145533259776] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 136, in post
-    data = serializer.data
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/serializers.py", line 739, in data
-    ret = super(ListSerializer, self).data
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/serializers.py", line 263, in data
-    self._data = self.to_representation(self.instance)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/serializers.py", line 657, in to_representation
-    self.child.to_representation(item) for item in iterable
-TypeError: 'Server' object is not iterable
-2017-11-16 16:18:58,194 [Thread-2:123145337790464] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 135, in post
-    print server
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/query.py", line 1270, in __getitem__
-    return list(self)[k]
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/query.py", line 1233, in __iter__
-    query = iter(self.query)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/sql/query.py", line 80, in __iter__
-    self._execute_query()
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/sql/query.py", line 114, in _execute_query
-    self.cursor.execute(self.sql, params)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/query.py", line 1076, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/sql/compiler.py", line 1099, in execute_sql
+    cursor.execute(sql, params)
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/backends/utils.py", line 80, in execute
     return super(CursorDebugWrapper, self).execute(sql, params)
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/backends/utils.py", line 65, in execute
@@ -549,8 +509,8 @@ Traceback (most recent call last):
     err.raise_mysql_exception(self._data)
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/pymysql/err.py", line 107, in raise_mysql_exception
     raise errorclass(errno, errval)
-InternalError: (1054, u"Unknown column 'uco2webprod' in 'where clause'")
-2017-11-16 16:19:56,527 [Thread-2:123145381048320] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
+ProgrammingError: (1146, u"Table 'deploysystem.cluster' doesn't exist")
+2017-12-08 14:45:17,438 [Thread-4:123145326198784] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/CreateCluster
 Traceback (most recent call last):
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
     response = get_response(request)
@@ -568,37 +528,30 @@ Traceback (most recent call last):
     self.raise_uncaught_exception(exc)
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
     response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 140, in post
-    current_containers.create(server_id=server_id, container_id=container['id'], container_name=container['Name'], image_name=container['Image'], \
-NameError: global name 'server_id' is not defined
-2017-11-16 16:20:30,714 [Thread-2:123145565884416] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 135, in post
-    server_id = server['id']
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/query.py", line 1270, in __getitem__
-    return list(self)[k]
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/query.py", line 1233, in __iter__
-    query = iter(self.query)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/sql/query.py", line 80, in __iter__
-    self._execute_query()
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/sql/query.py", line 114, in _execute_query
-    self.cursor.execute(self.sql, params)
+  File "/Users/benson/Projects/MikasonOperBackend/server/cluster_api_views.py", line 25, in post
+    serializer.save()
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/serializers.py", line 215, in save
+    self.instance = self.create(validated_data)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/serializers.py", line 916, in create
+    instance = ModelClass.objects.create(**validated_data)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/query.py", line 394, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/base.py", line 807, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/base.py", line 837, in save_base
+    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/base.py", line 923, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/base.py", line 962, in _do_insert
+    using=using, raw=raw)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/query.py", line 1076, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/sql/compiler.py", line 1099, in execute_sql
+    cursor.execute(sql, params)
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/backends/utils.py", line 80, in execute
     return super(CursorDebugWrapper, self).execute(sql, params)
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/backends/utils.py", line 65, in execute
@@ -625,8 +578,8 @@ Traceback (most recent call last):
     err.raise_mysql_exception(self._data)
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/pymysql/err.py", line 107, in raise_mysql_exception
     raise errorclass(errno, errval)
-InternalError: (1054, u"Unknown column 'uco2webprod' in 'where clause'")
-2017-11-16 16:22:45,240 [Thread-2:123145566851072] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
+InternalError: (1054, u"Unknown column 'createdata' in 'field list'")
+2017-12-11 21:52:19,758 [Thread-4:123145474117632] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/BindServer
 Traceback (most recent call last):
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
     response = get_response(request)
@@ -644,37 +597,30 @@ Traceback (most recent call last):
     self.raise_uncaught_exception(exc)
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
     response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 140, in post
-    current_containers.create(server_id=server_id, container_id=container['id'], container_name=container['Name'], image_name=container['Image'], \
-NameError: global name 'server_id' is not defined
-2017-11-16 16:23:40,125 [Thread-2:123145531924480] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 136, in post
-    server_id = server['id']
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/query.py", line 1270, in __getitem__
-    return list(self)[k]
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/query.py", line 1233, in __iter__
-    query = iter(self.query)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/sql/query.py", line 80, in __iter__
-    self._execute_query()
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/sql/query.py", line 114, in _execute_query
-    self.cursor.execute(self.sql, params)
+  File "/Users/benson/Projects/MikasonOperBackend/server/cluster_api_views.py", line 172, in post
+    serializer.save()
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/serializers.py", line 215, in save
+    self.instance = self.create(validated_data)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/serializers.py", line 916, in create
+    instance = ModelClass.objects.create(**validated_data)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/query.py", line 394, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/base.py", line 807, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/base.py", line 837, in save_base
+    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/base.py", line 923, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/base.py", line 962, in _do_insert
+    using=using, raw=raw)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/query.py", line 1076, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/sql/compiler.py", line 1099, in execute_sql
+    cursor.execute(sql, params)
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/backends/utils.py", line 80, in execute
     return super(CursorDebugWrapper, self).execute(sql, params)
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/backends/utils.py", line 65, in execute
@@ -701,8 +647,8 @@ Traceback (most recent call last):
     err.raise_mysql_exception(self._data)
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/pymysql/err.py", line 107, in raise_mysql_exception
     raise errorclass(errno, errval)
-InternalError: (1054, u"Unknown column 'uco2webprod' in 'where clause'")
-2017-11-16 16:23:58,287 [Thread-2:123145428037632] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
+InternalError: (1054, u"Unknown column 'moduleId' in 'field list'")
+2017-12-12 11:32:46,577 [Thread-2:123145414688768] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/GetCluster
 Traceback (most recent call last):
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
     response = get_response(request)
@@ -720,414 +666,6 @@ Traceback (most recent call last):
     self.raise_uncaught_exception(exc)
   File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
     response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 136, in post
-    server_id = server['id']
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/query.py", line 1270, in __getitem__
-    return list(self)[k]
-TypeError: list index must be an integer, not str
-2017-11-16 16:24:29,474 [Thread-2:123145495097344] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 141, in post
-    current_containers.create(server_id=server_id, container_id=container['id'], container_name=container['Name'], image_name=container['Image'], \
-NameError: global name 'server_id' is not defined
-2017-11-16 16:24:48,473 [Thread-2:123145512673280] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 141, in post
-    current_containers.create(server_id=server_id, container_id=container['id'], container_name=container['Name'], image_name=container['Image'], \
-NameError: global name 'server_id' is not defined
-2017-11-16 16:24:51,883 [Thread-3:123145512673280] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 141, in post
-    current_containers.create(server_id=server_id, container_id=container['id'], container_name=container['Name'], image_name=container['Image'], \
-NameError: global name 'server_id' is not defined
-2017-11-16 16:25:11,486 [Thread-2:123145334706176] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 142, in post
-    command=container['Command'], createdate=container['Created'], state=container['State'], status=container['Status'])
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/query.py", line 394, in create
-    obj.save(force_insert=True, using=self.db)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/base.py", line 807, in save
-    force_update=force_update, update_fields=update_fields)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/base.py", line 837, in save_base
-    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/base.py", line 923, in _save_table
-    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/base.py", line 962, in _do_insert
-    using=using, raw=raw)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/manager.py", line 85, in manager_method
-    return getattr(self.get_queryset(), name)(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/query.py", line 1076, in _insert
-    return query.get_compiler(using=using).execute_sql(return_id)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/sql/compiler.py", line 1098, in execute_sql
-    for sql, params in self.as_sql():
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/sql/compiler.py", line 1051, in as_sql
-    for obj in self.query.objs
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/sql/compiler.py", line 990, in prepare_value
-    value = field.get_db_prep_save(value, connection=self.connection)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/fields/__init__.py", line 770, in get_db_prep_save
-    prepared=False)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/fields/__init__.py", line 762, in get_db_prep_value
-    value = self.get_prep_value(value)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/fields/__init__.py", line 1853, in get_prep_value
-    return int(value)
-TypeError: int() argument must be a string or a number, not 'Server'
-2017-11-16 16:26:00,235 [Thread-2:123145403432960] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 142, in post
-    current_containers.create(server_id=server_id, container_id=container['id'], container_name=container['Name'], image_name=container['Image'], \
-NameError: global name 'server_id' is not defined
-2017-11-16 16:27:15,479 [Thread-2:123145391501312] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 141, in post
-    current_containers.create(server_id=server_id, container_id=container['id'], container_name=container['Name'], image_name=container['Image'], \
-NameError: global name 'server_id' is not defined
-2017-11-16 16:27:40,261 [Thread-2:123145434611712] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 136, in post
-    server_id = serializer.data.get('id')
-AttributeError: 'ReturnList' object has no attribute 'get'
-2017-11-16 16:27:53,081 [Thread-2:123145464098816] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 136, in post
-    server_id = serializer.data['id']
-TypeError: list index must be an integer, not str
-2017-11-16 16:28:19,235 [Thread-2:123145464500224] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 142, in post
-    command=container['Command'], createdate=container['Created'], state=container['State'], status=container['Status'])
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/query.py", line 394, in create
-    obj.save(force_insert=True, using=self.db)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/base.py", line 807, in save
-    force_update=force_update, update_fields=update_fields)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/base.py", line 837, in save_base
-    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/base.py", line 923, in _save_table
-    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/base.py", line 962, in _do_insert
-    using=using, raw=raw)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/manager.py", line 85, in manager_method
-    return getattr(self.get_queryset(), name)(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/query.py", line 1076, in _insert
-    return query.get_compiler(using=using).execute_sql(return_id)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/sql/compiler.py", line 1098, in execute_sql
-    for sql, params in self.as_sql():
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/sql/compiler.py", line 1051, in as_sql
-    for obj in self.query.objs
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/sql/compiler.py", line 990, in prepare_value
-    value = field.get_db_prep_save(value, connection=self.connection)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/fields/__init__.py", line 770, in get_db_prep_save
-    prepared=False)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/fields/__init__.py", line 762, in get_db_prep_value
-    value = self.get_prep_value(value)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/fields/__init__.py", line 1853, in get_prep_value
-    return int(value)
-TypeError: int() argument must be a string or a number, not 'ReturnList'
-2017-11-16 16:28:33,966 [Thread-2:123145486286848] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 143, in post
-    command=container['Command'], createdate=container['Created'], state=container['State'], status=container['Status'])
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/query.py", line 394, in create
-    obj.save(force_insert=True, using=self.db)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/base.py", line 807, in save
-    force_update=force_update, update_fields=update_fields)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/base.py", line 837, in save_base
-    updated = self._save_table(raw, cls, force_insert, force_update, using, update_fields)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/base.py", line 923, in _save_table
-    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/base.py", line 962, in _do_insert
-    using=using, raw=raw)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/manager.py", line 85, in manager_method
-    return getattr(self.get_queryset(), name)(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/query.py", line 1076, in _insert
-    return query.get_compiler(using=using).execute_sql(return_id)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/sql/compiler.py", line 1098, in execute_sql
-    for sql, params in self.as_sql():
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/sql/compiler.py", line 1051, in as_sql
-    for obj in self.query.objs
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/sql/compiler.py", line 990, in prepare_value
-    value = field.get_db_prep_save(value, connection=self.connection)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/fields/__init__.py", line 770, in get_db_prep_save
-    prepared=False)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/fields/__init__.py", line 762, in get_db_prep_value
-    value = self.get_prep_value(value)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/fields/__init__.py", line 1853, in get_prep_value
-    return int(value)
-TypeError: int() argument must be a string or a number, not 'ReturnList'
-2017-11-16 16:29:07,622 [Thread-2:123145400954880] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/ListSwarmContainers
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 144, in post
-    containers = self.get_container()
-  File "/Users/benson/Projects/MikasonOperBackend/server/docker_init_api.py", line 111, in get_container
-    except Docker_Container.DoesNotExist:
-NameError: global name 'Docker_Container' is not defined
-2017-11-16 21:47:11,887 [Thread-2:123145499299840] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/getServerFunc
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/server_api_views.py", line 335, in post
-    'retdata': serializer.data
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/serializers.py", line 739, in data
-    ret = super(ListSerializer, self).data
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/serializers.py", line 263, in data
-    self._data = self.to_representation(self.instance)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/serializers.py", line 657, in to_representation
-    self.child.to_representation(item) for item in iterable
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/db/models/query.py", line 1245, in __iter__
-    raise InvalidQuery('Raw query must include the primary key')
-InvalidQuery: Raw query must include the primary key
-2017-11-16 22:01:48,460 [Thread-2:123145338105856] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/getServerFunc
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/server_api_views.py", line 332, in post
-    func = self.get_server_func_by_id(server_id)
-  File "/Users/benson/Projects/MikasonOperBackend/server/server_api_views.py", line 325, in get_server_func_by_id
-    logger.error(e)
-NameError: global name 'logger' is not defined
-2017-11-17 10:56:15,984 [Thread-2:123145461231616] [django.request:152] [base:get_response] [WARNING]- Not Found: /server/getServerFunc
-2017-11-17 10:57:35,278 [Thread-3:123145461231616] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/GetServerFunc
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/server_api_views.py", line 334, in post
-    raise ParamException('serverId')
-ParamException
-2017-11-17 11:01:12,318 [Thread-4:123145461231616] [django.request:135] [exception:handle_uncaught_exception] [ERROR]- Internal Server Error: /server/GetServerFunc
-Traceback (most recent call last):
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/exception.py", line 41, in inner
-    response = get_response(request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 187, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/core/handlers/base.py", line 185, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/django/views/generic/base.py", line 68, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 489, in dispatch
-    response = self.handle_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 449, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/usr/local/Cellar/pypy/5.8.0/libexec/site-packages/rest_framework/views.py", line 486, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/Users/benson/Projects/MikasonOperBackend/server/server_api_views.py", line 334, in post
-    raise ParamException('serverId')
-ParamException
+  File "/Users/benson/Projects/MikasonOperBackend/server/cluster_api_views.py", line 92, in post
+    'server': server[0]
+IndexError: tuple index out of range

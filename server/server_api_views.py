@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # coding: utf-8
 from django.db import connection
 from rest_framework.response import Response
@@ -6,28 +7,102 @@ from rest_framework.views import APIView
 from util.exception import BaseException, ParamException
 from util.error import BaseError, CommonError
 
-from .models import Server, ServerDetail, ServerSevice, ServerMonitorFuncRelation
-from .serializers import ServerSerializers, ServerDetailSerializers, ServerSeviceSerializers, ServerMonitorFuncRelationSerializers
+from .models import Server, ServerDetail, ServerMonitorFuncRelation
+from .serializers import ServerSerializers, ServerDetailSerializers, ServerMonitorFuncRelationSerializers
 import json
 import logging
 # Create your views here.
 
 logger = logging.getLogger('sourceDns.webdns.views')
 
-class ListServer(APIView):
+class ListServerAllDetail(APIView):
     """
         list all servers or create a server
     """
 
+    def list_detail_join(self):
+        try:
+            datas = []
+            with connection.cursor() as cursor:
+                query = 'SELECT a.name,a.alias,a.tag,a.status,a.is_monitor,b.cpu,b.mem,b.netflow,b.system,b.hdd,b.global_ip,b.private_ip FROM server a,server_detail b WHERE a.id=b.serverId'
+                cursor.execute(query)
+                rows = cursor.fetchall()
+                print rows
+                for row in rows:
+                    data = {
+                        'name': row[0],
+                        'alias': row[1],
+                        'tag':row[2],
+                        'status': row[3],
+                        'is_monitor': row[4],
+                        'cpu': row[5],
+                        'mem': row[6],
+                        'netflow': row[7],
+                        'system': row[8],
+                        'hdd': row[9],
+                        'global_ip': row[10],
+                        'private_ip': row[11],
+                    }
+                    datas.append(data)
+            return datas
+        except Exception as e:
+            logging.error(e)
+
     def post(self, request, format=None):
-        servers = Server.objects.all()
-        serializer = ServerSerializers(servers, many=True)
+        # servers = Server.objects.all()
+        servers = self.list_detail_join()
+        # serializer = ServerSerializers(servers, many=True)
         # print serializer.data
         data = {
             'retcode': 0,
-            'retdata': serializer.data
+            'retdata': servers
         }
         return Response(data)
+
+
+class ListAllServer(APIView):
+
+    def get_server(self):
+        try:
+            return Server.objects.all()
+        except Server.DoesNotExist:
+            logging.error(e)
+
+    def post(self, request, fotmat=None):
+        server = self.get_server()
+        serializer = ServerSerializers(server, many=True)
+        msg = {
+            'retcode': 0,
+            'retdata': serializer.data,
+            'retmsg': 'success'
+        }
+        return Response(msg)
+
+
+class ListServerName(APIView):
+
+    def get_server(self):
+        try:
+            return Server.objects.all()
+        except Server.DoesNotExist:
+            logging.error(e)
+
+    def post(self, request, fotmat=None):
+        server = self.get_server()
+        serializer = ServerSerializers(server, many=True)
+        servers = []
+        for data in serializer.data:
+            server = {
+                'serverId': data['id'],
+                'serverName': data['name']
+            }
+            servers.append(server)
+        msg = {
+            'retcode': 0,
+            'retdata': servers,
+            'retmsg': 'success'
+        }
+        return Response(msg)
 
 
 class CreateServer(APIView):
@@ -37,8 +112,6 @@ class CreateServer(APIView):
             'name': json.loads(request.body).get('name', None),
             'alias': json.loads(request.body).get('alias', None),
             'tag': json.loads(request.body).get('tag', None),
-            'status': json.loads(request.body).get('status', None),
-            'is_monitor': json.loads(request.body).get('is_monitor', None)
         }
         # print data
         serializer = ServerSerializers(data=data)
@@ -71,7 +144,45 @@ class EditServer(APIView):
         serializer = ServerSerializers(server, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            msg = {
+                'retcode': 0,
+                'retdata': serializer.data
+            }
+            return Response(msg, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class EditServerMonitor(APIView):
+    """
+        look up the detail server or update a sevser
+    """
+
+    def get_object(self, serverId):
+        try:
+            return Server.objects.get(id=serverId)
+        except ServerDetail.DoesNotExist:
+            raise Http404
+
+    def post(self, request, format=None):
+        serverId = json.loads(request.body).get('serverId', None)
+        if serverId is None:
+            raise ParamException('serverId')
+        is_monitor = json.loads(request.body).get('is_monitor', None)
+        if is_monitor is None:
+            raise ParamException('is_monitor')
+        server = self.get_object(serverId)
+        data = {
+            'id': serverId,
+            'is_monitor': is_monitor
+        }
+        serializer = ServerSerializers(server, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            msg = {
+                'retcode': 0,
+                'retdata': serializer.data
+            }
+            return Response(msg, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -102,6 +213,8 @@ class CreateServerDetail(APIView):
             'mem': json.loads(request.body).get('mem', None),
             'netflow': json.loads(request.body).get('netflow', None),
             'hdd': json.loads(request.body).get('hdd', None),
+            'global_ip': json.loads(request.body).get('global_ip', None),
+            'private_ip': json.loads(request.body).get('private_ip', None),
             'system': json.loads(request.body).get('system', None),
             'core': json.loads(request.body).get('core', None),
         }
@@ -120,7 +233,7 @@ class GetServerDetail(APIView):
 
     def get_object(self, serverId):
         try:
-            query = 'SELECT a.id,a.name,a.alias,a.tag,b.cpu,b.mem,b.netflow,b.hdd,b.system,b.core FROM server a,server_detail b WHERE a.id=b.serverId and b.serverId=%s' % serverId
+            query = 'SELECT b.id,b.serverId,b.cpu,b.mem,b.netflow,b.hdd,b.system,b.core,b.global_ip,b.private_ip FROM server a,server_detail b WHERE a.id=b.serverId AND b.serverId=%s' % serverId
             return ServerDetail.objects.raw(query)
         except ServerDetail.DoesNotExist:
             raise Http404
@@ -147,7 +260,7 @@ class EditServerDetail(APIView):
 
     def get_object(self, serverId):
         try:
-            return ServerDetail.objects.get(serverId=serverId)
+            return ServerDetail.objects.filter(serverId=serverId)
         except ServerDetail.DoesNotExist:
             raise Http404
 
@@ -159,9 +272,78 @@ class EditServerDetail(APIView):
         serializer = ServerDetailSerializers(server, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            data = {
+                'retcode': 0,
+                'retdata': serializer.data
+            }
+            return Response(data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class EditServerAndDetail(APIView):
+
+    def get_detail_object(self, serverId):
+        try:
+            return ServerDetail.objects.get(serverId=serverId)
+        except ServerDetail.DoesNotExist as e:
+            logging.error(e)
+
+    def get_server_object(self, serverId):
+        try:
+            return Server.objects.get(id=serverId)
+        except Server.DoesNotExist as e:
+            logging.error(e)
+
+    def post(self, request, format=None):
+        # print request.data
+        serverId = json.loads(request.body).get('serverId', None)
+        if serverId is None:
+            raise ParamException('serverId')
+
+        name = json.loads(request.body).get('name', None)
+        alias = json.loads(request.body).get('alias', None)
+        tag = json.loads(request.body).get('tag', None)
+        cpu = json.loads(request.body).get('cpu', None)
+        mem = json.loads(request.body).get('mem', None)
+        hdd = json.loads(request.body).get('hdd', None)
+        global_ip = json.loads(request.body).get('global_ip', None)
+        private_ip = json.loads(request.body).get('private_ip', None)
+        system = json.loads(request.body).get('system', None)
+        netflow = json.loads(request.body).get('netflow', None)
+
+        server_dict = {
+            'name': name,
+            'alias': alias,
+            'tag': tag
+        }
+        detail_dict = {
+            'cpu': cpu,
+            'mem': mem,
+            'hdd': hdd,
+            'global_ip': global_ip,
+            'private_ip': private_ip,
+            'system': system,
+            'netflow': netflow
+        }
+
+        server = self.get_server_object(serverId)
+        detail = self.get_detail_object(serverId)
+        server_serializer = ServerSerializers(server, data=server_dict)
+        if server_serializer.is_valid():
+            server_serializer.save()
+
+        detail_serializer = ServerDetailSerializers(detail, data=detail_dict)
+        if detail_serializer.is_valid():
+            detail_serializer.save()
+            msg = {
+                'retcode': 0,
+                'retdata': {
+                    'base': server_serializer.data,
+                    'detail': detail_serializer.data
+                }
+            }
+            return Response(msg, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CreateServerSevice(APIView):
 
@@ -171,11 +353,10 @@ class CreateServerSevice(APIView):
         """
         data = {
             'serverId': json.loads(request.body).get('serverId', None),
-            'projectId': json.loads(request.body).get('projectId', None),
+            'projectId': json.loads(request.body).get('projectId', 0),
             'name': json.loads(request.body).get('name', None),
             'port': json.loads(request.body).get('port', None),
             'version': json.loads(request.body).get('version', None),
-            'is_actived': json.loads(request.body).get('is_actived', None)
         }
         serializer = ServerSeviceSerializers(data=data)
         if serializer.is_valid():
@@ -207,7 +388,11 @@ class EditServerSevice(APIView):
         serializer = ServerSeviceSerializers(sevice, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            data = {
+                'retcode': 0,
+                'retdata': serializer.data
+            }
+            return Response(data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -280,7 +465,11 @@ class ServerFuncRelation(APIView):
         serializer = ServerMonitorFuncRelationSerializers(data=data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            data = {
+                'retcode': 0,
+                'retdata': serializer.data
+            }
+            return Response(data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -341,6 +530,7 @@ class GetServerFunc(APIView):
             raise ParamException('serverId')
 
         func = self.get_server_func_by_id(serverId)
+        # print inspect.stack()[0][3]
         # print func
         data = {
             'retcode': 0,

@@ -3,3 +3,93 @@
 2017-11-17 11:27:12,322 [Thread-2:123145573666816] [sourceDns.webdns.views:329] [server_api_views:get_server_func_by_id] [ERROR]- 'DatabaseWrapper' object has no attribute 'Dictcursor'
 2017-11-17 11:29:56,021 [Thread-2:123145506721792] [sourceDns.webdns.views:330] [server_api_views:get_server_func_by_id] [ERROR]- cursor() takes exactly 1 argument (2 given)
 2017-11-17 11:29:57,421 [Thread-3:123145506721792] [sourceDns.webdns.views:330] [server_api_views:get_server_func_by_id] [ERROR]- cursor() takes exactly 1 argument (2 given)
+2017-12-01 14:46:05,245 [Thread-17:123145313206272] [sourceDns.webdns.views:124] [views:get_object_id] [ERROR]- ModuleDetail matching query does not exist.
+2017-12-01 14:47:42,922 [Thread-23:123145313206272] [sourceDns.webdns.views:124] [views:get_object_id] [ERROR]- ModuleDetail matching query does not exist.
+2017-12-01 14:58:43,724 [Thread-2:123145514622976] [sourceDns.webdns.views:130] [views:get_module_server] [ERROR]- Cannot resolve keyword 'serverid' into field. Choices are: configfile, createdate, id, is_actived, moduleid, port
+2017-12-01 15:04:52,612 [Thread-2:123145356488704] [sourceDns.webdns.views:130] [views:get_module_server] [ERROR]- Cannot resolve keyword 'serverid' into field. Choices are: configfile, createdate, id, is_actived, moduleid, port
+2017-12-01 15:05:02,102 [Thread-2:123145573027840] [sourceDns.webdns.views:130] [views:get_module_server] [ERROR]- Cannot resolve keyword 'serverid' into field. Choices are: configfile, createdate, id, is_actived, moduleid, port
+2017-12-01 15:11:04,614 [Thread-4:123145573027840] [sourceDns.webdns.views:130] [views:get_module_server] [ERROR]- Cannot resolve keyword 'serverid' into field. Choices are: configfile, createdate, id, is_actived, moduleid, port
+2017-12-01 15:11:07,371 [Thread-5:123145573027840] [sourceDns.webdns.views:130] [views:get_module_server] [ERROR]- Cannot resolve keyword 'serverid' into field. Choices are: configfile, createdate, id, is_actived, moduleid, port
+2017-12-01 15:11:22,604 [Thread-6:123145573027840] [sourceDns.webdns.views:130] [views:get_module_server] [ERROR]- Cannot resolve keyword 'serverid' into field. Choices are: configfile, createdate, id, is_actived, moduleid, port
+2017-12-01 15:11:58,513 [Thread-2:123145374683136] [sourceDns.webdns.views:130] [views:get_module_server] [ERROR]- Cannot resolve keyword 'serverid' into field. Choices are: configfile, createdate, id, is_actived, moduleid, port
+2017-12-01 15:11:59,954 [Thread-3:123145374683136] [sourceDns.webdns.views:130] [views:get_module_server] [ERROR]- Cannot resolve keyword 'serverid' into field. Choices are: configfile, createdate, id, is_actived, moduleid, port
+2017-12-01 15:32:36,022 [Thread-3:123145418874880] [sourceDns.webdns.views:139] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 15:33:01,008 [Thread-6:123145418874880] [sourceDns.webdns.views:139] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 17:05:50,367 [Thread-15:123145378193408] [sourceDns.webdns.views:139] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 17:05:51,631 [Thread-16:123145378193408] [sourceDns.webdns.views:139] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 17:57:22,590 [Thread-45:123145378193408] [sourceDns.webdns.views:139] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 18:18:38,981 [Thread-73:123145378193408] [sourceDns.webdns.views:139] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 18:18:59,916 [Thread-77:123145378193408] [sourceDns.webdns.views:139] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 18:21:02,159 [Thread-81:123145378193408] [sourceDns.webdns.views:139] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 18:21:03,468 [Thread-82:123145378193408] [sourceDns.webdns.views:139] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 19:42:05,079 [Thread-17:123145463197696] [sourceDns.webdns.views:139] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 19:42:07,899 [Thread-18:123145463197696] [sourceDns.webdns.views:139] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 19:42:08,966 [Thread-19:123145463197696] [sourceDns.webdns.views:139] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 19:42:11,370 [Thread-20:123145463197696] [sourceDns.webdns.views:139] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 19:42:17,927 [Thread-21:123145463197696] [sourceDns.webdns.views:139] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 19:44:18,226 [Thread-27:123145463197696] [sourceDns.webdns.views:139] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 19:50:56,846 [Thread-40:123145463197696] [sourceDns.webdns.views:139] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 19:51:00,853 [Thread-41:123145463197696] [sourceDns.webdns.views:139] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 19:52:43,152 [Thread-44:123145463197696] [sourceDns.webdns.views:139] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 20:06:06,406 [Thread-7:123145537658880] [sourceDns.webdns.views:139] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 20:31:15,626 [Thread-4:123145521242112] [sourceDns.webdns.views:139] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 21:12:01,820 [Thread-12:123145494708224] [sourceDns.webdns.views:140] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 21:12:03,295 [Thread-13:123145494708224] [sourceDns.webdns.views:140] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 21:12:04,483 [Thread-14:123145494708224] [sourceDns.webdns.views:140] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 21:44:02,148 [Thread-25:123145325707264] [sourceDns.webdns.views:141] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 21:44:14,348 [Thread-28:123145325707264] [sourceDns.webdns.views:141] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 21:46:02,100 [Thread-42:123145325707264] [sourceDns.webdns.views:141] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 21:46:05,115 [Thread-43:123145325707264] [sourceDns.webdns.views:141] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 21:46:06,335 [Thread-44:123145325707264] [sourceDns.webdns.views:141] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 21:46:18,622 [Thread-50:123145325707264] [sourceDns.webdns.views:141] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-01 21:46:19,850 [Thread-51:123145325707264] [sourceDns.webdns.views:141] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-04 17:22:29,652 [Thread-24:123145312284672] [sourceDns.webdns.views:141] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-04 18:40:35,892 [Thread-4:123145341583360] [sourceDns.webdns.views:141] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-04 18:41:25,342 [Thread-5:123145341583360] [sourceDns.webdns.views:141] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-04 18:44:26,450 [Thread-7:123145341583360] [sourceDns.webdns.views:141] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-04 19:44:28,118 [Thread-10:123145519935488] [sourceDns.webdns.views:167] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-04 20:03:37,337 [Thread-7:123145326637056] [sourceDns.webdns.views:223] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-04 20:11:29,557 [Thread-6:123145520443392] [sourceDns.webdns.views:223] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-04 20:11:48,600 [Thread-11:123145520443392] [sourceDns.webdns.views:223] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-04 20:13:05,906 [Thread-13:123145520443392] [sourceDns.webdns.views:223] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-04 20:15:24,709 [Thread-18:123145520443392] [sourceDns.webdns.views:223] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-04 20:17:12,962 [Thread-21:123145520443392] [sourceDns.webdns.views:223] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-04 20:47:59,173 [Thread-5:123145423515648] [sourceDns.webdns.views:258] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-04 20:48:17,932 [Thread-6:123145423515648] [sourceDns.webdns.views:170] [views:get_detail] [ERROR]- (1064, u"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1")
+2017-12-04 20:48:17,933 [Thread-6:123145423515648] [sourceDns.webdns.views:179] [views:create_detail] [ERROR]- u'port'
+2017-12-04 20:50:15,413 [Thread-2:123145567600640] [sourceDns.webdns.views:259] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-04 20:51:05,184 [Thread-4:123145567600640] [sourceDns.webdns.views:259] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-04 20:51:26,728 [Thread-5:123145567600640] [sourceDns.webdns.views:170] [views:get_detail] [ERROR]- (1064, u"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1")
+2017-12-04 20:51:26,729 [Thread-5:123145567600640] [sourceDns.webdns.views:179] [views:create_detail] [ERROR]- u'port'
+2017-12-04 20:52:17,560 [Thread-6:123145567600640] [sourceDns.webdns.views:259] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-04 20:52:27,534 [Thread-7:123145567600640] [sourceDns.webdns.views:259] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-04 20:52:35,536 [Thread-9:123145567600640] [sourceDns.webdns.views:259] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-04 20:52:46,123 [Thread-10:123145567600640] [sourceDns.webdns.views:170] [views:get_detail] [ERROR]- (1064, u"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1")
+2017-12-04 20:52:46,124 [Thread-10:123145567600640] [sourceDns.webdns.views:179] [views:create_detail] [ERROR]- u'port'
+2017-12-04 20:54:47,428 [Thread-3:123145396350976] [sourceDns.webdns.views:262] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-04 20:55:05,352 [Thread-4:123145396350976] [sourceDns.webdns.views:170] [views:get_detail] [ERROR]- (1064, u"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1")
+2017-12-04 20:56:08,380 [Thread-3:123145370501120] [sourceDns.webdns.views:251] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-04 20:56:28,901 [Thread-4:123145370501120] [sourceDns.webdns.views:170] [views:get_detail] [ERROR]- (1064, u"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1")
+2017-12-04 20:57:12,320 [Thread-3:123145416167424] [sourceDns.webdns.views:251] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-04 20:57:28,238 [Thread-4:123145416167424] [sourceDns.webdns.views:170] [views:get_detail] [ERROR]- (1064, u"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1")
+2017-12-04 20:58:57,192 [Thread-3:123145485701120] [sourceDns.webdns.views:254] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-04 20:59:20,661 [Thread-4:123145485701120] [sourceDns.webdns.views:170] [views:get_detail] [ERROR]- (1064, u"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1")
+2017-12-04 20:59:55,416 [Thread-3:123145424764928] [sourceDns.webdns.views:255] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-04 21:00:11,368 [Thread-4:123145424764928] [sourceDns.webdns.views:170] [views:get_detail] [ERROR]- (1064, u"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1")
+2017-12-04 21:04:49,484 [Thread-3:123145571082240] [sourceDns.webdns.views:263] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-04 21:05:06,281 [Thread-4:123145571082240] [sourceDns.webdns.views:170] [views:get_detail] [ERROR]- (1064, u"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1")
+2017-12-04 21:06:04,138 [Thread-3:123145396699136] [sourceDns.webdns.views:263] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-04 21:06:24,158 [Thread-4:123145396699136] [sourceDns.webdns.views:170] [views:get_detail] [ERROR]- (1064, u"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1")
+2017-12-04 21:08:33,593 [Thread-4:123145344192512] [sourceDns.webdns.views:170] [views:get_detail] [ERROR]- (1064, u"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1")
+2017-12-04 21:10:48,456 [Thread-4:123145440010240] [sourceDns.webdns.views:170] [views:get_detail] [ERROR]- (1064, u"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1")
+2017-12-04 21:11:53,072 [Thread-3:123145482952704] [sourceDns.webdns.views:193] [views:update_detail] [ERROR]- global name 'is_actived' is not defined
+2017-12-04 21:13:30,634 [Thread-5:123145320554496] [sourceDns.webdns.views:193] [views:update_detail] [ERROR]- (1064, u'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'["9000", "8000", "80"],configfile=/usr/local/nginx/conf/vhost  WHERE moduleId=1 \' at line 1')
+2017-12-04 21:16:00,591 [Thread-4:123145461051392] [sourceDns.webdns.views:194] [views:update_detail] [ERROR]- (1064, u'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'9000", "8000", "80"]",configfile="/usr/local/nginx/conf/vhost"  WHERE moduleId=1\' at line 1')
+2017-12-04 21:18:21,101 [Thread-4:123145521479680] [sourceDns.webdns.views:194] [views:update_detail] [ERROR]- (1064, u'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'8000", "9000", "80"]",configfile="/usr/local/nginx/conf/vhost"  WHERE moduleId=1\' at line 1')
+2017-12-04 21:19:33,836 [Thread-4:123145547984896] [sourceDns.webdns.views:194] [views:update_detail] [ERROR]- (1064, u'You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'8000", "9000", "80"]",configfile="/usr/local/nginx/conf/vhost"  WHERE moduleId=1\' at line 1')
+2017-12-05 11:11:27,815 [Thread-4:123145339908096] [sourceDns.webdns.views:258] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-08 15:32:39,807 [Thread-6:123145453916160] [sourceDns.webdns.views:258] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-08 15:32:41,848 [Thread-7:123145453916160] [sourceDns.webdns.views:258] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-08 15:32:43,204 [Thread-8:123145453916160] [sourceDns.webdns.views:258] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-08 15:32:44,903 [Thread-9:123145453916160] [sourceDns.webdns.views:258] [views:get_module_server] [ERROR]- 'NoneType' object is not subscriptable
+2017-12-08 15:39:50,701 [Thread-3:123145519075328] [sourceDns.webdns.views:81] [cluster_api_views:update_object] [ERROR]- 'Cluster' object has no attribute 'update'

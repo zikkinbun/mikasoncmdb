@@ -3,7 +3,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework import routers, renderers
 
 from mysql_api_views import MysqlStatus, MysqlConns, MysqlCom
-from monitor_func_views import CreateMonitorFunction, GetMonitorFunction
+from monitor_func_views import CreateMonitorFunction, GetMonitorFunction, GetMonitorMysqlUser, CreateMonitorMysqlUser
 from system_api_views import CpuLoadListByIP, MemStatListByIP, GetRunProcess, GetBootTime, GetUptime
 
 urlpatterns = [
@@ -12,6 +12,9 @@ urlpatterns = [
     url(r'^GetMysqlCom$', MysqlCom.as_view()),
     url(r'^CreateMonFunc$', CreateMonitorFunction.as_view()),
     url(r'^GetMonFunc$', GetMonitorFunction.as_view()),
+    url(r'^GetMonFunc$', GetMonitorFunction.as_view()),
+    url(r'^GetMysqlUser$', GetMonitorMysqlUser.as_view()),
+    url(r'^CreateMysqlUser$', CreateMonitorMysqlUser.as_view()),
     url(r'^CpuLoadByIp$', CpuLoadListByIP.as_view()),
     url(r'^MemStatByIp$', MemStatListByIP.as_view()),
     url(r'^RunProcess$', GetRunProcess.as_view()),

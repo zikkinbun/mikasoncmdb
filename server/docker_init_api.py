@@ -133,13 +133,13 @@ class ListSwarmContainer(APIView):
                 }
             server = Server.objects.filter(name=container['Host'])
             serializer = ServerSerializers(server, many=True)
-            server_id = serializer.data[0].get('id')
+            serverId = serializer.data[0].get('id')
             # print server_id
             current_containers = ServerContainer.objects.filter(container_id=container['id'])
             if current_containers:
                 current_containers.update(state=container['State'], status=container['Status'])
             else:
-                current_containers.create(server_id=server_id, container_id=container['id'], container_name=container['Name'], image_name=container['Image'], \
+                current_containers.create(serverId=serverId, container_id=container['id'], container_name=container['Name'], image_name=container['Image'], \
                                             command=container['Command'], createdate=container['Created'], state=container['State'], status=container['Status'])
         containers = self.get_container()
         serializer = ServerContainerSerializers(containers, many=True)

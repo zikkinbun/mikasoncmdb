@@ -1,5 +1,5 @@
 # coding: utf-8
-from .models import MonitorMysqlConnection, MonitorMysqlProcesslist, MonitorMysqlReplication, MonitorMysqlStatus, MonitorMysqlSlowQueryHis, MonitorCpuLoad, MonitorHddStat, MonitorMemStat, MonitorFunction, MonitorNetworkLoad, MonitorNginxStatus, MonitorOnlineUser, MonitorTcpStatus
+from .models import MonitorMysqlConnection, MonitorMysqlProcesslist, MonitorMysqlReplication, MonitorMysqlStatus, MonitorMysqlSlowQueryHis, MonitorCpuLoad, MonitorHddStat, MonitorMemStat, MonitorFunction, MonitorNetworkLoad, MonitorNginxStatus, MonitorOnlineUser, MonitorTcpStatus, MonitorMysqlUser
 
 from rest_framework import serializers
 
@@ -55,4 +55,10 @@ class MonitorFunctionSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = MonitorFunction
+        fields = '__all__'
+
+class MonitorMysqlUserSerializers(serializers.ModelSerializer):
+
+    class Meta:
+        model = MonitorMysqlUser
         fields = '__all__'

@@ -13,3 +13,5 @@ zabbixapi/migrations/*.pyc
 period/*.pyc
 dbmonitor/migrations/*.pyc
 network/migrations/*.pyc
+monitor/migrations/*.pyc
+server/migrations/*.pyc
